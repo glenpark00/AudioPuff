@@ -10,28 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_203433) do
+ActiveRecord::Schema.define(version: 2020_04_28_234846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "profile_ids", force: :cascade do |t|
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "profile_url", null: false
     t.string "email", null: false
-    t.string "profile_image_url"
-    t.string "header_image_url"
-    t.integer "age"
+    t.string "display_name", null: false
+    t.integer "age", null: false
     t.string "gender", null: false
     t.string "password_digest", null: false
     t.string "session_token", null: false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "city"
-    t.string "country"
-    t.text "bio"
+    t.string "first_name", default: "", null: false
+    t.string "last_name", default: "", null: false
+    t.string "city", default: "", null: false
+    t.string "country", default: "", null: false
+    t.text "bio", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "display_name", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["profile_url"], name: "index_users_on_profile_url", unique: true
     t.index ["session_token"], name: "index_users_on_session_token", unique: true

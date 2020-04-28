@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -11,11 +10,12 @@ class LoginForm extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin(e) {
-      this.props.login(this.state).then( () => {
-      this.props.handleCloseModal();
-      this.setState({ step: 1, formType: null, identifier: '', password: '' });
-    })
+  handleLogin() {
+    this.props.login(this.state)
+      .then(() => {
+        this.setState({ step: 1, formType: null, identifier: '', password: '' });
+        this.props.handleCloseModal();
+      });
   }
 
   render() {
@@ -35,4 +35,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default LoginForm;

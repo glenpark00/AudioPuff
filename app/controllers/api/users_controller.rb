@@ -46,11 +46,14 @@ class Api::UsersController < ApplicationController
 
   protected
   def create_user_params
-    params.require(:user).permit(:email, :age, :gender, :password)
+    profile_id = ProfileId.create
+    params[:user][:profile_url] = 'user' + profile_id[:id].to_s
+    params[:user][:display_name] = 'User' + profile_id[:id].to_s
+    params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name)
   end
 
   def update_user_params
     params.require(:user)
-      .permit(:display_name, :profile_url, :profile_image_url, :header_image_url, :first_name, :last_name, :city, :country, :bio)
+      .permit(:display_name, :profile_url, :first_name, :last_name, :city, :country, :bio)
   end
 end

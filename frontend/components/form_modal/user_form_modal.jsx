@@ -38,6 +38,7 @@ export default class UserFormModal extends React.Component {
   }
 
   handleCloseModal() {
+    this.props.clearSessionErrors();
     this.resetLocalState();
     this.props.disableModalDisplay();
   }
@@ -54,7 +55,7 @@ export default class UserFormModal extends React.Component {
                           handleCloseModal={this.handleCloseModal}
                           errors={this.props.errors} />
       } else if (formType === 'signup') {
-        return <SignupForm identifier={this.state.identifier} 
+        return <SignupForm email={this.state.identifier} 
                            signup={this.props.signup}
                            prevStep={this.prevStep} 
                            handleCloseModal={this.handleCloseModal} />

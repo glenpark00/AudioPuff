@@ -22,7 +22,7 @@
 class User < ApplicationRecord
   validates :profile_url, :email, :session_token, presence: true, uniqueness: true
   validates :display_name, :age, :gender, :password_digest, presence: true
-  # You're going to need to add a default and presence validation for the image urls, not including it now in db or model to make seeding easier
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, length: { minimum: 6 }, allow_nil: true
 
   before_validation :ensure_session_token
