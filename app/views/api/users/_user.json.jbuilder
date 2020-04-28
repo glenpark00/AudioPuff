@@ -1,0 +1,1 @@
+json.extract! user, :id, :profile_url, :display_name, :profile_image_url, :header_image_url, :first_name, :last_name, :city, :country, :bio

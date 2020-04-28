@@ -1,0 +1,88 @@
+// Place all the styles related to the StaticPages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// NAV-BAR COMPONENTS STYLING
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #cb769e;
+  padding: 10px;
+}
+
+.login-button {
+  color: white;
+  background-color: #cb769e;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 8%
+}
+
+.signup-button {
+  font: white 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #549f93;
+  padding: 10px;
+  border-radius: 8%;
+}
+
+.form-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 500px;
+  margin: 30px;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(231, 231, 231, 0.678);
+  z-index: 10;
+}
+
+.modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
+.site-dropdown {
+  position: relative;
+  color: #549f93;
+}
+
+.site-dropdown-button {
+  border-style: none;
+  font-size: 20px;
+  font-weight: 800;
+  background-color: transparent;
+}
+
+.site-dropdown-ul {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: pink;
+  padding-right: 100px;
+  padding-bottom: 50px;
+  width: 40px;
+  height: 100px;
+  border-radius: 5%;
+  border-style: groove;
+  border: 10px solid purple;
+}
+
+//////////////////////////////////////////
