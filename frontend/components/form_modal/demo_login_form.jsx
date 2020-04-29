@@ -4,7 +4,8 @@ class DemoLoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state =  {
-      currentPassword: ''
+      currentPassword: '',
+      interval: null
     }
     this.fillInField();
     this.handleLogin = this.handleLogin.bind(this);
@@ -25,7 +26,12 @@ class DemoLoginForm extends React.Component {
 
   componentDidMount() {
     const submitButton = document.getElementById('demo-submit-button');
-    setTimeout(() => submitButton.click(), 2000)
+    this.setState({ interval: setInterval(() => submitButton.click(), 2000) })
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.interval);
+    this.setState({ interval: null })
   }
 
   handleLogin() {

@@ -16,4 +16,13 @@
 
  a {
   text-decoration: none;
- }
+  color: floralwhite;
+}
+
+body {
+  background-color: floralwhite;
+}
+
+.hide {
+  display: none;
+}

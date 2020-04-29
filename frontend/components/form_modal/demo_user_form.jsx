@@ -5,7 +5,7 @@ export default class DemoUserForm extends React.Component {
     super(props);
     this.state = {
       currentIdentifier: '',
-      timeout: null
+      interval: null
     }
     this.fillInField();
   }
@@ -20,12 +20,17 @@ export default class DemoUserForm extends React.Component {
         if (index === chars.length) {
           clearInterval(interval)
         }
-      }, 300)
+      }, 250)
   }
 
   componentDidMount() {
     const submitButton = document.getElementById('demo-submit-button');
-    setTimeout(() => submitButton.click(), 2000) 
+    this.setState({ interval: setInterval(() => submitButton.click(), 2000) })
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.state.interval);
+    this.setState({ interval: null })
   }
 
   render() {
