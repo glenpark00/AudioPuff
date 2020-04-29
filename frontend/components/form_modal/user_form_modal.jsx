@@ -2,6 +2,7 @@ import React from 'react';
 import UserForm from './user_form';
 import LoginForm from './login_form';
 import SignupForm from './signup_form';
+import DemoLogin from './demo_login';
 
 export default class UserFormModal extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class UserFormModal extends React.Component {
     this.prevStep = this.prevStep.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.resetLocalState = this.resetLocalState.bind(this);
+    this.triggerDemoLogin = this.triggerDemoLogin.bind(this);
   }
 
   resetLocalState() {
@@ -43,22 +45,30 @@ export default class UserFormModal extends React.Component {
     this.props.disableModalDisplay();
   }
 
+  triggerDemoLogin() {
+    this.setState({ firstStep: false, formType: 'demo' });
+  }
+
   modalContent() {
     const formType = this.state.formType;
     if (this.state.firstStep) {
-      return <UserForm setForm = { this.setForm } />
-    } else  {
+      return <UserForm setForm={ this.setForm } 
+                       triggerDemoLogin={ this.triggerDemoLogin } />
+    } else if (!this.state.firstStep)  {
       if (formType === 'login') {
-        return <LoginForm identifier={this.state.identifier} 
-                          login={this.props.login}
-                          prevStep={this.prevStep} 
-                          handleCloseModal={this.handleCloseModal}
-                          errors={this.props.errors} />
+        return <LoginForm identifier={ this.state.identifier } 
+                          login={ this.props.login }
+                          prevStep={ this.prevStep } 
+                          handleCloseModal={ this.handleCloseModal }
+                          errors={ this.props.errors } />
       } else if (formType === 'signup') {
-        return <SignupForm email={this.state.identifier} 
-                           signup={this.props.signup}
-                           prevStep={this.prevStep} 
-                           handleCloseModal={this.handleCloseModal} />
+        return <SignupForm email={ this.state.identifier } 
+                           signup={ this.props.signup }
+                           prevStep={ this.prevStep } 
+                           handleCloseModal={ this.handleCloseModal } />
+      } else if (formType === 'demo') {
+        return <DemoLogin handleCloseModal={ this.handleCloseModal }
+                          login={ this.props.login } />
       }
     }
   }

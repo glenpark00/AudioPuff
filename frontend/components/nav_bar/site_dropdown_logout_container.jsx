@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/session_actions'
 
-const SiteDropdownLogout = ({ logout }) => (
-  <Link to='/logout' onClick={logout}>Sign out</Link>
+const SiteDropdownLogout = ({ closeDropdown, logout }) => (
+  <Link to='/logout' onClick={() => {
+    logout();
+    closeDropdown();
+  }}>Sign out</Link>
 )
 
 const mapDispatchToProps = (dispatch) => ({

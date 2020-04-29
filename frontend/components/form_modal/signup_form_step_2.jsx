@@ -13,7 +13,6 @@ export default class SignupFormStep2 extends React.Component {
       genderError: false
     }
     this.toggleCustomGender = this.toggleCustomGender.bind(this);
-    this.checkFields = this.checkFields.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
   }
 
@@ -27,29 +26,24 @@ export default class SignupFormStep2 extends React.Component {
   }
 
   checkFields() {
-    let hasErrors = false
     if (this.state.age < 15) {
-      hasErrors = true;
       this.setState({ ageError: true });
     }
     if (this.state.gender === '') {
-      hasErrors = true;
       this.setState({ genderError: true });
     }
-    return hasErrors;
   }
 
   handleSignup() {
-    this.setState({ ageError: null, genderError: null }, () => {
-      if (!this.checkFields()) {
-        const { email, password, gender, age } = this.state;
-        this.props.signup({ email, password, gender, age })
-          .then(() => {
-            this.setState({ gender: '', age: 0, });
-            this.props.handleCloseModal();
-          });
-      }
-    });
+    this.checkFields();
+    if (this.state.age >= 15 && this.state.gender != '') {
+      const { email, password, gender, age } = this.state;
+      this.props.signup({ email, password, gender, age })
+        .then(() => {
+          this.setState({ gender: '', age: 0, });
+          this.props.handleCloseModal();
+        });
+    }
   }
 
   render() {

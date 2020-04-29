@@ -22,11 +22,11 @@ export default class NavBarSiteDropdown extends React.Component {
         {this.state.showDropdown ?
           <ul className='site-dropdown-ul'>
             <li>
-              <Link to='/'>About us</Link>
+              <Link to='/' onClick={this.handleClick}>About us</Link>
             </li>
             {this.props.loggedIn ? 
             <li>
-              <SiteDropdownLogoutContainer />
+              <SiteDropdownLogoutContainer closeDropdown={this.handleClick}/>
             </li>
             : ''}
           </ul>
