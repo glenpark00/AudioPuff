@@ -1,4 +1,4 @@
-import { ENABLE_MODAL_DISPLAY, DISABLE_MODAL_DISPLAY } from '../actions/ui_actions';
+import { ENABLE_MODAL_DISPLAY, DISABLE_MODAL_DISPLAY } from '../../actions/ui_actions';
 
 const showModalReducer = (state = false, action) => {
   switch (action.type) {

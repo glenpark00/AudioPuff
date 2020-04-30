@@ -5,14 +5,14 @@ import { Route } from 'react-router-dom';
 
 // Placeholder
 import Discover from './discover';
-import Upload from './upload';
+import SongUploadFormContainer from './song_upload_form_container';
 
 const App = () => (
 	<div>
 		<NavBarContainer />
 		<UserFormModalContainer />
 		<Route exact path='/discover' component={ Discover }/>
-		<Route exact path='/upload' component={ Upload }/>
+		<Route exact path='/upload' component={ SongUploadFormContainer }/>
 	</div>
 );
 

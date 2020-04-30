@@ -17,6 +17,7 @@ export default class SiteDropdownButton extends React.Component {
   }
 
   closeDropdown(e) {
+    e.stopPropagation();
     this.setState({ showDropdown: false });
   }
 

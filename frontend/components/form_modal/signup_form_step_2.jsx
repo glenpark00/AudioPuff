@@ -52,8 +52,8 @@ export default class SignupFormStep2 extends React.Component {
         <h3>Create your AudioPuff account</h3>
         <div>Tell us your age</div>
         <input type='number'
-          value={this.state.age}
-          onChange={e => this.setState({ age: e.target.value })} />
+          value={ this.state.age }
+          onChange={ e => this.setState({ age: e.target.value }) } />
         { this.state.ageError ? 
           <div>
             Sorry, but you don't meet AudioPuff's minimum age requirements.
@@ -61,7 +61,7 @@ export default class SignupFormStep2 extends React.Component {
           : '' 
         }
         <div>Gender</div>
-        <select defaultValue='' onChange={this.toggleCustomGender}>
+        <select defaultValue='' onChange={ this.toggleCustomGender }>
           <option disabled value=''>Indicate your gender</option>
           <option value="Female">Female</option>
           <option value="Male">Male</option>
@@ -81,7 +81,7 @@ export default class SignupFormStep2 extends React.Component {
           </div>
           : ''
         }
-        <button onClick={this.handleSignup}>Continue</button>
+        <button onClick={ this.handleSignup }>Continue</button>
       </div>
     )
   }

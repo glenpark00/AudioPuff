@@ -3,9 +3,12 @@
 class Api::UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
+    profile_id = ProfileId.create
+    @user.profile_url = 'user' + profile_id[:id].to_s
+    @user.display_name = 'User' + profile_id[:id].to_s
     if @user.save
       login!(@user)
-      render :show
+      render :display
     else
       render json: @user.errors.full_messages, status: 422
     end
@@ -46,9 +49,6 @@ class Api::UsersController < ApplicationController
 
   protected
   def create_user_params
-    profile_id = ProfileId.create
-    params[:user][:profile_url] = 'user' + profile_id[:id].to_s
-    params[:user][:display_name] = 'User' + profile_id[:id].to_s
     params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name)
   end
 

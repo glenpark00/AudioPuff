@@ -1,0 +1,1 @@
+json.partial! partial: 'api/songs/song', locals: { user: @user }

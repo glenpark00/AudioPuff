@@ -2,28 +2,31 @@
 #
 # Table name: users
 #
-#  id                :bigint           not null, primary key
-#  profile_url       :string           not null
-#  email             :string           not null
-#  profile_image_url :string
-#  header_image_url  :string
-#  age               :integer
-#  gender            :string           not null
-#  password_digest   :string           not null
-#  session_token     :string           not null
-#  first_name        :string
-#  last_name         :string
-#  city              :string
-#  country           :string
-#  bio               :text
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id              :bigint           not null, primary key
+#  profile_url     :string           not null
+#  email           :string           not null
+#  display_name    :string           not null
+#  age             :integer          not null
+#  gender          :string           not null
+#  password_digest :string           not null
+#  session_token   :string           not null
+#  first_name      :string           default(""), not null
+#  last_name       :string           default(""), not null
+#  city            :string           default(""), not null
+#  country         :string           default(""), not null
+#  bio             :text             default(""), not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
 #
 class User < ApplicationRecord
   validates :profile_url, :email, :session_token, presence: true, uniqueness: true
   validates :display_name, :age, :gender, :password_digest, presence: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, length: { minimum: 6 }, allow_nil: true
+
+  has_one_attached :profile_image
+
+  has_one_attached :header_image
 
   before_validation :ensure_session_token
 

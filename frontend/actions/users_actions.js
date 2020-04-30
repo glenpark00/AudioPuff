@@ -16,8 +16,8 @@ const receiveManyUsers = users => ({
 });
 
 // Thunk Action Creators
-export const fetchUser = user => dispatch => (
-  UsersApiUtil.fetchUser(user).then(
+export const fetchUser = userId => dispatch => (
+  UsersApiUtil.fetchUser(userId).then(
     user => dispatch(receiveOneUser(user)))
 );
 

@@ -8,4 +8,3 @@ export const enableModalDisplay = () => ({
 export const disableModalDisplay = () => ({
   type: DISABLE_MODAL_DISPLAY
 });
-
