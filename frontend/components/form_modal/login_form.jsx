@@ -22,13 +22,14 @@ class LoginForm extends React.Component {
     const { identifier, prevStep } = this.props;
     return (
       <div className='form-modal'>
-        <button onClick={prevStep}>{identifier}</button>
-        <input type="password"
+        <div className='form-prev-button' onClick={prevStep}>◀  {identifier}</div>
+        <input className='form-modal-input'
+               type="password"
                value={this.state.password}
                placeholder='Your Password'
                onChange={e => this.setState({ password: e.target.value })} />
         { this.props.errors.length > 0 ? <div>{this.props.errors[0]}</div> : '' }
-        <button onClick={this.handleLogin}>Sign In</button>
+        <button className='form-submit-button' onClick={this.handleLogin}>Sign In</button>
         <a href="">Don't know your password?</a>
       </div>
     )

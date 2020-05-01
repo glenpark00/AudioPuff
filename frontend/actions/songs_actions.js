@@ -3,6 +3,7 @@ import * as SongsApiUtil from '../util/songs_api_util';
 // Action Type Constants
 export const RECEIVE_SONG = 'RECEIVE_SONG';
 export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
+export const RECEIVE_CURRENT_SONG = 'RECEIVE_CURRENT_SONG';
 
 // Regular Action Creators
 const receiveSong = song => ({
@@ -15,10 +16,21 @@ const receiveSongErrors = errors => ({
   errors
 })
 
+const receiveCurrentSong = song => ({
+  type: RECEIVE_CURRENT_SONG,
+  song
+})
+
 // Thunk Action Creators
-export const createSong = (song, currentUserId) => dispatch => (
-  SongsApiUtil.createSong(song, currentUserId).then(
+export const createSong = (song) => dispatch => (
+  SongsApiUtil.createSong(song).then(
     song => dispatch(receiveSong(song)),
     errors => dispatch(receiveSongErrors(errors.responseJSON))
+  )
+)
+
+export const fetchCurrentSongFileUrl = songId => dispatch => (
+  SongsApiUtil.fetchSongFileUrl(songId).then(
+    song => dispatch(receiveCurrentSong(song))
   )
 )

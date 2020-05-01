@@ -1,0 +1,99 @@
+// .nav-bar {
+//   position: fixed;
+//   left: 0;
+//   bottom: 0;
+//   box-sizing: border-box;
+//   width     : 100%;
+//   height    : 150px;
+//   border-radius: 0 0 100% 100%;
+// }
+
+// .nav-bar-background {
+//   position: absolute; /* Take the parent out of the document flow */
+//   top: -230px; /* Move a little down */
+//   left: -200px;
+//   background: #61a0af;
+//   width: 150%;
+//   height: 180px;
+//   border-radius: 50%;
+// }
+
+// .nav-bar::before, .nav-bar::after {
+//   content: '';
+//   position: absolute;
+//   bottom: 0;
+//   z-index : -1;
+//   border-radius: 100%;
+// }
+
+// .nav-bar::before {
+//   /* This is the  size of the clouds left ear */
+//   width  : 125px;
+//   height : 125px;
+
+//   /* We sligthly move it to the left */
+//   left    : -80px;
+
+//   /* To make sure that the bottom of the cloud
+//      remains flat, we must make the bottom right
+//      corner of the left ear square. */
+//   border-top-right-radius: 0;
+// }
+
+// .nav-bar::after {
+//   /* This is the size of the clouds left ear */
+//   width  : 100px;
+//   height : 100px;
+
+//   /* We sligthly move it to the right */
+//   right   : -60px;
+
+//   /* To make sure that the bottom of the cloud
+//      remains flat, we must make the bottom left
+//      corner of the right ear square. */
+//   border-top-left-radius: 0;
+// }
+
+// #cloud-back {
+//   filter: url(#filter-back);
+//   box-shadow: 50px 50px 30px 100px #fff;
+// }
+
+// #cloud-mid {
+//   filter: url(#filter-mid);
+//   box-shadow: 50px 50px 70px 30px rgba(158, 168, 179, 0.5);
+// }
+
+// #cloud-front {
+//   filter: url(#filter-front);
+//   box-shadow: 50px 50px 60px 20px rgba(0, 0, 0, 0.3);
+// }
+
+// .nav-bar-items {
+//   position: relative;
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: flex-start;
+//   background: transparent;
+//   height: 100px;
+//   padding-left: 60px;
+//   padding-right: 60px;
+// }
+
+// <div className="nav-bar-background" id="cloud-back"></div>
+//         <div className="nav-bar-background" id="cloud-mid"></div>
+//         <div className="nav-bar-background" id="cloud-front"></div> 
+//         <svg width="0" height="0">
+//           <filter id="filter-back">
+//             <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="4" seed="8517"/>
+//             <feDisplacementMap in="SourceGraphic" scale="170" />
+//           </filter>
+//           <filter id="filter-mid">
+//             <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="4" seed="8517"/>
+//             <feDisplacementMap in="SourceGraphic" scale="150" />
+//           </filter>
+//           <filter id="filter-front">
+//             <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="4" seed="8517"/>
+//             <feDisplacementMap in="SourceGraphic" scale="100" />
+//           </filter>
+//         </svg>

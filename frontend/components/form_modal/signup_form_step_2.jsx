@@ -28,9 +28,13 @@ export default class SignupFormStep2 extends React.Component {
   checkFields() {
     if (this.state.age < 15) {
       this.setState({ ageError: true });
+    } else {
+      this.setState({ ageError: false });
     }
     if (this.state.gender === '') {
       this.setState({ genderError: true });
+    } else {
+      this.setState({ genderError: false });
     }
   }
 
@@ -51,7 +55,8 @@ export default class SignupFormStep2 extends React.Component {
       <div className='form-modal'>
         <h3>Create your AudioPuff account</h3>
         <div>Tell us your age</div>
-        <input type='number'
+        <input className='form-modal-input'
+          type='number'
           value={ this.state.age }
           onChange={ e => this.setState({ age: e.target.value }) } />
         { this.state.ageError ? 
@@ -61,7 +66,7 @@ export default class SignupFormStep2 extends React.Component {
           : '' 
         }
         <div>Gender</div>
-        <select defaultValue='' onChange={ this.toggleCustomGender }>
+        <select className='form-modal-input' defaultValue='' onChange={ this.toggleCustomGender }>
           <option disabled value=''>Indicate your gender</option>
           <option value="Female">Female</option>
           <option value="Male">Male</option>
@@ -69,7 +74,8 @@ export default class SignupFormStep2 extends React.Component {
           <option value="Prefer not to say">Prefer not to say</option>
         </select>
         { this.state.showCustomGender ? 
-          <input type="text"
+          <input className='form-modal-input'
+                 type="text"
                  value={ this.state.gender } 
                  placeholder='Custom gender' 
                  onChange={ e => this.setState({ gender: e.target.value }) } /> 
@@ -81,7 +87,7 @@ export default class SignupFormStep2 extends React.Component {
           </div>
           : ''
         }
-        <button onClick={ this.handleSignup }>Continue</button>
+        <button className='form-submit-button' onClick={ this.handleSignup }>Continue</button>
       </div>
     )
   }

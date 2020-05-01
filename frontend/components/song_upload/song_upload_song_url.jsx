@@ -12,20 +12,29 @@ export default class SongUploadSongUrl extends React.Component {
 
   openEdit(e) {
     e.stopPropagation();
-    this.setState({ openEdit: true });
     window.addEventListener('click', this.closeEdit);
+    this.setState({ openEdit: true });
   }
 
   closeEdit() {
-    this.setState({ openEdit: false });
     window.removeEventListener('click', this.closeEdit);
+    this.setState({ openEdit: false });
   }
 
   content() {
     if (this.state.openEdit) {
-      return <input type="text" value={ this.props.songUrl } onChange={ this.props.handleInput('songUrl') } onClick={ e => e.stopPropagation() }/>
+      return <input className='song-info-url'
+                    type="text" 
+                    value={ this.props.songUrl } 
+                    onChange={ this.props.handleInput('songUrl') } 
+                    onClick={ e => e.stopPropagation() }/>
     } else {
-      return <><strong>{ this.props.songUrl }</strong><button onClick={ this.openEdit }>Pencil</button></>
+      return (
+        <>
+          <strong className='song-url-static'>{ this.props.songUrl }</strong>
+          <button className='song-url-edit-button' onClick={ this.openEdit }>&#9998;</button>
+        </>
+      )
     }
   }
 

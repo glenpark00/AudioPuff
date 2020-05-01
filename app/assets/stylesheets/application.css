@@ -14,15 +14,18 @@
  *= require_self
  */
 
- a {
+a {
   text-decoration: none;
-  color: floralwhite;
+  color: #ccc;
+  font: 100 14px/1.5 Interstate,Lucida Grande,Arial,sans-serif;
 }
 
 body {
-  background-color: floralwhite;
+  /* background: #e5e5e5 */
+  background-color: white;
+  height: 600px;
 }
 
-.hide {
-  display: none;
+html, body, #root, #app, #root > div {
+  height: 100%
 }

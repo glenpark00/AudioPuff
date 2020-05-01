@@ -1,0 +1,96 @@
+$red-theme: #CE1141;
+$yellow-theme: #f4d06f;
+$white-theme: #e5e5e5;
+$black-theme: rgb(51, 51, 51);
+$form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background-color: $black_theme;
+}
+
+.phantom-nav-bar {
+  display: block;
+  padding: 20px;
+  width: 100%;
+  height: 50px;
+}
+
+.homepage-link {
+  line-height: 50px;
+  height: 100%;
+  font-family: Josefin Sans;
+  font-weight: 900;
+  font-size: 20px;
+  color: $white-theme;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: $red-theme;
+}
+
+.login-button {
+  color: white;
+  background-color: rgb(51, 51, 51);;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: $form-button-text-fam;
+  width: 80px;
+  height: 26px;
+  border-radius: 3px;
+  border: 1px solid #e5e5e5;
+  padding: 2px 11px 2px 10px;
+}
+
+.signup-button {
+  color: white;
+  font-family: $form-button-text-fam;
+  font-size: 14px;
+  font-weight: 100;
+  background-color: $yellow-theme;
+  width: 125px;
+  height: 26px;
+  border-radius: 3px;
+  border: 1px solid #e5e5e5;
+  padding: 2px 11px 2px 10px;
+}
+
+.profile-button {
+  color: white;
+  font-size: 17px;
+  font-family: $form-button-text-fam;
+}
+
+.site-dropdown {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+}
+
+.site-dropdown-button {
+  font-size: 30px;
+  font-weight: 600;
+  height: 40px;
+  vertical-align: middle;
+  color: white;
+}
+
+.site-dropdown-div {
+  position: fixed;
+  top: 60px;
+  display: flex;
+  flex-direction: column;
+  background-color: $black-theme;
+  width: 80px;
+  height: 100px;
+  border-radius: 2px;
+  border: 2px solid #1d1d1dc7;
+}

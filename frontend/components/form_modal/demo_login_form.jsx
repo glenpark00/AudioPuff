@@ -21,16 +21,16 @@ class DemoLoginForm extends React.Component {
         if (index === chars.length) {
           clearInterval(interval)
         }
-      }, 200)
+      }, 150)
   }
 
   componentDidMount() {
-    const submitButton = document.getElementById('demo-submit-button');
-    this.setState({ interval: setInterval(() => submitButton.click(), 2000) })
+    const submitButton = document.querySelector('.form-submit-button');
+    this.setState({ interval: setInterval(() => submitButton.click(), 1600) })
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.interval);
+    clearInterval(this.state.interval);
     this.setState({ interval: null })
   }
 
@@ -43,12 +43,13 @@ class DemoLoginForm extends React.Component {
     const { demoIdentifier, prevStep } = this.props;
     return (
       <div className='form-modal'>
-        <button onClick={ prevStep }>{ demoIdentifier }</button>
-        <input type="password"
+        <button className='form-prev-button' onClick={prevStep}>◀  { demoIdentifier }</button>
+        <input className='form-modal-input' 
+          type="password"
           value={ this.state.currentPassword }
           placeholder='Your Password'
           onChange={ e => this.setState({ currentPassword: e.target.value }) } />
-        <button id='demo-submit-button' ref={ this.simulateClick } onClick={ this.handleLogin }>Sign In</button>
+        <button className='form-submit-button' ref={ this.simulateClick } onClick={ this.handleLogin }>Sign In</button>
         <a href="">Don't know your password?</a>
       </div>
     )

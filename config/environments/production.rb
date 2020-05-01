@@ -30,7 +30,7 @@ Rails.application.configure do
   config.assets.compile = false
 
   # Connects ActiveStorage and AWS S3
-  config.active_storage.service = :amazon_prod
+  # config.active_storage.service = :amazon_prod
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 

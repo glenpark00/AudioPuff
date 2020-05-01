@@ -20,3 +20,11 @@ export const userExists = identifier => (
     success: data => data
   })
 )
+
+export const fetchUserSongs = userId => (
+  $.ajax({
+    url: `api/users/${userId}/songs`,
+    method: 'GET'
+  })
+)
+

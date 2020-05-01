@@ -4,10 +4,12 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do 
     resources :users, only: [:create, :index, :show, :update] do 
-      resources :songs, only: [:create, :show, :update, :destroy, :index]
+      resources :songs, only: [:index]
     end
-    get 'song-search', to: 'songs#song_search'
+    resources :songs, only: [:create, :update, :show, :destroy]
     get 'exists', to: 'users#user_exists?'
+    get 'songs/:id/file', to: 'songs#fetch_song_file'
+    get 'song-search', to: 'songs#song_search'
     resource :session, only: [:create, :destroy]
   end
 end

@@ -12,11 +12,14 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div className='nav-bar'>
-        <Link to="/" className='homepage-link'>AUDIOPUFF</Link>
-        { !this.props.loggedIn ? <NavBarAuthContainer /> : <NavBarProtectedContainer /> }
-        <SiteDropdownButton loggedIn={this.props.loggedIn}/>
-      </div>
+      <>
+        <div className='nav-bar'>
+          <Link to="/" className='homepage-link nav-bar-item'>A U D I O P U F F</Link>
+          {!this.props.loggedIn ? <NavBarAuthContainer /> : <NavBarProtectedContainer />}
+          <SiteDropdownButton loggedIn={this.props.loggedIn} />
+        </div>
+        <div className='phantom-nav-bar'></div>
+      </>
     )
   }
 }

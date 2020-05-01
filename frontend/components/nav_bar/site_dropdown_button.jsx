@@ -17,14 +17,12 @@ export default class SiteDropdownButton extends React.Component {
   }
 
   closeDropdown(e) {
-    e.stopPropagation();
     this.setState({ showDropdown: false });
   }
 
   render() {
     return (
-      <div className='site-dropdown'>
-        <button className='site-dropdown-button' onClick={ this.handleClick }>...</button>
+      <div className='site-dropdown-button' onClick={ this.handleClick }>...
         {this.state.showDropdown ?
           <SiteDropdown closeDropdown={ this.closeDropdown }
                         loggedIn={ this.props.loggedIn } />

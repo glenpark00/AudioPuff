@@ -1,7 +1,16 @@
-export const createSong = (song, currentUserId) => (
+export const createSong = (song) => (
   $.ajax({
-    url: `api/users/${currentUserId}/songs`,
+    url: `api/songs`,
     method: 'POST',
-    data: { song }
+    data: song,
+    contentType: false,
+    processData: false
+  })
+)
+
+export const fetchSongFileUrl = songId => (
+  $.ajax({
+    url: `api/songs/${songId}/file`,
+    method: 'GET'
   })
 )

@@ -24,14 +24,17 @@ export default class SongUploadGenre extends React.Component {
     const { genre, handleInput } = this.props;
     return (
       <div>
-        <select defaultValue='None' onChange={ this.toggleCustomGenre }>
+        <select className='song-info-genre' defaultValue='None' onChange={ this.toggleCustomGenre }>
           { this.GENRES.map((genre, idx) => (
             <option key={ idx } value={ genre }>{ genre }</option>
           )) }
         </select>
         { this.state.showCustomGenre ?
           <label>Custom Genre
-            <input type="text" value={ genre } onChange={ handleInput('genre') } />  
+            <input className='song-info-title'
+             type="text"
+             value={ genre } 
+             onChange={ handleInput('genre') } />  
           </label>
           : ''
         }

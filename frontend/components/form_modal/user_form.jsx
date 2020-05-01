@@ -29,7 +29,8 @@ export default class UserForm extends React.Component {
   render() {
     return (
       <div className='form-modal'>
-        <input type="text"
+        <input className='form-modal-input' 
+          type="text"
           value={this.state.identifier}
           placeholder='Your email address or profile URL'
           onChange={e => this.setState({ identifier: e.target.value })} />
@@ -37,9 +38,10 @@ export default class UserForm extends React.Component {
           <div>That profile url does not exist</div>
           : ''
         }
-        <button onClick={this.checkUserExists}>Continue</button>
-        <div>We may use your email and devices for updates and tips on SoundCloud's products and services, and for activities notifications. You can unsubscribe for free at any time in your notification settings.</div>
-        <button onClick={this.props.triggerDemoLogin}>Demo Login</button>
+        <button className='form-submit-button' onClick={this.checkUserExists}>Continue</button>
+        <button className='demo-login-button' onClick={this.props.triggerDemoLogin}>Demo Login</button>
+        <br/>
+        <div>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
       </div>
     )
   }

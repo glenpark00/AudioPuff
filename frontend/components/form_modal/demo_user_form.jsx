@@ -20,29 +20,31 @@ export default class DemoUserForm extends React.Component {
         if (index === chars.length) {
           clearInterval(interval)
         }
-      }, 250)
+      }, 150)
   }
 
   componentDidMount() {
-    const submitButton = document.getElementById('demo-submit-button');
-    this.setState({ interval: setInterval(() => submitButton.click(), 2000) })
+    const submitButton = document.querySelector('.form-submit-button');
+    this.setState({ interval: setInterval(() => submitButton.click(), 1600) })
   }
 
   componentWillUnmount() {
-    clearTimeout(this.state.interval);
+    clearInterval(this.state.interval);
     this.setState({ interval: null })
   }
 
   render() {
     return (
       <div className='form-modal'>
-        <input type="text"
+        <input className='form-modal-input'
+          type="text"
           value={ this.state.currentIdentifier }
           placeholder='Your email address or profile URL'
           onChange={ e => this.setState({ currentIdentifier: e.target.value }) } />
-        <button id='demo-submit-button' ref={ this.simulateClick } onClick={ this.props.nextStep }>Continue</button>
-        <div>We may use your email and devices for updates and tips on SoundCloud's products and services, and for activities notifications. You can unsubscribe for free at any time in your notification settings.</div>
-        <button>Demo Login</button>
+        <button className='form-submit-button' ref={ this.simulateClick } onClick={ this.props.nextStep }>Continue</button>
+        <button className='demo-login-button'>Demo Login</button>
+        <br/>
+        <div>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
       </div>
     )
   }

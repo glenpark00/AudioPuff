@@ -1,9 +1,9 @@
 class Api::SongsController < ApplicationController
   before_action :require_login, only: [:create, :update, :destroy]
 
-  def create 
+  def create
     @song = Song.new(song_params)
-    @song.user_id = params[:user_id].to_i
+    @song.user_id = current_user.id
     if @song.save
       render :show
     else
@@ -40,13 +40,18 @@ class Api::SongsController < ApplicationController
     render :index
   end
 
+  def fetch_song_file
+    @song = Song.find_by(id: params[:id])
+    render :file
+  end
+
   def song_search
 
   end
 
   protected
   def song_params
-    params.require(:song).permit(:title, :song_url, :genre, :description)
+    params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file)
   end
 
   def require_login

@@ -12,9 +12,9 @@
 #  updated_at  :datetime         not null
 #
 class Song < ApplicationRecord
-  validates :title, :song_url, :description, :genre, :user_id, presence: true
+  validates :title, :song_url, :genre, :user_id, presence: true
 
   has_one_attached :audio_file
 
-  has_one_attached :image
+  has_one_attached :image_file
 end

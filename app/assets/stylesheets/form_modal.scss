@@ -1,0 +1,77 @@
+.form-modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 375px;
+  margin: 30px;
+  border-radius: 5px;
+  border: thin black 2px;
+  font-size: 16px;
+}
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(231, 231, 231, 0.678);
+  z-index: 10;
+}
+
+.modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+}
+
+.form-modal-input {
+  width: 80%;
+  height: 25px;
+  padding: 5px;
+  border: 2px solid #61a0af;
+  border-radius: 4px;
+  margin: 5px;
+  font-size: 16px;
+}
+
+.form-submit-button {
+  color: white;
+  font-weight: 900;
+  background-color: #CE1141;
+  border-radius: 2px;
+  width: 80%;
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.demo-login-button {
+  color: white;
+  font-weight: 900;
+  background-color: #f4d06f;
+  border-radius: 2px;
+  width: 80%;
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.form-prev-button {
+  color: black;
+  font-weight: 900;
+  border: 1px solid grey;
+  border-radius: 5px;
+  height: 20px;
+  padding: 5px;
+  margin: 5px;
+}
+
+.form-modal > label {
+  font-size: 15px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
