@@ -26,6 +26,13 @@ body {
   height: 600px;
 }
 
-html, body, #root, #app, #root > div {
+html, body, #root, #app, #app-body, #root > div {
   height: 100%
+}
+
+#app-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }

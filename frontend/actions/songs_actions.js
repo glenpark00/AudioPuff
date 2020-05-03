@@ -1,4 +1,6 @@
 import * as SongsApiUtil from '../util/songs_api_util';
+import { receiveUserDisplay } from '../actions/users_actions';
+import { fetchUserDisplay } from '../util/users_api_util';
 
 // Action Type Constants
 export const RECEIVE_SONG = 'RECEIVE_SONG';
@@ -22,10 +24,21 @@ const receiveCurrentSong = song => ({
 })
 
 // Thunk Action Creators
-export const createSong = (song) => dispatch => (
+export const createSong = song => dispatch => (
   SongsApiUtil.createSong(song).then(
     song => dispatch(receiveSong(song)),
     errors => dispatch(receiveSongErrors(errors.responseJSON))
+  )
+)
+
+export const fetchSong = songId => dispatch => (
+  SongsApiUtil.fetchSong(songId).then(
+    song => {
+      dispatch(receiveSong(song));
+      fetchUserDisplay(song.user_id).then(
+        user => receiveUserDisplay(user)
+      )
+    }
   )
 )
 

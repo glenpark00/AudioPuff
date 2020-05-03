@@ -1,15 +1,21 @@
 import * as UsersApiUtil from '../util/users_api_util';
 
 // Action Type Constants
-export const RECEIVE_ONE_USER = 'RECEIVE_ONE_USER';
+export const RECEIVE_USER = 'RECEIVE_USER';
+export const RECEIVE_USER_DISPLAY = 'RECEIVE_USER_DISPLAY';
 export const RECEIVE_MANY_USERS = 'RECEIVE_MANY_USERS';
 export const RECEIVE_USER_SONGS = 'RECEIVE_USER_SONGS';
 
 // Regular Action Creators
-const receiveOneUser = user => ({
-  type: RECEIVE_ONE_USER,
+const receiveUser = user => ({
+  type: RECEIVE_USER,
   user
 });
+
+const receiveUserDisplay = user => ({
+  type: RECEIVE_USER_DISPLAY,
+  user
+})
 
 const receiveManyUsers = users => ({
   type: RECEIVE_MANY_USERS,
@@ -25,7 +31,7 @@ const receiveUserSongs = (userId, songs) => ({
 // Thunk Action Creators
 export const fetchUser = userId => dispatch => (
   UsersApiUtil.fetchUser(userId).then(
-    user => dispatch(receiveOneUser(user)))
+    user => dispatch(receiveUser(user)))
 );
 
 export const fetchUsers = () => dispatch => (

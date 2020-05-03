@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       resources :songs, only: [:index]
     end
     resources :songs, only: [:create, :update, :show, :destroy]
+
+    get 'user-display/:id', to: 'users#display'
     get 'exists', to: 'users#user_exists?'
     get 'songs/:id/file', to: 'songs#fetch_song_file'
     get 'song-search', to: 'songs#song_search'

@@ -4,7 +4,7 @@ import ProfileDropdownButton from './profile_dropdown_button';
 
 const NavBarProtected = ({ currentUser, fetchUser }) => (
   <>
-    <Link to='/trypro'>Try Pro</Link>
+    <Link to='/'>Try Pro</Link>
     <Link to='/upload'>Upload</Link>
     <ProfileDropdownButton currentUser={currentUser} fetchUser={fetchUser} />
   </>
