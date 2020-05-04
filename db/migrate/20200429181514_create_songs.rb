@@ -6,6 +6,7 @@ class CreateSongs < ActiveRecord::Migration[5.2]
       t.text :description, null: false, default: ''
       t.string :genre, null: false
       t.integer :user_id, null: false
+      t.integer :duration, null: false
       t.timestamps
     end
 

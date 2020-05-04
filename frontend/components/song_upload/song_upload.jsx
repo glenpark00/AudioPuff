@@ -6,20 +6,21 @@ export default class SongUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      audioFile: null
+      audioFile: null,
+      duration: null
     }
     this.setAudioFile = this.setAudioFile.bind(this);
   }
 
-  setAudioFile(audioFile) {
-    this.setState({ audioFile })
+  setAudioFile(audioFile, duration) {
+    this.setState({ audioFile, duration })
   }
 
   content() {
     if (!this.state.audioFile) {
       return <SongFileUpload setAudioFile={ this.setAudioFile } />
     } else {
-      return <SongUploadFormContainer audioFile={ this.state.audioFile } setAudioFile={ this.setAudioFile } />
+      return <SongUploadFormContainer audioFile={ this.state.audioFile } duration={ this.state.duration } setAudioFile={ this.setAudioFile } />
     }
   }
 

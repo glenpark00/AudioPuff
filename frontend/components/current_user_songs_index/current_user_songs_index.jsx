@@ -5,10 +5,15 @@ import ProfileUserHeader from '../profile_user_header/profile_user_header';
 export default class CurrentUserSongsIndex extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      songs: this.props.currentUser.songs
+    }
   }
 
   componentDidMount() {
-    this.props.fetchUserSongs(this.props.currentUser.id)
+    this.props.fetchUserSongs(this.props.currentUser.id).then(
+      () => this.setState({ songs: this.props.currentUser.songs })
+    )
   }
 
   render() {
@@ -19,8 +24,8 @@ export default class CurrentUserSongsIndex extends React.Component {
           <ProfileUserHeader user={currentUser} />
           <div>Recent</div>
           <div className='index-recent-songs'>
-            { currentUser.songs ?
-              currentUser.songs.map(songId => {
+            { this.state.songs ?
+              this.state.songs.map(songId => {
               let song = songs[songId]
               return (
                 <div className='song-index-key' key={song.id}>

@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_004704) do
     t.text "description", default: "", null: false
     t.string "genre", null: false
     t.integer "user_id", null: false
+    t.integer "duration", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "song_url"], name: "index_songs_on_user_id_and_song_url", unique: true

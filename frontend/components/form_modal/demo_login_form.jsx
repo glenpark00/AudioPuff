@@ -43,7 +43,7 @@ class DemoLoginForm extends React.Component {
     const { demoIdentifier, prevStep } = this.props;
     return (
       <div className='form-modal'>
-        <button className='form-prev-button' onClick={prevStep}>◀  { demoIdentifier }</button>
+        <div className='form-prev-button' onClick={prevStep}>◀  { demoIdentifier }</div>
         <input className='form-modal-input' 
           type="password"
           value={ this.state.currentPassword }

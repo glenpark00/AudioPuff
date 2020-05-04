@@ -12,13 +12,17 @@ export default class SongUploadSongUrl extends React.Component {
 
   openEdit(e) {
     e.stopPropagation();
-    window.addEventListener('click', this.closeEdit);
     this.setState({ openEdit: true });
+    window.addEventListener('click', this.closeEdit);
   }
 
   closeEdit() {
-    window.removeEventListener('click', this.closeEdit);
     this.setState({ openEdit: false });
+    window.removeEventListener('click', this.closeEdit);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.closeEdit);
   }
 
   content() {

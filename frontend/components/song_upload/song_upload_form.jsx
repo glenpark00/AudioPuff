@@ -8,6 +8,7 @@ export default class SongUploadForm extends React.Component {
     super(props);
     this.state = {
       audioFile: this.props.audioFile,
+      duration: this.props.duration,
       imageFile: null,
       title: this.props.audioFile.name.split('.')[0],
       songUrl: this.props.audioFile.name.split('.')[0],
@@ -48,14 +49,15 @@ export default class SongUploadForm extends React.Component {
     if (this.state.title != '' && this.state.imageFile != null) {
       const formData = this.prepareForm();
       this.props.createSong(formData);
-      this.props.history.push('/');
+      this.props.history.push(`/${this.props.currentUser.profileUrl}`);
     }
   }
 
   prepareForm() {
     const formData = new FormData();
-    const { audioFile, imageFile, title, songUrl, genre, description } = this.state;
+    const { audioFile, duration, imageFile, title, songUrl, genre, description } = this.state;
     formData.append('song[audioFile]', audioFile);
+    formData.append('song[duration]', duration)
     formData.append('song[imageFile]', imageFile);
     formData.append('song[title]', title);
     formData.append('song[title]', title);

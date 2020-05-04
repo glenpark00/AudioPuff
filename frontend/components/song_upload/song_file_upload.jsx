@@ -8,12 +8,14 @@ export default class SongFileUpload extends React.Component {
     this.exitDrag = this.exitDrag.bind(this);
     this.handleButtonUpload = this.handleButtonUpload.bind(this);
     this.handleUploadClick = this.handleUploadClick.bind(this);
+    this.handleAudioFile = this.handleAudioFile.bind(this);
   }
 
   drop(e) {
     e.preventDefault();
-    if (e.dataTransfer.files && e.dataTransfer.files[0] && e.dataTransfer.files[0].size < 1000000) {
-      this.props.setAudioFile(e.dataTransfer.files[0]);
+    const files = e.dataTransfer.files
+    if (files && files[0] && files[0].size < 1500000) {
+      this.handleAudioFile(files[0]);
     } else {
       alert('Invalid file type or file size too large')
     }
@@ -33,9 +35,22 @@ export default class SongFileUpload extends React.Component {
     e.preventDefault();
   }
 
+  handleAudioFile(file) {
+    const hiddenAudio = document.createElement('audio');
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      hiddenAudio.src = fileReader.result
+    }
+    fileReader.readAsDataURL(file);
+    hiddenAudio.addEventListener('loadedmetadata', () => {
+      this.props.setAudioFile(file, Math.trunc(hiddenAudio.duration));
+    })
+  }
+
   handleButtonUpload(e) {
-    if (e.target.files && e.target.files[0] && e.target.files[0].size < 1000000) {
-      this.props.setAudioFile(e.target.files[0]);
+   const files = e.target.files
+    if (files && files[0] && files[0].size < 1500000) {
+      this.handleAudioFile(files[0]);
     } else {
       alert('Invalid file type or file size too large')
     }
@@ -55,6 +70,7 @@ export default class SongFileUpload extends React.Component {
           <div className='upload-area-text'>Drag and drop your tracks here</div>
           <br/>
           <input className= 'hidden-upload' type="file" onChange={ this.handleButtonUpload } />
+          <audio className='hidden-audio'></audio>
           <button className='upload-button' onClick={ this.handleUploadClick }>or choose files to upload</button>
           <div className='file-upload-overlay'
                onDragOver={ this.allowDrop }

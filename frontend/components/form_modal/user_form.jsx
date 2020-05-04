@@ -29,19 +29,20 @@ export default class UserForm extends React.Component {
   render() {
     return (
       <div className='form-modal'>
+        <div className='form-header'>Sign in or create an account</div>
         <input className='form-modal-input' 
           type="text"
           value={this.state.identifier}
           placeholder='Your email address or profile URL'
           onChange={e => this.setState({ identifier: e.target.value })} />
         { this.state.error ? 
-          <div>That profile url does not exist</div>
+          <div className='form-error-text'>That profile url does not exist</div>
           : ''
         }
-        <button className='form-submit-button' onClick={this.checkUserExists}>Continue</button>
+        <button className='identifier-submit-button' onClick={this.checkUserExists}>Continue</button>
         <button className='demo-login-button' onClick={this.props.triggerDemoLogin}>Demo Login</button>
         <br/>
-        <div>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
+        <div className='modal-text'>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
       </div>
     )
   }

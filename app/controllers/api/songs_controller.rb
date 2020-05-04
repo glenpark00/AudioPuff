@@ -51,7 +51,7 @@ class Api::SongsController < ApplicationController
 
   protected
   def song_params
-    params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file)
+    params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file, :duration)
   end
 
   def require_login

@@ -24,7 +24,7 @@ export default class DemoUserForm extends React.Component {
   }
 
   componentDidMount() {
-    const submitButton = document.querySelector('.form-submit-button');
+    const submitButton = document.querySelector('.identifier-submit-button');
     this.setState({ interval: setInterval(() => submitButton.click(), 1600) })
   }
 
@@ -36,15 +36,16 @@ export default class DemoUserForm extends React.Component {
   render() {
     return (
       <div className='form-modal'>
+        <div className='form-header'>Sign in or create an account</div>
         <input className='form-modal-input'
           type="text"
           value={ this.state.currentIdentifier }
           placeholder='Your email address or profile URL'
           onChange={ e => this.setState({ currentIdentifier: e.target.value }) } />
-        <button className='form-submit-button' ref={ this.simulateClick } onClick={ this.props.nextStep }>Continue</button>
+        <button className='identifier-submit-button' ref={ this.simulateClick } onClick={ this.props.nextStep }>Continue</button>
         <button className='demo-login-button'>Demo Login</button>
         <br/>
-        <div>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
+        <div className='modal-text'>We may use your email and devices for absolutely nothing. You can unsubscribe for free at any time in your notification settings.</div>
       </div>
     )
   }

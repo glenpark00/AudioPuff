@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const NavBarAuth = ({ enableModalDisplay }) => (
   <>
@@ -9,7 +8,6 @@ const NavBarAuth = ({ enableModalDisplay }) => (
     <button className='signup-button' onClick={ enableModalDisplay }>
       Create account
     </button>
-    <Link to='/upload'>Upload</Link>
   </>
 )
   

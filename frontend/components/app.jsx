@@ -2,6 +2,7 @@ import React from 'react';
 import NavBarContainer from './nav_bar/nav_bar_container';
 import UserFormModalContainer from './form_modal/user_form_modal_container';
 import { Route, Switch } from 'react-router-dom';
+import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 import GlobalAudioPlayerContainer from './global_audio_player/global_audio_player_container';
 
 // Placeholder
@@ -16,9 +17,9 @@ const App = () => (
 		<NavBarContainer />
 		<div id='app-body'>
 			<Switch>
-				<Route exact path='/logout' component={LogoutPage} />
+				<AuthRoute exact path='/logout' component={LogoutPage} />
 				<Route exact path='/discover' component={Discover} />
-				<Route exact path='/upload' component={SongUpload} />
+				<ProtectedRoute exact path='/upload' component={SongUpload} />
 				<Route path='/:profile_url/:song_url' component={SongShowContainer} />
 				<Route path='/:profile_url' component={CurrentUserSongsIndexContainer} />
 			</Switch>

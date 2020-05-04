@@ -53,20 +53,20 @@ export default class SignupFormStep2 extends React.Component {
   render() {
     return (
       <div className='form-modal'>
-        <h3>Create your AudioPuff account</h3>
-        <div>Tell us your age</div>
+        <h3 className='form-header'>Create your AudioPuff account</h3>
+        <div className='modal-subheader'>Tell us your age</div>
         <input className='form-modal-input'
           type='number'
           value={ this.state.age }
           onChange={ e => this.setState({ age: e.target.value }) } />
         { this.state.ageError ? 
-          <div>
+          <div className='form-error-text'>
             Sorry, but you don't meet AudioPuff's minimum age requirements.
           </div> 
           : '' 
         }
-        <div>Gender</div>
-        <select className='form-modal-input' defaultValue='' onChange={ this.toggleCustomGender }>
+        <div className='modal-subheader'>Gender</div>
+        <select className='form-modal-dropdown' defaultValue='' onChange={ this.toggleCustomGender }>
           <option disabled value=''>Indicate your gender</option>
           <option value="Female">Female</option>
           <option value="Male">Male</option>
@@ -82,12 +82,12 @@ export default class SignupFormStep2 extends React.Component {
           : '' 
         }
         { this.state.genderError ?
-          <div>
+          <div className='form-error-text'>
             Please indicate your gender.
           </div>
           : ''
         }
-        <button className='form-submit-button' onClick={ this.handleSignup }>Continue</button>
+        <button className='form-submit-button ' onClick={ this.handleSignup }>Continue</button>
       </div>
     )
   }
