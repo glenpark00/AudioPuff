@@ -49,7 +49,6 @@ export default class GlobalAudioPlayer extends React.Component {
   content() {
     const { currentSong, displayPlayer, users } = this.props;
     const user = users[currentSong.userId];
-    debugger
     if (displayPlayer && currentSong && user) {
       return (
         <>
