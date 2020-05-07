@@ -1,11 +1,10 @@
-# Because SoundCloud's way of showing the user's profile page includes taking their profile_url and having that be the "wildcard" instead of users/:id; find out later on how to change the show and index methods to use profile_url as the wildcard (probably still have to somehow put it in params)
-
 class Api::UsersController < ApplicationController
   def create
     @user = User.new(create_user_params)
     profile_id = ProfileId.create
     @user.profile_url = 'user' + profile_id[:id].to_s
     @user.display_name = 'User' + profile_id[:id].to_s
+    @user.profile_image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_profile_image.jpg')), filename: 'default_profile_image.jpg')
     if @user.save
       login!(@user)
       render :display
@@ -63,6 +62,6 @@ class Api::UsersController < ApplicationController
 
   def update_user_params
     params.require(:user)
-      .permit(:display_name, :profile_url, :first_name, :last_name, :city, :country, :bio)
+      .permit(:display_name, :profile_url, :first_name, :last_name, :city, :country, :bio, :profile_image)
   end
 end

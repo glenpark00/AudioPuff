@@ -6,11 +6,14 @@ Rails.application.routes.draw do
     resources :users, only: [:create, :index, :show, :update] do 
       resources :songs, only: [:index]
     end
-    resources :songs, only: [:create, :update, :show, :destroy]
+    resources :songs, only: [:create, :update, :destroy]
 
     get 'user-display/:id', to: 'users#display'
     get 'exists', to: 'users#user_exists?'
+
+    get ':profile_url/:song_url', to: 'songs#show'
     get 'songs/:id/file', to: 'songs#fetch_song_file'
+    get 'songs', to: 'songs#all_songs'
     get 'song-search', to: 'songs#song_search'
     resource :session, only: [:create, :destroy]
   end

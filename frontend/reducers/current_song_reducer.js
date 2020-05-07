@@ -5,7 +5,7 @@ const currentSongReducer = (state = {}, action) => {
   const newState = Object.assign({}, state);
   switch (action.type) {
     case RECEIVE_CURRENT_SONG:
-      return { playing: true, id: action.song.id, fileUrl: action.song.fileUrl, currentTime: 0 };
+      return { playing: true, id: action.song.id, fileUrl: action.song.fileUrl, imageUrl: action.song.imageUrl, userId: action.song.userId, duration: action.song.duration, currentTime: 0 };
     case CHANGE_CURRENT_TIME:
       newState.currentTime = action.time;
       return newState;

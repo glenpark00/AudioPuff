@@ -5,6 +5,16 @@ export const fetchUser = userId => (
   })
 )
 
+export const updateUser = user => (
+  $.ajax({
+    url: `api/users/${user.get('user[id]')}`,
+    method: 'PATCH',
+    data: user,
+    contentType: false,
+    processData: false
+  })
+)
+
 export const fetchUserDisplay = userId => (
   $.ajax({
     url: `api/user-display/${userId}`,
@@ -23,7 +33,7 @@ export const userExists = identifier => (
   $.ajax({
     url: 'api/exists',
     method: 'GET',
-    data: { identifier: identifier },
+    data: { identifier },
     success: data => data
   })
 )

@@ -1,4 +1,6 @@
 import React from 'react';
+import { debounce } from 'throttle-debounce';
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 export default class GlobalAudioPlayer extends React.Component {
   constructor(props) {
@@ -6,15 +8,19 @@ export default class GlobalAudioPlayer extends React.Component {
     this.state = {
 
     }
-    this.handlePause = this.handlePause.bind(this);
-    this.handlePlay = this.handlePlay.bind(this);
+    this.handleControls = this.handleControls.bind(this);
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
   }
 
-  handlePlay() {
+  handleControls() {
     const player = document.querySelector('.global-audio-player')
-    player.play();
-    this.props.playAudio();
+    if (this.props.currentSong.playing) {
+      player.pause();
+      this.props.pauseAudio();
+    } else {
+      player.play();
+      this.props.playAudio();
+    }
   }
 
   handlePause() {
@@ -24,17 +30,44 @@ export default class GlobalAudioPlayer extends React.Component {
   }
 
   handleTimeUpdate(e) {
-    this.props.changeCurrentTime(Math.trunc(e.target.currentTime));
+    const globalAudioTime = e.target.currentTime
+    return debounce(800, true, () => this.props.changeCurrentTime(Math.trunc(globalAudioTime)));
+  }
+
+  buttonContent() {
+    const player = document.querySelector('.global-audio-player');
+    if (!player) {
+      return null;
+    }
+    if (player.paused) {
+      return <FaPlay />
+    } else {
+      return <FaPause />
+    }
   }
 
   content() {
-    if (this.props.displayPlayer && this.props.currentSong) {
+    const { currentSong, displayPlayer, users } = this.props;
+    const user = users[currentSong.userId];
+    debugger
+    if (displayPlayer && currentSong && user) {
       return (
         <>
           <div className='global-audio-player-div'>
-            <button onClick={ this.handlePlay }>Play</button>
-            <button onClick={ this.handlePause }>Pause</button>
-            <audio className='global-audio-player' onTimeUpdate={ this.handleTimeUpdate } controls autoPlay src={ this.props.currentSong.fileUrl }></audio>
+            <button onClick={ this.handleControls }>{this.buttonContent()}</button>
+            <div className='progress-bar'>
+              <div>{currentSong.currentTime}</div>
+              <div className='progress-line'></div>
+              <div>{currentSong.duration}</div>
+            </div>
+            <div className='player-song-info-container'>
+              <img className='player-song-image' src={currentSong.imageUrl} />
+              <div className='player-song-info'>
+                <div>{user.displayName}</div>
+                <div>{currentSong.title}</div>
+              </div>
+            </div>
+            <audio hidden className='global-audio-player' onTimeUpdate={ e => this.handleTimeUpdate(e)() } controls autoPlay src={ currentSong.fileUrl }></audio>
           </div>
           <div className='phantom-audio-player'></div>
         </>

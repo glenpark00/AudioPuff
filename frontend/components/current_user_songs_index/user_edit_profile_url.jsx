@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SongUploadSongUrl extends React.Component {
+export default class UserEditProfileUrl extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,16 +27,16 @@ export default class SongUploadSongUrl extends React.Component {
 
   content() {
     if (this.state.openEdit) {
-      return <input className='song-info-url'
-                    type="text" 
-                    value={ this.props.songUrl } 
-                    onChange={ this.props.handleInput('songUrl') } 
-                    onClick={ e => e.stopPropagation() }/>
+      return <input className='user-profile-url'
+        type="text"
+        value={this.props.profileUrl}
+        onChange={this.props.handleInput('profileUrl')}
+        onClick={e => e.stopPropagation()} />
     } else {
       return (
         <>
-          <div className='song-url-dynamic'>{ this.props.songUrl }</div>
-          <button className='song-url-edit-button' onClick={ this.openEdit }>&#9998;</button>
+          <div className='profile-url-dynamic'>{this.props.profileUrl}</div>
+          <button className='profile-url-edit-button' onClick={this.openEdit}>&#9998;</button>
         </>
       )
     }

@@ -1,0 +1,24 @@
+.song-display {
+  position: relative;
+  width: 150px;
+  height: 200px;
+  margin: 15px;
+}
+
+.song-display-image {
+  width: 150px;
+  height: 150px;
+}
+
+.song-display-play {
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  color: white;
+  text-align: center;
+  line-height: 40px;
+  background-color: #CE1141;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}

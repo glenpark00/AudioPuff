@@ -26,8 +26,6 @@ class User < ApplicationRecord
 
   has_one_attached :profile_image
 
-  has_one_attached :header_image
-
   has_many :songs
 
   before_validation :ensure_session_token

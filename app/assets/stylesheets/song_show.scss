@@ -1,0 +1,130 @@
+.song-show-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 80%;
+}
+
+.song-show-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  height: 360px;
+  background-image: linear-gradient(315deg, rgb(200, 173, 189) 0%, rgb(101, 93, 86) 100%);
+}
+
+.song-show-play {
+  color: white;
+  text-align: center;
+  line-height: 63px;
+  background-color: #CE1141;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  flex: 0 0 55px;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 30px;
+}
+
+.song-show-info-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px;
+}
+
+.song-show-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+}
+
+.song-show-display-name, .song-show-title {
+  font-weight: 100;
+  background-color: rgba(0,0,0,.8);
+  padding: 2px 7px 3px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.song-show-display-name {
+  color: #ccc;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.song-show-title-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.song-show-title {
+  color: #fff;
+  font-size: 24px;
+  line-height: 37px;
+  max-width: 100%;
+}
+
+.song-show-time-elapsed {
+  color: #fff;
+  font-size: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
+  text-align: right;
+  vertical-align: bottom;
+  padding: 4px 0 3px;
+}
+
+
+.song-show-upper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 180%;
+}
+
+.song-show-info-top-line {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.song-show-image {
+  width: 310px;
+  height: 310px;
+  flex: 0 0 310px;
+  margin-left: 30px;
+}
+
+.user-song-item-buttons {
+  display: flex;
+  margin-top: 5px;
+}
+
+.user-song-item-button {
+  padding: 3px;
+  margin: 5px;
+  font-size: 15px;
+  border: 1px solid lightgrey;
+}
+
+
+
+
+
+.delete-song-modal {
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-song-separator {
+  width: 550px;
+  height: 5px;
+  background-color: lightgrey;
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class SongUploadImage extends React.Component {
+export default class UserEditImageUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,14 +27,14 @@ export default class SongUploadImage extends React.Component {
 
   render() {
     return (
-      <div className='song-upload-image-container'>
-        { this.state.imageUrl ?
-          <img className='song-upload-image-preview' src={this.state.imageUrl} />
-          : <div className='song-upload-image-default'></div>
+      <div className='profile-image-container'>
+        {this.state.imageUrl ?
+          <img className='profile-image-preview' src={this.state.imageUrl} />
+          : <div className='profile-image-default'></div>
         }
-        <input className='hidden-upload' type="file" onChange={ this.handleImageInput }/>
-        <div className='song-image-upload-button' onClick={ this.handleUploadClick } >📷 Upload Image</div>
-        { this.props.imageError ? <div>You must provide an image</div> : '' }
+        <input className='hidden-upload' type="file" onChange={this.handleImageInput} />
+        <div className='profile-image-upload-button' onClick={this.handleUploadClick} >📷 Upload Image</div>
+        {this.props.imageError ? <div>You must provide an image</div> : ''}
       </div>
     )
   }

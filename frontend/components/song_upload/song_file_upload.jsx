@@ -19,6 +19,7 @@ export default class SongFileUpload extends React.Component {
     } else {
       alert('Invalid file type or file size too large')
     }
+    this.exitDrag(e);
   }
 
   enterDrag(e) {

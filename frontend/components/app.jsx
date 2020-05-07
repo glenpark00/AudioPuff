@@ -6,7 +6,7 @@ import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 import GlobalAudioPlayerContainer from './global_audio_player/global_audio_player_container';
 
 // Placeholder
-import Discover from './discover';
+import DiscoverContainer from './discover/discover_container';
 import SongUpload from './song_upload/song_upload';
 import CurrentUserSongsIndexContainer from './current_user_songs_index/current_user_songs_index_container';
 import SongShowContainer from './song_show/song_show_container';
@@ -18,10 +18,10 @@ const App = () => (
 		<div id='app-body'>
 			<Switch>
 				<AuthRoute exact path='/logout' component={LogoutPage} />
-				<Route exact path='/discover' component={Discover} />
+				<Route exact path='/discover' component={DiscoverContainer} />
 				<ProtectedRoute exact path='/upload' component={SongUpload} />
-				<Route path='/:profile_url/:song_url' component={SongShowContainer} />
-				<Route path='/:profile_url' component={CurrentUserSongsIndexContainer} />
+				<Route path='/:profileUrl/:songUrl' component={SongShowContainer} />
+				<Route path='/:profileUrl' component={CurrentUserSongsIndexContainer} />
 			</Switch>
 		</div>
 		<UserFormModalContainer />

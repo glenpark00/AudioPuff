@@ -40,8 +40,23 @@ export const fetchUsers = () => dispatch => (
   )
 );
 
+export const updateUser = user => dispatch => (
+  UsersApiUtil.updateUser(user).then(
+    user => dispatch(receiveUser(user))
+  )
+)
+
 export const fetchUserSongs = userId => dispatch => (
   UsersApiUtil.fetchUserSongs(userId).then(
     songs => dispatch(receiveUserSongs(userId, songs))
+  )
+)
+
+export const fetchUserDisplay = userId => dispatch => (
+  UsersApiUtil.fetchUserDisplay(userId).then(
+    user => {
+      dispatch(receiveUserDisplay(user));
+      return user;
+    }
   )
 )

@@ -48,8 +48,9 @@ export default class SongUploadForm extends React.Component {
     this.checkFields();
     if (this.state.title != '' && this.state.imageFile != null) {
       const formData = this.prepareForm();
-      this.props.createSong(formData);
-      this.props.history.push(`/${this.props.currentUser.profileUrl}`);
+      this.props.createSong(formData).then(
+        () => this.props.history.push(`/${this.props.currentUser.profileUrl}/${this.state.songUrl}`)
+      );
     }
   }
 
@@ -87,24 +88,21 @@ export default class SongUploadForm extends React.Component {
           <div className='song-create-form'>
             <SongUploadImage setImageFile={ this.setImageFile } imageError={ this.state.imageError } />
             <div className='song-info-form'>
-              <label>Title
-                <input className='song-info-title' type="text" value={title} onChange={this.handleInput('title')} />
-                { this.state.titleError ? <div>You must provide a title</div> : '' }
-              </label>
+              <div className='song-form-text'>Title</div>
+              <input className='song-form-input' type="text" value={title} onChange={this.handleInput('title')} />
+              { this.state.titleError ? <div>You must provide a title</div> : '' }
               <div className='song-url-field'>
                 <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.currentUser.profileUrl}/</span>
                 <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} />
               </div>
-              <label>Genre
+              <div className='song-form-text'>Genre</div>
                 <SongUploadGenre genre={genre} handleInput={this.handleInput} />
-              </label>
-              <label>Description
+              <div className='song-form-text'>Description</div>
               <textarea className='song-input-textarea'
                         value={description} 
                         onChange={this.handleInput('description')} 
                         cols="30" rows="10"
                         placeholder='Describe your track'></textarea>
-              </label>
             </div>
           </div>
           <div className='create-song-buttons'>

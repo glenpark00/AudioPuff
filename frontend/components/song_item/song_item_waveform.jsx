@@ -25,9 +25,11 @@ export default class SongItemWaveform extends React.Component {
     const { song } = this.props;
     return (
       <div className='song-item-waveform'>
-        <div>{ this.currentTimeContent() }</div>
-        <div></div>
-        <div>{ this.convertSecsToMins(song.duration) }</div>
+        <div className='waveform-audio'></div>
+        <div className='waveform-time'>
+          <div className='waveform-time-text'>{ this.currentTimeContent() }</div>
+          <div className='waveform-time-text'>{ this.convertSecsToMins(song.duration) }</div>
+        </div>
       </div>
     )
   }

@@ -4,8 +4,8 @@ import GlobalAudioPlayer from './global_audio_player';
 
 const mapStateToProps = state => ({
   currentSong: state.currentSong,
-  songs: state.entities.songs,
-  displayPlayer: state.ui.displayPlayer
+  displayPlayer: state.ui.displayPlayer,
+  users: state.entities.users
 })
 
 const mapDispatchToProps = dispatch => ({

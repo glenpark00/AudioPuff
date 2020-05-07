@@ -12,7 +12,8 @@ class Api::SongsController < ApplicationController
   end
 
   def show
-    @song = Song.find_by(id: params[:id])
+    user = User.find_by(profile_url: params[:profile_url])
+    @song = Song.find_by(user_id: user.id, song_url: params[:song_url])
     if @song
       render :show
     else
@@ -43,6 +44,11 @@ class Api::SongsController < ApplicationController
   def fetch_song_file
     @song = Song.find_by(id: params[:id])
     render :file
+  end
+
+  def all_songs
+    @songs = Song.all
+    render :index
   end
 
   def song_search
