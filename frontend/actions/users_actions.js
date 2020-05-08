@@ -60,3 +60,12 @@ export const fetchUserDisplay = userId => dispatch => (
     }
   )
 )
+
+export const fetchUserByProfileUrl = profileUrl => dispatch => (
+  UsersApiUtil.fetchUserByProfileUrl(profileUrl).then(
+    user => {
+      dispatch(receiveUser(user));
+      return user;
+    }
+  )
+)

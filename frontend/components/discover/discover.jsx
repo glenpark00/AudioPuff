@@ -16,11 +16,17 @@ export default class Discover extends React.Component {
     return (
       <div className='discover-page-background'>
         <div className='discover-page'>
-          {songs.map(song =>
-            <div key={song.id}>
-              <SongDisplayItemContainer song={song} user={users[song.userId]} />
-            </div>
-          )}
+          <div className='discover-heading-container'>
+            <h2 className='discover-header'>New Music Now</h2>
+            <div className='discover-subheader'>The latest hits, updated all the time</div>
+          </div>
+          <div className='new-songs-index'>
+            {songs.map(song =>
+              <div key={song.id}>
+                <SongDisplayItemContainer song={song} user={users[song.userId]} />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     )

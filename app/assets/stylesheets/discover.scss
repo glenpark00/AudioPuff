@@ -8,6 +8,35 @@
 
 .discover-page {
   display: flex;
+  flex-direction: column;
   width: 80%;
   background-color: white;
+}
+
+.discover-heading-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.discover-header {
+  font-size: 23px;
+  font-weight: 100;
+  margin-top: 25px;
+  margin-left: 20px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.discover-subheader {
+  margin: 10px 0 20px 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5;
+  font-weight: 100;
+  color: #999;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-size: 14px;
+}
+
+.new-songs-index {
+  display: flex;
+  flex-wrap: wrap;
 }

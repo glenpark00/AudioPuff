@@ -8,7 +8,7 @@ import GlobalAudioPlayerContainer from './global_audio_player/global_audio_playe
 // Placeholder
 import DiscoverContainer from './discover/discover_container';
 import SongUpload from './song_upload/song_upload';
-import CurrentUserSongsIndexContainer from './current_user_songs_index/current_user_songs_index_container';
+import UserProfilePageContainer from './user_profile_page/user_profile_page_container'
 import SongShowContainer from './song_show/song_show_container';
 import LogoutPage from './logout_page';
 
@@ -21,7 +21,7 @@ const App = () => (
 				<Route exact path='/discover' component={DiscoverContainer} />
 				<ProtectedRoute exact path='/upload' component={SongUpload} />
 				<Route path='/:profileUrl/:songUrl' component={SongShowContainer} />
-				<Route path='/:profileUrl' component={CurrentUserSongsIndexContainer} />
+				<Route path='/:profileUrl' component={UserProfilePageContainer} />
 			</Switch>
 		</div>
 		<UserFormModalContainer />

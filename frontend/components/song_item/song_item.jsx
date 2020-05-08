@@ -9,6 +9,7 @@ export default class SongShow extends React.Component {
     this.handlePlayButton = this.handlePlayButton.bind(this);
     this.playButtonContent = this.playButtonContent.bind(this);
     this.openSongShow = this.openSongShow.bind(this);
+    this.linkToProfile = this.linkToProfile.bind(this);
   }
 
   handlePlayButton() {
@@ -42,6 +43,10 @@ export default class SongShow extends React.Component {
     this.props.history.push(`/${this.props.user.profileUrl}/${this.props.song.songUrl}`);
   }
 
+  linkToProfile() {
+    this.props.history.push(`/${this.props.user.profileUrl}`);
+  }
+
   render() {
     const { song, user, currentSong, displayPlayer } = this.props;
     return (
@@ -51,7 +56,7 @@ export default class SongShow extends React.Component {
           <div className='song-item-play' onClick={ this.handlePlayButton }>{ this.playButtonContent() }</div>
           <div className='song-item-info'>
             <div className='song-item-info-top-line'>
-              <div className='song-item-display-name'>{ user.displayName }</div>
+              <div className='song-item-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
               <div className='song-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
             </div>
             <div className='song-item-title'>{ song.title }</div>

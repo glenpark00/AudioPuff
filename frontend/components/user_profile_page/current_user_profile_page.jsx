@@ -4,7 +4,7 @@ import ProfileUserHeader from '../profile_user_header/profile_user_header';
 import UserEditFormModal from './user_edit_form_modal';
 import { FaPencilAlt } from 'react-icons/fa';
 
-export default class CurrentUserSongsIndex extends React.Component {
+export default class CurrentUserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

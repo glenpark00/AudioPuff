@@ -49,6 +49,11 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def get_by_profile_url
+    @user = User.find_by(profile_url: params[:profile_url])
+    render :show
+  end
+
   def display
     @user = User.find_by(id: params[:id])
     if @user
@@ -60,7 +65,7 @@ class Api::UsersController < ApplicationController
 
   protected
   def create_user_params
-    params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name, :profile_image)
+    params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name)
   end
 
   def update_user_params

@@ -45,3 +45,9 @@ export const fetchUserSongs = userId => (
   })
 )
 
+export const fetchUserByProfileUrl = profileUrl => (
+  $.ajax({
+    url: `api/users/profile/${profileUrl}`,
+    method: 'GET'
+  })
+)
