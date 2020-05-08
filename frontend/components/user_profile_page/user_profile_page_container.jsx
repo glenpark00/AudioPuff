@@ -3,7 +3,7 @@ import UserProfilePage from './user_profile_page';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
-  currentUserProfileUrl: state.entities.users[state.session.currentUserId].profileUrl
+  currentUser: state.entities.users[state.session.currentUserId]
 })
 
 export default withRouter(connect(mapStateToProps)(UserProfilePage));
