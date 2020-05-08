@@ -46,10 +46,9 @@
   position: relative;
 }
 
-.profile-image-default {
+.profile-image-original {
   width: 240px;
   height: 240px;
-  background-image: linear-gradient(#333, #CE1141);
 }
 
 .profile-image-preview {
@@ -155,10 +154,6 @@
   background: #fff;
   margin-bottom: 20px;
   width: 100%;
-}
-
-.user-edit-first-name, .user-edit-last-name {
-
 }
 
 .profile-url-edit-button {

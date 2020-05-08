@@ -36,15 +36,19 @@ export default class SongDisplayItem extends React.Component {
 
   render() {
     const { song, user } = this.props;
-    return (
-      <div className='song-display'>
-        <img className='song-display-image' onClick={this.openSongShow} src={song.imageUrl} />
-        <div className='song-display-play' onClick={this.handlePlayButton}>{this.playButtonContent()}</div>
-        <div className='song-display-info'>
-          <div className='song-displau-title'>{song.title}</div>
-          <div className='song-display-user-name'>{user.displayName}</div>
+    if (song && user) {
+      return (
+        <div className='song-display'>
+          <img className='song-display-image' onClick={this.openSongShow} src={song.imageUrl} />
+          <div className='song-display-play' onClick={this.handlePlayButton}>{this.playButtonContent()}</div>
+          <div className='song-display-info'>
+            <div className='song-display-title'>{song.title}</div>
+            <div className='song-display-user-name'>{user.displayName}</div>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return null;
+    }
   }
 }

@@ -14,8 +14,7 @@ export default class SongUploadForm extends React.Component {
       songUrl: this.props.audioFile.name.split('.')[0],
       genre: 'None',
       description: '',
-      titleError: false,
-      imageError: false
+      titleError: false
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -37,16 +36,16 @@ export default class SongUploadForm extends React.Component {
     } else {
       this.setState({ titleError: false })
     }
-    if (this.state.imageFile === null) {
-      this.setState({ imageError: true })
+    if (this.state.songUrl === '') {
+      this.setState({ urlError: true })
     } else {
-      this.setState({ imageError: false })
+      this.setState({ urlError: false })
     }
   }
 
   handleCreateSong() {
     this.checkFields();
-    if (this.state.title != '' && this.state.imageFile != null) {
+    if (this.state.title != '' && this.state.songUrl != '') {
       const formData = this.prepareForm();
       this.props.createSong(formData).then(
         () => this.props.history.push(`/${this.props.currentUser.profileUrl}/${this.state.songUrl}`)
@@ -57,9 +56,9 @@ export default class SongUploadForm extends React.Component {
   prepareForm() {
     const formData = new FormData();
     const { audioFile, duration, imageFile, title, songUrl, genre, description } = this.state;
+    if (imageFile) formData.append('song[imageFile]', imageFile);
     formData.append('song[audioFile]', audioFile);
     formData.append('song[duration]', duration)
-    formData.append('song[imageFile]', imageFile);
     formData.append('song[title]', title);
     formData.append('song[title]', title);
     formData.append('song[songUrl]', songUrl);
@@ -86,14 +85,14 @@ export default class SongUploadForm extends React.Component {
         <div className='song-form'>
           <h2>Basic Info</h2>
           <div className='song-create-form'>
-            <SongUploadImage setImageFile={ this.setImageFile } imageError={ this.state.imageError } />
+            <SongUploadImage setImageFile={ this.setImageFile } />
             <div className='song-info-form'>
               <div className='song-form-text'>Title</div>
               <input className='song-form-input' type="text" value={title} onChange={this.handleInput('title')} />
               { this.state.titleError ? <div>You must provide a title</div> : '' }
               <div className='song-url-field'>
                 <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.currentUser.profileUrl}/</span>
-                <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} />
+                <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} urlError={this.state.urlError} />
               </div>
               <div className='song-form-text'>Genre</div>
                 <SongUploadGenre genre={genre} handleInput={this.handleInput} />

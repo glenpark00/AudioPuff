@@ -28,12 +28,12 @@ export default class SongUploadImage extends React.Component {
   render() {
     return (
       <div className='song-upload-image-container'>
-        { this.state.imageUrl ?
+        {this.state.imageUrl ?
           <img className='song-upload-image-preview' src={this.state.imageUrl} />
-          : <div className='song-upload-image-default'></div>
+          : <img className='song-original-image' src={this.props.originalImageUrl} />
         }
-        <input className='hidden-upload' type="file" onChange={ this.handleImageInput }/>
-        <div className='song-image-upload-button' onClick={ this.handleUploadClick } >📷 Upload Image</div>
+        <input className='hidden-upload' type="file" onChange={this.handleImageInput} />
+        <div className='song-image-upload-button-edit' onClick={this.handleUploadClick} >📷 Upload Image</div>
       </div>
     )
   }

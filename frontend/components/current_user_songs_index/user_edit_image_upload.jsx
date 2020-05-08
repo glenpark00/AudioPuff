@@ -30,7 +30,7 @@ export default class UserEditImageUpload extends React.Component {
       <div className='profile-image-container'>
         {this.state.imageUrl ?
           <img className='profile-image-preview' src={this.state.imageUrl} />
-          : <div className='profile-image-default'></div>
+          : <img className='profile-image-original' src={this.props.imageUrl}/>
         }
         <input className='hidden-upload' type="file" onChange={this.handleImageInput} />
         <div className='profile-image-upload-button' onClick={this.handleUploadClick} >📷 Upload Image</div>

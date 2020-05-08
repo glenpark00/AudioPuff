@@ -10,7 +10,7 @@ export const createSong = (song) => (
 
 export const updateSong = song => (
   $.ajax({
-    url: `api/songs/${song.id}`,
+    url: `api/songs/${song.get('song[id]')}`,
     method: 'PATCH',
     data: song,
     contentType: false,

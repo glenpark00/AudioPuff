@@ -37,6 +37,7 @@ export default class SongUploadSongUrl extends React.Component {
         <>
           <div className='song-url-dynamic'>{ this.props.songUrl }</div>
           <button className='song-url-edit-button' onClick={ this.openEdit }>&#9998;</button>
+          { this.props.urlError ? <div>You must provide a song URL</div> : null }
         </>
       )
     }

@@ -30,6 +30,9 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
+    if params[:user][:profile_image] == 'null'
+      params[:user][:profile_image] = @user.profile_image
+    end
     if @user.update(update_user_params)
       render :show
     else
@@ -57,7 +60,7 @@ class Api::UsersController < ApplicationController
 
   protected
   def create_user_params
-    params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name)
+    params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name, :profile_image)
   end
 
   def update_user_params

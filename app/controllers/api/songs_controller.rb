@@ -1,8 +1,9 @@
 class Api::SongsController < ApplicationController
-  before_action :require_login, only: [:create, :update, :destroy]
-
   def create
-    @song = Song.new(song_params)
+    @song = Song.new(create_song_params)
+    unless @song.image_file.attached?
+      @song.image_file.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_song_image.jpg')), filename: 'default_song_image.jpg')
+    end
     @song.user_id = current_user.id
     if @song.save
       render :show
@@ -23,7 +24,10 @@ class Api::SongsController < ApplicationController
 
   def update
     @song = Song.find_by(id: params[:id])
-    if @song.update(song_params)
+    if params[:song][:image_file] == 'null'
+      params[:song][:image_file] = @song.image_file
+    end
+    if @song.update(update_song_params)
       render :show
     else
       render json: @song.errors.full_messages, status: 422
@@ -56,9 +60,15 @@ class Api::SongsController < ApplicationController
   end
 
   protected
-  def song_params
+  def create_song_params
     params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file, :duration)
   end
+
+  def update_song_params
+    params.require(:song).permit(:title, :song_url, :genre, :description, :image_file)
+  end
+
+  def
 
   def require_login
     render json: ['You must be logged in to perform that action'], status: 403 unless logged_in?

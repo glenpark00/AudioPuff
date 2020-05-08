@@ -9,16 +9,18 @@ export default class ProfileUserHeader extends React.Component {
     const { user } = this.props;
     return (
       <div className='profile-header'>
-        <img src={ user.imageUrl ? user.imageUrl : null } />
-        <div className='header-display-name'>{ user.displayName }</div>
-        { user.firstName && user.lastName ?
-          <div className='header-real-name'>{`${user.firstName} ${user.lastName}`}</div>
-          : ''
-        }
-        { user.city && user.country ?
-          <div className='header-location'>{`${user.city}, ${user.country}`}</div>
-          : ''
-        }
+        <img className='user-profile-image' src={ user.imageUrl ? user.imageUrl : null } />
+        <div className='user-header-info'>
+          <div className='header-display-name'>{user.displayName}</div>
+          {user.firstName && user.lastName ?
+            <div className='header-real-name'>{`${user.firstName} ${user.lastName}`}</div>
+            : null
+          }
+          {user.city && user.country ?
+            <div className='header-location'>{`${user.city}, ${user.country}`}</div>
+            : null
+          }
+        </div>
       </div>
     )
   }

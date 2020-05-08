@@ -46,24 +46,37 @@ export default class GlobalAudioPlayer extends React.Component {
     }
   }
 
+  convertSecsToMins(seconds) {
+    let mins = Math.floor(seconds / 60).toString();
+    let secs = seconds % 60;
+    secs = (secs < 10 ? '0' + secs.toString() : secs.toString());
+    return `${mins}:${secs}`
+  } 
+
+  currentProgress() {
+    return (this.props.currentSong.currentTime / this.props.currentSong.duration) * 100
+  }
+
   content() {
     const { currentSong, displayPlayer, users } = this.props;
     const user = users[currentSong.userId];
+    const currentProgress = this.currentProgress()
     if (displayPlayer && currentSong && user) {
       return (
         <>
           <div className='global-audio-player-div'>
-            <button onClick={ this.handleControls }>{this.buttonContent()}</button>
+            <div onClick={ this.handleControls }>{this.buttonContent()}</div>
             <div className='progress-bar'>
-              <div>{currentSong.currentTime}</div>
-              <div className='progress-line'></div>
-              <div>{currentSong.duration}</div>
+              <div className='player-time'>{this.convertSecsToMins(currentSong.currentTime)}</div>
+              <div className='current-progress-line' style={{width: `${currentProgress}%`}}></div>
+              <div className='progress-line' style={{ width: `${100 - currentProgress}%`}}></div>
+              <div className='player-time'>{this.convertSecsToMins(currentSong.duration)}</div>
             </div>
             <div className='player-song-info-container'>
               <img className='player-song-image' src={currentSong.imageUrl} />
               <div className='player-song-info'>
-                <div>{user.displayName}</div>
-                <div>{currentSong.title}</div>
+                <div className='player-song-name'>{user.displayName}</div>
+                <div className='player-song-title'>{currentSong.title}</div>
               </div>
             </div>
             <audio hidden className='global-audio-player' onTimeUpdate={ e => this.handleTimeUpdate(e)() } controls autoPlay src={ currentSong.fileUrl }></audio>

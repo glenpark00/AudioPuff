@@ -22,11 +22,11 @@ class SongShowDeleteModal extends React.Component {
         <SongItemContainer song={ song } user={ user }/>
         <div className='delete-song-separator'></div>
         <div className='delete-song-subheader'>Permanently delete this track?</div>
-        <div>
-          <div>Removing this track is irreversible. You will lose all the plays, likes and comments for this track with no way to get them back.</div>
-          <div>
-            <div onClick={closeModal}>Cancel</div>
-            <div onClick={this.handleDelete}>Delete forever</div>
+        <div className='delete-song-info'>
+          <div className='delete-song-warning'>Removing this track is irreversible. You will lose all the plays, likes and comments for this track with no way to get them back.</div>
+          <div className='delete-song-buttons'>
+            <div className='delete-song-cancel' onClick={() => closeModal('showDeleteModal')}>Cancel</div>
+            <div className='delete-song-button' onClick={this.handleDelete}>Delete forever</div>
           </div>
         </div>
       </div>

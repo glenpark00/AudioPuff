@@ -12,8 +12,7 @@ export default class UserEditProfileUrl extends React.Component {
 
   openEdit(e) {
     e.stopPropagation();
-    this.setState({ openEdit: true });
-    window.addEventListener('click', this.closeEdit);
+    this.setState({ openEdit: true }, () => window.addEventListener('click', this.closeEdit));
   }
 
   closeEdit() {
@@ -30,7 +29,7 @@ export default class UserEditProfileUrl extends React.Component {
       return <input className='user-profile-url'
         type="text"
         value={this.props.profileUrl}
-        onChange={this.props.handleInput('profileUrl')}
+        onChange={this.props.handleInput}
         onClick={e => e.stopPropagation()} />
     } else {
       return (

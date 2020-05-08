@@ -37,7 +37,7 @@ export default class CurrentUserSongsIndex extends React.Component {
           <div className='current-user-profile-page'>
             <ProfileUserHeader user={currentUser} />
             <div className='current-user-buttons'>
-              <div onClick={ () => this.setState({ showEditModal: true }) }><FaPencilAlt />Edit</div>
+              <div className='user-info-edit-button' onClick={ () => this.setState({ showEditModal: true }) }><FaPencilAlt /> Edit</div>
             </div>
             <div className='profile-subheader-text'>Recent</div>
             <div className='index-recent-songs'>

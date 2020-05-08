@@ -8,6 +8,7 @@ export default class Discover extends React.Component {
 
   componentDidMount() {
     this.props.fetchAllSongs();
+    this.props.fetchUsers();
   }
 
   render() {

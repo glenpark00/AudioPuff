@@ -86,12 +86,12 @@ export default class UserEditFormModal extends React.Component {
             <UserEditImageUpload setImageFile={this.setImageFile} imageUrl={ imageUrl } />
             <div className='user-edit-info-form'>
               <div className='user-edit-text'>Display name</div>
-              <input className='user-edit-input' type="text" value={displayName} onChange={this.handleInput('title')} />
+              <input className='user-edit-input' type="text" value={displayName} onChange={this.handleInput('displayName')} />
               {this.state.nameError ? <div>You must provide a display name.</div> : ''}
               <div className='user-edit-text'>Profile URL</div>
               <div className='profile-url-field'>
                 <span className='profile-url-static'>audiopuff.herokuapp.com/</span>
-                <UserEditProfileUrl profileUrl={profileUrl} handleInput={this.handleInput} />
+                <UserEditProfileUrl profileUrl={profileUrl} handleInput={this.handleInput('profileUrl')} />
               </div>
               <div className='user-edit-real-name'>
                 <div className='user-edit-first-name'>

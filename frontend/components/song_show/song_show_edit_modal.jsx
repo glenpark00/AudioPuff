@@ -1,9 +1,10 @@
 import React from 'react';
-import SongUploadImage from '../song_upload/song_upload_image';
+import SongShowUploadImage from './song_show_upload_image';
 import SongUploadSongUrl from '../song_upload/song_upload_song_url';
 import SongUploadGenre from '../song_upload/song_upload_genre';
+import { withRouter } from 'react-router-dom';
 
-export default class SongShowEditModal extends React.Component {
+class SongShowEditModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +14,7 @@ export default class SongShowEditModal extends React.Component {
       genre: this.props.song.genre,
       description: this.props.song.description,
       titleError: false,
-      imageError: false
+      urlError: false
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -35,16 +36,16 @@ export default class SongShowEditModal extends React.Component {
     } else {
       this.setState({ titleError: false })
     }
-    if (this.state.imageFile === null) {
-      this.setState({ imageError: true })
+    if (this.state.songUrl === '') {
+      this.setState({ urlError: true })
     } else {
-      this.setState({ imageError: false })
+      this.setState({ urlError: false })
     }
   }
 
   handleEditSong() {
     this.checkFields();
-    if (this.state.title != '' && this.state.imageFile != null) {
+    if (this.state.title != '' && this.state.songUrl != '') {
       const formData = this.prepareForm();
       this.props.updateSong(formData);
       this.props.history.push(`/${this.props.user.profileUrl}`);
@@ -71,23 +72,23 @@ export default class SongShowEditModal extends React.Component {
       genre: '',
       description: ''
     })
-    this.props.closeModal();
+    this.props.closeModal('showEditModal');
   }
 
   render() {
-    const { title, songUrl, genre, description, closeModal } = this.props;
+    const { title, songUrl, genre, description, closeModal } = this.state;
     return (
       <div className='song-form'>
         <h2>Basic Info</h2>
         <div className='song-create-form'>
-          <SongUploadImage setImageFile={this.setImageFile} imageError={this.state.imageError} />
+          <SongShowUploadImage originalImageUrl={this.props.song.imageUrl} setImageFile={this.setImageFile} />
           <div className='song-info-form'>
             <div className='song-form-text'>Title</div>
             <input className='song-form-input' type="text" value={title} onChange={this.handleInput('title')} />
             {this.state.titleError ? <div>You must provide a title</div> : ''}
             <div className='song-url-field'>
               <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.user.profileUrl}/</span>
-              <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} />
+              <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} urlError={this.state.urlError} />
             </div>
             <div className='song-form-text'>Genre</div>
             <SongUploadGenre genre={genre} handleInput={this.handleInput} />
@@ -107,3 +108,5 @@ export default class SongShowEditModal extends React.Component {
     )
   }
 }
+
+export default withRouter(SongShowEditModal);

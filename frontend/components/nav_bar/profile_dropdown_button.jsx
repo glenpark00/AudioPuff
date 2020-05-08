@@ -18,7 +18,7 @@ class ProfileDropdownButton extends React.Component {
 
   render() {
     return (
-      <button className='profile-button' onClick={ this.handleClick }>{ this.props.currentUser.displayName }</button>
+      <img className='profile-button' src={this.props.currentUser.imageUrl} onClick={ this.handleClick } /> 
     )
   }
 }

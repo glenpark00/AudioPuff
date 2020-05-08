@@ -16,6 +16,8 @@ export default class SongShow extends React.Component {
     }
     this.handlePlayButton = this.handlePlayButton.bind(this);
     this.playButtonContent = this.playButtonContent.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.linkToProfile = this.linkToProfile.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +59,14 @@ export default class SongShow extends React.Component {
     }
   }
 
+  linkToProfile() {
+    this.props.history.push(`/${this.state.user.profileUrl}`);
+  }
+
+  closeModal(type) {
+    this.setState({ [type]: false })
+  }
+
   render() {
     const { song, user } = this.state;
     if (song && user) {
@@ -65,7 +75,7 @@ export default class SongShow extends React.Component {
           { this.state.showEditModal ? 
             <div className="modal-background" onClick={ () => this.setState({ showEditModal: false }) }>
               <div className="modal-child" onClick={e => e.stopPropagation()}>
-                <SongShowEditModal song={song} user={user} updateSong={this.props.updateSong} closeModal={() => this.setState({ showEditModal: false })} />
+                <SongShowEditModal song={song} user={user} updateSong={this.props.updateSong} closeModal={this.closeModal} />
               </div>
             </div>
             : null
@@ -73,7 +83,7 @@ export default class SongShow extends React.Component {
           { this.state.showDeleteModal ?
             <div className="modal-background" onClick={ () => this.setState({ showDeleteModal: false }) }>
               <div className="modal-child" onClick={e => e.stopPropagation()}>
-                <SongShowDeleteModal song={song} user={user} deleteSong={this.props.deleteSong} closeModal={() => this.setState({ showDeleteModal: false })} />
+                <SongShowDeleteModal song={song} user={user} deleteSong={this.props.deleteSong} closeModal={this.closeModal} />
               </div>
             </div>
             : null
@@ -84,7 +94,7 @@ export default class SongShow extends React.Component {
               <div className='song-show-info'>
                 <div className='song-show-upper'> 
                   <div className='song-show-info-top-line'>
-                    <div className='song-show-display-name'>{ user.displayName }</div>
+                    <div className='song-show-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
                     <div className='song-show-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
                   </div>
                   <div className='song-show-title-container'>
@@ -98,8 +108,8 @@ export default class SongShow extends React.Component {
           </div>
           { this.props.currentUserId === user.id ?
             <div className='user-song-item-buttons'>
-              <div className='user-song-item-button' onClick={ () => this.setState({ showEditModal: true }) }>{ <FaPencilAlt /> }</div>
-              <div className='user-song-item-button' onClick={() => this.setState({ showDeleteModal: true })}>{ <FaTrash /> }</div>
+              <div className='user-song-item-button' onClick={ () => this.setState({ showEditModal: true }) }>{ <FaPencilAlt /> } Edit</div>
+              <div className='user-song-item-button' onClick={() => this.setState({ showDeleteModal: true })}>{ <FaTrash /> } Delete track</div>
             </div>
             : null
           }
