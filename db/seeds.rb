@@ -42,7 +42,7 @@ song_audio_url_frag = 'https://audiopuff-seeds.s3-us-west-1.amazonaws.com/audio_
 while i <= 50
   song = Song.create({
     title: Faker::Book.unique.title,
-    song_url: Faker::Faker::Name.unique.first_name,
+    song_url: Faker::Name.unique.first_name,
     duration: Faker::Number.within(range: 80..200),
     genre: 'None',
     created_at: Faker::Date.in_date_period(month: 5),
