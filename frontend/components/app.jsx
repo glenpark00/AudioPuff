@@ -18,7 +18,7 @@ const App = () => (
 		<div id='app-body'>
 			<Switch>
 				<AuthRoute exact path='/logout' component={LogoutPage} />
-				<Route exact path='/discover' component={DiscoverContainer} />
+				<Route exact path='/' component={DiscoverContainer} />
 				<ProtectedRoute exact path='/upload' component={SongUpload} />
 				<Route path='/:profileUrl/:songUrl' component={SongShowContainer} />
 				<Route path='/:profileUrl' component={UserProfilePageContainer} />

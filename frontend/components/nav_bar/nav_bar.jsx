@@ -13,7 +13,7 @@ export default class NavBar extends React.Component {
     return (
       <>
         <div className='nav-bar'>
-          <Link to="/discover" className='homepage-link nav-bar-item'>A U D I O P U F F</Link>
+          <Link to="/" className='homepage-link nav-bar-item'>A U D I O P U F F</Link>
           {!this.props.loggedIn ? <NavBarAuthContainer /> : <NavBarProtectedContainer />}
           <SiteDropdownButton loggedIn={this.props.loggedIn} />
         </div>
