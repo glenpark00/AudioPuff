@@ -15,13 +15,6 @@ export const updateUser = user => (
   })
 )
 
-export const fetchUserDisplay = userId => (
-  $.ajax({
-    url: `api/user-display/${userId}`,
-    method: 'GET'
-  })
-) 
-
 export const fetchUsers = () => (
   $.ajax({
     url: 'api/users',
@@ -38,16 +31,9 @@ export const userExists = identifier => (
   })
 )
 
-export const fetchUserSongs = userId => (
+export const fetchUserSongs = profileUrl => (
   $.ajax({
-    url: `api/users/${userId}/songs`,
-    method: 'GET'
-  })
-)
-
-export const fetchUserByProfileUrl = profileUrl => (
-  $.ajax({
-    url: `api/users/profile/${profileUrl}`,
+    url: `api/users/${profileUrl}/songs`,
     method: 'GET'
   })
 )

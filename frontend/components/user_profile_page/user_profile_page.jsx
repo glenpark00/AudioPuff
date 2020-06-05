@@ -1,12 +1,26 @@
 import React from 'react';
-import CurrentUserProfilePageContainer from './current_user_profile_page_container';
-import ProfilePageContainer from './profile_page_container'
+import CurrentUserProfilePage from './current_user_profile_page';
+import ProfilePage from './profile_page'
 
-const UserProfilePage = ({ match, currentUser }) => {
-  if (currentUser && match.params.profileUrl === currentUser.profileUrl) {
-    return <CurrentUserProfilePageContainer />
+const UserProfilePage = ({ currentUser, user, songs, fetchUserSongs, updateUser }) => {
+  if (currentUser && user === currentUser) {
+    return (
+      <CurrentUserProfilePage 
+        currentUser={currentUser}
+        songs={songs}
+        fetchUserSongs={fetchUserSongs}
+        updateUser={updateUser}
+      />
+    )
   } else {
-    return <ProfilePageContainer userProfileUrl={match.params.profileUrl} />
+    return (
+      <ProfilePage
+        user={user} 
+        songs={songs}
+        fetchUserSongs={fetchUserSongs}
+        updateUser={updateUser}
+      />
+    )
   }
 }
 

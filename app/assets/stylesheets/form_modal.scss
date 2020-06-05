@@ -22,12 +22,22 @@
   z-index: 10;
 }
 
+@keyframes bringDownSlow {
+  from {
+    top: 10%;
+  }
+  to {
+    top: 45%;
+  }
+}
+
 .modal-child {
   position: absolute;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  animation: 0.8s bringDownSlow ease-out;
 }
 
 .modal-text {

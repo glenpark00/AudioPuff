@@ -14,6 +14,7 @@ import LogoutPage from './logout_page';
 
 const App = () => (
 	<div id='app'>
+		<UserFormModalContainer />
 		<NavBarContainer />
 		<div id='app-body'>
 			<Switch>
@@ -24,7 +25,6 @@ const App = () => (
 				<Route path='/:profileUrl' component={UserProfilePageContainer} />
 			</Switch>
 		</div>
-		<UserFormModalContainer />
 		<GlobalAudioPlayerContainer />
 	</div>
 );

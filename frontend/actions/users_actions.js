@@ -2,7 +2,6 @@ import * as UsersApiUtil from '../util/users_api_util';
 
 // Action Type Constants
 export const RECEIVE_USER = 'RECEIVE_USER';
-export const RECEIVE_USER_DISPLAY = 'RECEIVE_USER_DISPLAY';
 export const RECEIVE_MANY_USERS = 'RECEIVE_MANY_USERS';
 export const RECEIVE_USER_SONGS = 'RECEIVE_USER_SONGS';
 
@@ -12,20 +11,14 @@ const receiveUser = user => ({
   user
 });
 
-const receiveUserDisplay = user => ({
-  type: RECEIVE_USER_DISPLAY,
-  user
-})
-
 const receiveManyUsers = users => ({
   type: RECEIVE_MANY_USERS,
   users
 });
 
-const receiveUserSongs = (userId, songs) => ({
+const receiveUserSongs = data => ({
   type: RECEIVE_USER_SONGS,
-  userId,
-  songs
+  data
 })
 
 // Thunk Action Creators
@@ -46,26 +39,8 @@ export const updateUser = user => dispatch => (
   )
 )
 
-export const fetchUserSongs = userId => dispatch => (
-  UsersApiUtil.fetchUserSongs(userId).then(
-    songs => dispatch(receiveUserSongs(userId, songs))
-  )
-)
-
-export const fetchUserDisplay = userId => dispatch => (
-  UsersApiUtil.fetchUserDisplay(userId).then(
-    user => {
-      dispatch(receiveUserDisplay(user));
-      return user;
-    }
-  )
-)
-
-export const fetchUserByProfileUrl = profileUrl => dispatch => (
-  UsersApiUtil.fetchUserByProfileUrl(profileUrl).then(
-    user => {
-      dispatch(receiveUser(user));
-      return user;
-    }
+export const fetchUserSongs = profileUrl => dispatch => (
+  UsersApiUtil.fetchUserSongs(profileUrl).then(
+    data => dispatch(receiveUserSongs(data))
   )
 )

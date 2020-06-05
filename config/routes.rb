@@ -10,11 +10,10 @@ Rails.application.routes.draw do
 
     get 'user-display/:id', to: 'users#display'
     get 'exists', to: 'users#user_exists?'
-    get 'users/profile/:profile_url', to: 'users#get_by_profile_url'
 
     get ':profile_url/:song_url', to: 'songs#show'
     get 'songs/:id/file', to: 'songs#fetch_song_file'
-    get 'songs', to: 'songs#all_songs'
+    post 'songs/n', to: 'songs#fetch_n_songs'
     get 'song-search', to: 'songs#song_search'
     resource :session, only: [:create, :destroy]
   end

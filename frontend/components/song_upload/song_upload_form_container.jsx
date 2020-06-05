@@ -4,11 +4,11 @@ import SongUploadForm from './song_upload_form';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
-  currentUser: state.entities.users[state.session.currentUserId]
+  currentUser: state.entities.users[state.session.currentUserUrl]
 })
 
 const mapDispatchToProps = dispatch => ({
-  createSong: (song, currentUserId) => dispatch(createSong(song, currentUserId))
+  createSong: (song, currentUserUrl) => dispatch(createSong(song, currentUserUrl))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SongUploadForm));

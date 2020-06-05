@@ -25,6 +25,13 @@ export const deleteSong = songId => (
   })
 )
 
+export const fetchSong = songId => (
+  $.ajax({
+    url: `api/songs/${songId}`,
+    method: 'GET'
+  })
+)
+
 export const fetchSongFromUrl = (songUrl, profileUrl) => (
   $.ajax({
     url: `api/${profileUrl}/${songUrl}`,
@@ -39,9 +46,11 @@ export const fetchSongFileUrl = songId => (
   })
 )
 
-export const fetchAllSongs = () => (
+export const fetchNSongs = n => (
   $.ajax({
-    url: `api/songs`,
-    method: 'GET'
+    url: `api/songs/n`,
+    method: 'POST',
+    data: { n }
+    
   })
 )

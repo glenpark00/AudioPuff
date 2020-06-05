@@ -65,6 +65,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   width: 33px;
   height: 33px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .site-dropdown {
@@ -81,17 +82,18 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   height: 40px;
   vertical-align: middle;
   color: white;
+  cursor: pointer;
 }
 
 .site-dropdown-div {
   position: fixed;
-  top: 60px;
+  top: 55px;
   display: flex;
   flex-direction: column;
   background-color: $black-theme;
   width: 80px;
   height: 40px;
   border-radius: 2px;
-  border: 2px solid #1d1d1dc7;
-  padding: 10px 3px;
+  border: 1px solid #1d1d1dc7;
+  padding: 5px;
 }

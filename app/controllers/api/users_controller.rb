@@ -49,11 +49,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  def get_by_profile_url
-    @user = User.find_by(profile_url: params[:profile_url])
-    render :show
-  end
-
   def display
     @user = User.find_by(id: params[:id])
     if @user

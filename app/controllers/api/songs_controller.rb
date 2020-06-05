@@ -4,7 +4,7 @@ class Api::SongsController < ApplicationController
     unless @song.image_file.attached?
       @song.image_file.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_song_image.jpg')), filename: 'default_song_image.jpg')
     end
-    @song.user_id = current_user.id
+    @song.user_url = current_user.profile_url
     if @song.save
       render :show
     else
@@ -13,8 +13,7 @@ class Api::SongsController < ApplicationController
   end
 
   def show
-    user = User.find_by(profile_url: params[:profile_url])
-    @song = Song.find_by(user_id: user.id, song_url: params[:song_url])
+    @song = Song.find_by(user_url: params[:profile_url], song_url: params[:song_url])
     if @song
       render :show
     else
@@ -41,7 +40,8 @@ class Api::SongsController < ApplicationController
   end
 
   def index
-    @songs = Song.where('user_id = ?', params[:user_id])
+    @users = [User.find_by(profile_url: params[:user_id])]
+    @songs = Song.where('user_url = ?', params[:user_id])
     render :index
   end
 
@@ -50,8 +50,10 @@ class Api::SongsController < ApplicationController
     render :file
   end
 
-  def all_songs
-    @songs = Song.all
+  def fetch_n_songs
+    @songs = Song.all.order('RANDOM()').limit(params[:n])
+    userUrls = @songs.map { |song| song.user_url }.uniq
+    @users = User.where(profile_url: userUrls)
     render :index
   end
 

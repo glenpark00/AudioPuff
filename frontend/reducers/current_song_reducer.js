@@ -1,5 +1,4 @@
 import { RECEIVE_CURRENT_SONG, PLAY_AUDIO, PAUSE_AUDIO, CHANGE_CURRENT_TIME } from '../actions/songs_actions';
-import { bindActionCreators } from 'redux';
 
 const currentSongReducer = (state = {}, action) => {
   Object.freeze(state);

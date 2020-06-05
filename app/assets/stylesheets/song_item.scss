@@ -11,19 +11,25 @@
   height: 160px;
   flex: 0 0 160px;
   margin-left: 30px;
+  cursor: pointer;
 }
 
 .song-item-play {
   color: white;
   text-align: center;
   vertical-align: middle;
-  line-height: 40px;
+  line-height: 45px;
   background-color: #CE1141;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   margin-left: 5px;
   margin-right: 5px;
+  cursor: pointer;
+}
+
+.song-item-play:hover { 
+  box-shadow: inset 0 0 0 99999px rgba(49, 47, 47, 0.2);
 }
 
 .song-item-info {
@@ -53,12 +59,14 @@
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   font-size: 12px;
   color: #999;
+  cursor: pointer;
 }
 
 .song-item-title {
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   font-size: 15px;
   color: #333;
+  cursor: pointer;
 }
 
 .song-time-elapsed {

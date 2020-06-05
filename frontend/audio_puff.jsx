@@ -4,16 +4,16 @@ import Root from "./components/root";
 import configureStore from "./store/store";
 
 document.addEventListener("DOMContentLoaded", () => {
-	let preloadedState = undefined;
+	let preloadedState;
 	if (window.currentUser) {
 		preloadedState = {
 			entities: {
 				users: {
-					[window.currentUser.id]: window.currentUser
+					[window.currentUser.profileUrl]: window.currentUser
 				}
 			},
 			session: {
-				currentUserId: window.currentUser.id
+				currentUserUrl: window.currentUser.profileUrl
 			},
 			errors: {
 				session: []

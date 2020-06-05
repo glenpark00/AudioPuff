@@ -1,16 +1,14 @@
 import { connect } from 'react-redux';
 import Discover from './discover';
-import { fetchAllSongs } from '../../actions/songs_actions';
-import { fetchUsers } from '../../actions/users_actions';
+import { fetchNSongs } from '../../actions/songs_actions';
 
 const mapStateToProps = state => ({
-  songs: Object.values(state.entities.songs),
+  songs: state.entities.songs,
   users: state.entities.users
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchAllSongs: () => dispatch(fetchAllSongs()),
-  fetchUsers: () => dispatch(fetchUsers())
+  fetchNSongs: n => dispatch(fetchNSongs(n)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Discover);

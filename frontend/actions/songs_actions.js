@@ -5,15 +5,15 @@ export const RECEIVE_SONG = 'RECEIVE_SONG';
 export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
 export const CLEAR_DELETED_SONG = 'CLEAR_DELETED_SONG';
 export const RECEIVE_CURRENT_SONG = 'RECEIVE_CURRENT_SONG';
-export const RECEIVE_ALL_SONGS = 'RECEIVE_ALL_SONGS';
+export const RECEIVE_SONGS = 'RECEIVE_SONGS';
 export const CHANGE_CURRENT_TIME = 'CHANGE_CURRENT_TIME';
 export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
 
 // Regular Action Creators
-const receiveSong = song => ({
+const receiveSong = data => ({
   type: RECEIVE_SONG,
-  song
+  data
 })
 
 const receiveSongErrors = errors => ({
@@ -31,9 +31,9 @@ const receiveCurrentSong = song => ({
   song
 })
 
-const receiveAllSongs = songs => ({
-  type: RECEIVE_ALL_SONGS,
-  songs
+const receiveSongs = data => ({
+  type: RECEIVE_SONGS,
+  data
 })
 
 export const changeCurrentTime = time => ({
@@ -70,31 +70,9 @@ export const deleteSong = songId => dispatch => (
   )
 )
 
-// export const fetchSongFromUrl = (songUrl, profileUrl) => dispatch => {
-//   let returnedSong;
-//   let returnedUser;
-//   SongsApiUtil.fetchSongFromUrl(songUrl, profileUrl).then(
-//     song => {
-//       returnedSong = song;
-//       dispatch(receiveSong(song));
-//     }
-//   ).then(
-//     fetchUserDisplay(returnedSong.userId).then(
-//       user => {
-//         returnedUser = user;
-//         dispatch(receiveUserDisplay(user));
-//       }
-//     )
-//   )
-//   return { returnedSong, returnedUser };
-// }
-
 export const fetchSongFromUrl = (songUrl, profileUrl) => dispatch => (
   SongsApiUtil.fetchSongFromUrl(songUrl, profileUrl).then(
-    song => {
-      dispatch(receiveSong(song));
-      return song
-    }
+    data => dispatch(receiveSong(data))
   )
 )
 
@@ -104,8 +82,8 @@ export const fetchCurrentSongFileUrl = songId => dispatch => (
   )
 )
 
-export const fetchAllSongs = () => dispatch => (
-  SongsApiUtil.fetchAllSongs().then(
-    songs => dispatch(receiveAllSongs(songs))
+export const fetchNSongs = n => dispatch => (
+  SongsApiUtil.fetchNSongs(n).then(
+    data => dispatch(receiveSongs(data))
   )
 )

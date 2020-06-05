@@ -26,7 +26,10 @@ class User < ApplicationRecord
 
   has_one_attached :profile_image
 
-  has_many :songs
+  has_many :songs,
+    primary_key: :profile_url,
+    foreign_key: :user_url,
+    class_name: 'Song'
 
   before_validation :ensure_session_token
 

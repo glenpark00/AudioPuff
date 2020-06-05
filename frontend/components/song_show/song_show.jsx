@@ -4,13 +4,12 @@ import { timeElapsed } from '../../util/general_util';
 import SongShowEditModal from './song_show_edit_modal';
 import SongShowDeleteModal from './song_show_delete_modal'
 import { FaPlay, FaPause, FaTrash, FaPencilAlt } from 'react-icons/fa';
+import Footer from '../footer';
 
 export default class SongShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      song: null,
-      user: null,
       showEditModal: false,
       showDeleteModal: false
     }
@@ -21,38 +20,31 @@ export default class SongShow extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchSongFromUrl(this.props.songUrl, this.props.profileUrl).then(
-      song => {
-        this.props.fetchUserDisplay(song.userId).then(
-          user => {
-            this.setState({ song, user })
-          }
-        )
-      }
-    )
+    const { fetchSongFromUrl, match } = this.props;
+    fetchSongFromUrl(match.params.songUrl, match.params.profileUrl);
   }
 
   handlePlayButton() {
-    const { currentSong, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
-    if (currentSong.playing && this.state.song.id === currentSong.id) {
+    const { currentSong, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
+    if (currentSong.playing && song.id === currentSong.id) {
       const globalAudio = document.querySelector('.global-audio-player');
       globalAudio.pause();
       pauseAudio();
     } else {
-      if (currentSong.id === this.state.song.id) {
+      if (currentSong.id === song.id) {
         const globalAudio = document.querySelector('.global-audio-player');
         globalAudio.play();
         playAudio();
       } else {
         displayGlobalAudioPlayer();
-        fetchCurrentSongFileUrl(this.state.song.id);
+        fetchCurrentSongFileUrl(song.id);
       }
     }
   }
 
   playButtonContent() {
-    const { currentSong } = this.props;
-    if (currentSong.id === this.state.song.id && currentSong.playing) {
+    const { currentSong, song } = this.props;
+    if (currentSong.id === song.id && currentSong.playing) {
       return <FaPause />
     } else {
       return <FaPlay />
@@ -60,7 +52,7 @@ export default class SongShow extends React.Component {
   }
 
   linkToProfile() {
-    this.props.history.push(`/${this.state.user.profileUrl}`);
+    this.props.history.push(`/${this.props.user.profileUrl}`);
   }
 
   closeModal(type) {
@@ -68,13 +60,15 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user } = this.state;
-    if (song && user) {
-      return (
+    const { song, user } = this.props;
+    if (!song || !user) return null; 
+    return (
+      <div className='song-show-page-background'>
         <div className='song-show-page'>
           { this.state.showEditModal ? 
             <div className="modal-background" onClick={ () => this.setState({ showEditModal: false }) }>
               <div className="modal-child" onClick={e => e.stopPropagation()}>
+                <div className ='modal-top-space'></div>
                 <SongShowEditModal song={song} user={user} updateSong={this.props.updateSong} closeModal={this.closeModal} />
               </div>
             </div>
@@ -99,6 +93,7 @@ export default class SongShow extends React.Component {
                   </div>
                   <div className='song-show-title-container'>
                     <div className='song-show-title'>{song.title}</div>
+                    <div className='song-show-genre'>#{song.genre}</div>
                   </div>
                 </div>
                 <SongItemWaveform currentSong={this.props.currentSong} song={song} displayPlayer={this.props.displayPlayer} />
@@ -106,7 +101,7 @@ export default class SongShow extends React.Component {
               <img src={ song.imageUrl } className='song-show-image' />
             </div>
           </div>
-          { this.props.currentUserId === user.id ?
+          {this.props.currentUserUrl === user.profileUrl ?
             <div className='user-song-item-buttons'>
               <div className='user-song-item-button' onClick={ () => this.setState({ showEditModal: true }) }>{ <FaPencilAlt /> } Edit</div>
               <div className='user-song-item-button' onClick={() => this.setState({ showDeleteModal: true })}>{ <FaTrash /> } Delete track</div>
@@ -114,9 +109,8 @@ export default class SongShow extends React.Component {
             : null
           }
         </div>
-      )
-    } else {
-      return null;
-    }
+        <Footer></Footer>
+      </div>
+    )
   }
 }

@@ -14,7 +14,7 @@ export default class CurrentUserProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchUserSongs(this.props.currentUser.id);
+    this.props.fetchUserSongs(this.props.currentUser.profileUrl);
   }
 
   handleCloseModal() {

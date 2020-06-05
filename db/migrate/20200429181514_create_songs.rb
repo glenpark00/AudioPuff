@@ -5,12 +5,12 @@ class CreateSongs < ActiveRecord::Migration[5.2]
       t.string :song_url, null: false
       t.text :description, null: false, default: ''
       t.string :genre, null: false
-      t.integer :user_id, null: false
+      t.string :user_url, null: false
       t.integer :duration, null: false
       t.timestamps
     end
 
-    add_index :songs, :user_id
-    add_index :songs, [:user_id, :song_url], unique: true
+    add_index :songs, :user_url
+    add_index :songs, [:user_url, :song_url], unique: true
   end
 end
