@@ -48,20 +48,22 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user, currentSong, displayPlayer } = this.props;
+    const { song, user, currentSong, displayPlayer, changeCurrentTime } = this.props;
     return (
       <div className='song-item'>
         <img className='song-item-image' onClick={ this.openSongShow } src={ song.imageUrl } />
-        <div className='song-item-content'>
-          <div className='song-item-play' onClick={ this.handlePlayButton }>{ this.playButtonContent() }</div>
-          <div className='song-item-info'>
-            <div className='song-item-info-top-line'>
-              <div className='song-item-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
-              <div className='song-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
+        <div className='song-item-content-container'>
+          <div className='song-item-content'>
+            <div className='song-item-play' onClick={ this.handlePlayButton }>{ this.playButtonContent() }</div>
+            <div className='song-item-info'>
+              <div className='song-item-info-top-line'>
+                <div className='song-item-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
+                <div className='song-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
+              </div>
+              <div className='song-item-title'>{ song.title }</div>
             </div>
-            <div className='song-item-title'>{ song.title }</div>
-            <SongItemWaveform currentSong={ currentSong } song={ song } displayPlayer={ displayPlayer } />
           </div>
+          <SongItemWaveform currentSong={ currentSong } song={ song } displayPlayer={ displayPlayer } changeCurrentTime={ changeCurrentTime } />
         </div>
       </div>
     )

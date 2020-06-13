@@ -14,6 +14,7 @@ export default class SongUploadForm extends React.Component {
       songUrl: this.props.audioFile.name.split('.')[0],
       genre: 'None',
       description: '',
+      waveform: null,
       titleError: false
     }
     this.handleInput = this.handleInput.bind(this);
@@ -22,12 +23,75 @@ export default class SongUploadForm extends React.Component {
     this.setImageFile = this.setImageFile.bind(this);
   }
 
+  componentDidMount() {
+    this.createSongWaveform(this.state.audioFile)
+  }
+
   handleInput(type) {
     return e => this.setState({ [type]: e.target.value })
   }
 
   setImageFile(imageFile) {
     this.setState({ imageFile })
+  }
+
+  // createSongWaveform(audioFile) {
+  //   window.AudioContext = window.AudioContext || window.webkitAudioContext;
+  //   const audioContext = new AudioContext();
+  //   audioFile.arrayBuffer()
+  //     .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+  //     .then(audioBuffer => this.setState({ waveform: this.drawWaveform(this.normalizeData(this.filterData(audioBuffer))) }, () => {
+  //       let can = this.state.waveform;
+  //       can.style.filter = 'invert(17%) sepia(86%) saturate(6300%) hue-rotate(330deg) brightness(80%) contrast(99%)'
+  //       document.querySelector('.song-form-background').append(can);
+  //     }))
+  // }
+
+  createSongWaveform(audioFile) {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContext();
+    audioFile.arrayBuffer()
+      .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+      .then(audioBuffer => this.setState({ waveform: this.drawWaveform(this.normalizeData(this.filterData(audioBuffer))) }))
+  }
+
+
+  filterData(audioBuffer) {
+    const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
+    const samples = 200; // Number of samples we want to have in our final data set
+    const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
+    const filteredData = [];
+    for (let i = 0; i < samples; i++) {
+      let blockStart = blockSize * i; // the location of the first sample in the block
+      let sum = 0;
+      for (let j = 0; j < blockSize; j++) {
+        sum = sum + Math.abs(rawData[blockStart + j]); // find the sum of all the samples in the block
+      }
+      filteredData.push(sum / blockSize); // divide the sum by the block size to get the average
+    }
+    return filteredData;
+  };
+
+  normalizeData(filteredData) {
+    const multiplier = Math.pow(Math.max(...filteredData), -1);
+    return filteredData.map(n => n * multiplier);
+  }
+
+  drawWaveform(data) {
+    const canvas = document.createElement('canvas');
+    canvas.width = '820';
+    canvas.height = '90';
+    const ctx = canvas.getContext('2d');
+    ctx.translate(0, canvas.height / 2);
+    let width = canvas.width / data.length;
+    data.forEach((point, i) => {
+      let height = point * canvas.height;
+      let x = i * width;
+      let y = height / -2;
+      ctx.fillStyle = '#d3d3d3';
+      ctx.fillRect(x, y, width, height);
+    })
+    return canvas.toDataURL();
   }
 
   checkFields() {
@@ -43,6 +107,22 @@ export default class SongUploadForm extends React.Component {
     }
   }
 
+  prepareForm() {
+    const formData = new FormData();
+    const { audioFile, waveform, duration, imageFile, title, songUrl, genre, description } = this.state;
+    if (imageFile) formData.append('song[imageFile]', imageFile);
+    this.createSongWaveform(audioFile);
+    formData.append('song[audioFile]', audioFile);
+    formData.append('song[waveform]', waveform);
+    formData.append('song[duration]', duration);
+    formData.append('song[title]', title);
+    formData.append('song[title]', title);
+    formData.append('song[songUrl]', songUrl);
+    formData.append('song[genre]', genre);
+    formData.append('song[description]', description);
+    return formData;
+  }
+
   handleCreateSong() {
     this.checkFields();
     if (this.state.title != '' && this.state.songUrl != '') {
@@ -51,20 +131,6 @@ export default class SongUploadForm extends React.Component {
         () => this.props.history.push(`/${this.props.currentUser.profileUrl}/${this.state.songUrl}`)
       );
     }
-  }
-
-  prepareForm() {
-    const formData = new FormData();
-    const { audioFile, duration, imageFile, title, songUrl, genre, description } = this.state;
-    if (imageFile) formData.append('song[imageFile]', imageFile);
-    formData.append('song[audioFile]', audioFile);
-    formData.append('song[duration]', duration)
-    formData.append('song[title]', title);
-    formData.append('song[title]', title);
-    formData.append('song[songUrl]', songUrl);
-    formData.append('song[genre]', genre);
-    formData.append('song[description]', description);
-    return formData;
   }
 
   handleCancel() {

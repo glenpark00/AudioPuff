@@ -20,12 +20,12 @@ export default class DemoUserForm extends React.Component {
         if (index === chars.length) {
           clearInterval(interval)
         }
-      }, 150)
+      }, 120)
   }
 
   componentDidMount() {
     const submitButton = document.querySelector('.identifier-submit-button');
-    this.setState({ interval: setInterval(() => submitButton.click(), 1600) })
+    this.setState({ interval: setInterval(() => submitButton.click(), 1200) })
   }
 
   componentWillUnmount() {

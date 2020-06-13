@@ -23,7 +23,6 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  margin-left: 5px;
   margin-right: 5px;
   cursor: pointer;
 }
@@ -45,6 +44,12 @@
   justify-content: space-between;
   width: 100%;
   margin-bottom: 4px;
+}
+
+.song-item-content-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 15px;
 }
 
 .song-item-content {
@@ -76,36 +81,4 @@
   color: #999;
   font-size: 12px;
   font-weight: 100;
-}
-
-.song-item-waveform {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: initial;
-  width: 100%;
-}
-
-.waveform-audio {
-//   width: 100%;
-//   height: 70px;
-//   background-color: grey;
-//   margin-top: 15px;
-  margin-top: 30px;
-}
-
-.waveform-time {
-  position: absolute;
-  bottom: 30%;
-  display: flex;
-  justify-content: space-between;
-  font: 10px Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
-  width: 100%;
-  z-index: 5;
-}
-
-.waveform-time-text {
-  background-color: black;
-  color: white;
 }

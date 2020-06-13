@@ -1,5 +1,5 @@
 json.song do
-  json.extract! song, :id, :title, :song_url, :genre, :description, :user_url, :created_at, :duration
+  json.extract! song, :id, :title, :song_url, :genre, :description, :user_url, :created_at, :duration, :waveform
   json.fileUrl url_for(song.audio_file)
   json.image_url url_for(song.image_file)
 end

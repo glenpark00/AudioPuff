@@ -1,5 +1,5 @@
 import React from 'react';
-import SiteDropdown from './site_dropdown';
+import SiteDropdownContainer from './site_dropdown_container';
 
 export default class SiteDropdownButton extends React.Component {
   constructor(props) {
@@ -22,10 +22,14 @@ export default class SiteDropdownButton extends React.Component {
 
   render() {
     return (
-      <div className='site-dropdown-button' onClick={ this.handleClick }>...
+      <div 
+        className={`site-dropdown-button ${this.state.showDropdown ? 'dropdown-selected' : ''} no-select`} 
+        onClick={ this.handleClick }
+      >...
         {this.state.showDropdown ?
-          <SiteDropdown closeDropdown={ this.closeDropdown }
-                        loggedIn={ this.props.loggedIn } />
+            <SiteDropdownContainer
+              closeDropdown={ this.closeDropdown }
+              loggedIn={ this.props.loggedIn } />
           : ''
         }
       </div>

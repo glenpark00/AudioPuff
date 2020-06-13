@@ -60,7 +60,7 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user } = this.props;
+    const { song, user, changeCurrentTime } = this.props;
     if (!song || !user) return null; 
     return (
       <div className='song-show-page-background'>
@@ -93,10 +93,10 @@ export default class SongShow extends React.Component {
                   </div>
                   <div className='song-show-title-container'>
                     <div className='song-show-title'>{song.title}</div>
-                    <div className='song-show-genre'>#{song.genre}</div>
+                    {song.genre !== 'None' ? <div className='song-show-genre'>#{song.genre}</div> : null}
                   </div>
                 </div>
-                <SongItemWaveform currentSong={this.props.currentSong} song={song} displayPlayer={this.props.displayPlayer} />
+                <SongItemWaveform currentSong={this.props.currentSong} song={song} displayPlayer={this.props.displayPlayer} changeCurrentTime={ changeCurrentTime }/>
               </div>
               <img src={ song.imageUrl } className='song-show-image' />
             </div>

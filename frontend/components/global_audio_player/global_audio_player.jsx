@@ -1,5 +1,5 @@
 import React from 'react';
-import { debounce } from 'throttle-debounce';
+import { throttle } from 'throttle-debounce';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
 export default class GlobalAudioPlayer extends React.Component {
@@ -7,6 +7,8 @@ export default class GlobalAudioPlayer extends React.Component {
     super(props);
     this.handleControls = this.handleControls.bind(this);
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
+    this.updateTime = this.updateTime.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleControls() {
@@ -28,8 +30,12 @@ export default class GlobalAudioPlayer extends React.Component {
 
   handleTimeUpdate(e) {
     const globalAudioTime = e.target.currentTime;
-    this.props.changeCurrentTime(Math.trunc(globalAudioTime))
+    this.updateTime(globalAudioTime);
   }
+
+  updateTime = throttle(200, time => {
+    this.props.changeCurrentTime(Math.trunc(time));
+  })
 
   buttonContent() {
     const player = document.querySelector('.global-audio-player');
@@ -54,6 +60,13 @@ export default class GlobalAudioPlayer extends React.Component {
     return (this.props.currentSong.currentTime / this.props.currentSong.duration) * 100
   }
 
+  handleClick(e) {
+    const { changeCurrentTime, currentSong } = this.props;
+    const newTime = Math.floor((e.nativeEvent.offsetX / e.target.offsetWidth) * currentSong.duration);
+    changeCurrentTime(newTime);
+    document.querySelector('.global-audio-player').currentTime = newTime;
+  }
+
   render() {
     const { currentSong, displayPlayer, users } = this.props;
     const user = users[currentSong.userUrl];
@@ -63,7 +76,7 @@ export default class GlobalAudioPlayer extends React.Component {
       <>
         <div className='global-audio-player-div'>
           <div onClick={this.handleControls}>{this.buttonContent()}</div>
-          <div className='progress-bar'>
+          <div className='progress-bar' onClick={this.handleClick}>
             <div className='player-time'>{this.convertSecsToMins(currentSong.currentTime)}</div>
             <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
             <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>

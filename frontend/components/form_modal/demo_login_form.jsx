@@ -21,12 +21,12 @@ class DemoLoginForm extends React.Component {
         if (index === chars.length) {
           clearInterval(interval)
         }
-      }, 150)
+      }, 100)
   }
 
   componentDidMount() {
     const submitButton = document.querySelector('.form-submit-button');
-    this.setState({ interval: setInterval(() => submitButton.click(), 1600) })
+    this.setState({ interval: setInterval(() => submitButton.click(), 1200) })
   }
 
   componentWillUnmount() {

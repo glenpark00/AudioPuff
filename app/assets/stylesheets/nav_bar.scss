@@ -68,32 +68,43 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   cursor: pointer;
 }
 
-.site-dropdown {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-}
+// .site-dropdown {
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 
 .site-dropdown-button {
+  position: relative;
   font-size: 30px;
   font-weight: 600;
-  height: 40px;
-  vertical-align: middle;
+  text-align: center;
+  width: 50px;
+  height: 100%;
+  line-height: 38px;
   color: white;
   cursor: pointer;
+  outline-style:none;
+}
+
+.site-dropdown-button.dropdown-selected {
+  background-color: black;
 }
 
 .site-dropdown-div {
-  position: fixed;
-  top: 55px;
+  position: absolute;
+  top: 100%;
+  right: 0%;
   display: flex;
   flex-direction: column;
-  background-color: $black-theme;
-  width: 80px;
-  height: 40px;
-  border-radius: 2px;
-  border: 1px solid #1d1d1dc7;
+  background-color: black;
+  width: 170px;
+  height: auto;
+  border-radius: 0 0 3px 3px;
   padding: 5px;
+}
+
+.site-dropdown-div > a {
+  text-align: left;
 }

@@ -1,0 +1,50 @@
+.song-item-waveform {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: initial;
+  width: 100%;
+}
+
+.waveform-audio {
+  position: relative;
+  width: 100%;
+}
+
+.waveform-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 90px;
+  overflow: hidden;
+}
+
+.waveform-progress-img {
+  height: 90px;
+}
+
+.waveform-default {
+  width: 100%;
+  height: 90px;
+}
+
+// .waveform-progress-img {
+//   object-fit: cover;
+// }
+
+.waveform-time {
+  position: absolute;
+  bottom: 40%;
+  display: flex;
+  justify-content: space-between;
+  font: 10px Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  width: 100%;
+  z-index: 5;
+  border-bottom: 1px solid white;
+}
+
+.waveform-time-text {
+  background-color: black;
+  color: white;
+}

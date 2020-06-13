@@ -14,7 +14,8 @@ const songsReducer = (state = {}, action) => {
       delete newState[action.songUrl];
       return newState;
     case RECEIVE_USER_SONGS:
-      return action.data.songs;
+      const userSongs = (action.data.songs ? action.data.songs : {})
+      return Object.assign({}, state, userSongs);
     default:
       return state;
   }

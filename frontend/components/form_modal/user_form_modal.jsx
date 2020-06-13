@@ -40,9 +40,17 @@ export default class UserFormModal extends React.Component {
   }
 
   handleCloseModal() {
-    this.props.clearSessionErrors();
-    this.resetLocalState();
-    this.props.disableModalDisplay();
+    setTimeout(() => {
+      this.props.clearSessionErrors();
+      this.resetLocalState();
+      this.props.disableModalDisplay();
+    }, 900)
+    const modal = document.querySelector('.modal-child');
+    modal.style.top = '-100%';
+    modal.animate([
+      { top: '45%' },
+      { top: '-100%' }
+    ], 800)
   }
 
   triggerDemoLogin() {

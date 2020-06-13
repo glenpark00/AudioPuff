@@ -51,7 +51,8 @@ class Api::SongsController < ApplicationController
   end
 
   def fetch_n_songs
-    @songs = Song.all.order('RANDOM()').limit(params[:n])
+    # @songs = Song.all.order('RANDOM()').limit(params[:n])
+    @songs = Song.all.limit(params[:n])
     userUrls = @songs.map { |song| song.user_url }.uniq
     @users = User.where(profile_url: userUrls)
     render :index
@@ -63,7 +64,7 @@ class Api::SongsController < ApplicationController
 
   protected
   def create_song_params
-    params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file, :duration)
+    params.require(:song).permit(:title, :song_url, :genre, :description, :audio_file, :image_file, :duration, :waveform)
   end
 
   def update_song_params

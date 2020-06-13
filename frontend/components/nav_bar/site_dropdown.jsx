@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SiteDropdownLogoutContainer from './site_dropdown_logout_container';
 
 export default class SiteDropdown extends React.Component {
   constructor(props) {
@@ -16,11 +15,15 @@ export default class SiteDropdown extends React.Component {
   }
 
   render() {
+    const { closeDropdown, logout } = this.props;
     return (
       <div className='site-dropdown-div'>
-        <Link to='/' onClick={ this.props.closeDropdown }>About us</Link>
+        <Link to='/' onClick={ closeDropdown }>About us</Link>
         {this.props.loggedIn ?
-          <SiteDropdownLogoutContainer closeDropdown={ this.props.closeDropdown } />
+          <Link to='/logout' onClick={() => {
+            logout();
+            closeDropdown();
+          }}>Sign out</Link>
           : ''}
       </div>
     )
