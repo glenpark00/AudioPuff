@@ -62,7 +62,9 @@ export default class GlobalAudioPlayer extends React.Component {
 
   handleClick(e) {
     const { changeCurrentTime, currentSong } = this.props;
-    const newTime = Math.floor((e.nativeEvent.offsetX / e.target.offsetWidth) * currentSong.duration);
+    let currentTargetRect = e.currentTarget.getBoundingClientRect();
+    const offsetX = e.pageX - currentTargetRect.left;
+    const newTime = Math.floor((offsetX / e.currentTarget.offsetWidth) * currentSong.duration);
     changeCurrentTime(newTime);
     document.querySelector('.global-audio-player').currentTime = newTime;
   }
@@ -76,10 +78,12 @@ export default class GlobalAudioPlayer extends React.Component {
       <>
         <div className='global-audio-player-div'>
           <div onClick={this.handleControls}>{this.buttonContent()}</div>
-          <div className='progress-bar' onClick={this.handleClick}>
+          <div className='progress-bar'>
             <div className='player-time'>{this.convertSecsToMins(currentSong.currentTime)}</div>
-            <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
-            <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
+            <div className='full-progress-line' onClick={this.handleClick}>
+              <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
+              <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
+            </div>
             <div className='player-time'>{this.convertSecsToMins(currentSong.duration)}</div>
           </div>
           <div className='player-song-info-container'>
