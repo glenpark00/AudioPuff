@@ -25,13 +25,13 @@ export default class SongShow extends React.Component {
   }
 
   handlePlayButton() {
-    const { currentSong, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
-    if (currentSong.playing && song.id === currentSong.id) {
+    const { audio, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
+    if (audio.playing && song.id === audio.currentSong.id) {
       const globalAudio = document.querySelector('.global-audio-player');
       globalAudio.pause();
       pauseAudio();
     } else {
-      if (currentSong.id === song.id) {
+      if (audio.currentSong.id === song.id) {
         const globalAudio = document.querySelector('.global-audio-player');
         globalAudio.play();
         playAudio();
@@ -43,8 +43,8 @@ export default class SongShow extends React.Component {
   }
 
   playButtonContent() {
-    const { currentSong, song } = this.props;
-    if (currentSong.id === song.id && currentSong.playing) {
+    const { audio, song } = this.props;
+    if (audio.currentSong.id === song.id && audio.playing) {
       return <FaPause />
     } else {
       return <FaPlay />
@@ -60,7 +60,7 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user, changeCurrentTime } = this.props;
+    const { audio, song, user, changeCurrentTime, fetchCurrentSongFileUrl, displayGlobalAudioPlayer, displayPlayer} = this.props;
     if (!song || !user) return null; 
     return (
       <div className='song-show-page-background'>
@@ -96,7 +96,13 @@ export default class SongShow extends React.Component {
                     {song.genre !== 'None' ? <div className='song-show-genre'>#{song.genre}</div> : null}
                   </div>
                 </div>
-                <SongItemWaveform currentSong={this.props.currentSong} song={song} displayPlayer={this.props.displayPlayer} changeCurrentTime={ changeCurrentTime }/>
+                <SongItemWaveform 
+                  audio={audio} 
+                  song={song} 
+                  displayPlayer={displayPlayer}
+                  displayGlobalAudioPlayer={displayGlobalAudioPlayer}
+                  fetchCurrentSongFileUrl={fetchCurrentSongFileUrl}
+                  changeCurrentTime={ changeCurrentTime }/>
               </div>
               <img src={ song.imageUrl } className='song-show-image' />
             </div>

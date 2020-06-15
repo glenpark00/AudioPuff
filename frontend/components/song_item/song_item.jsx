@@ -13,13 +13,13 @@ export default class SongShow extends React.Component {
   }
 
   handlePlayButton() {
-    const { currentSong, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
-    if (currentSong.playing && song.id === currentSong.id) {
+    const { audio, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
+    if (audio.playing && song.id === currentSong.id) {
       const globalAudio = document.querySelector('.global-audio-player');
       globalAudio.pause();
       pauseAudio();
     } else {
-      if (currentSong.id === song.id) {
+      if (audio.currentSong.id === song.id) {
         const globalAudio = document.querySelector('.global-audio-player');
         globalAudio.play();
         playAudio();
@@ -31,8 +31,8 @@ export default class SongShow extends React.Component {
   }
 
   playButtonContent() {
-    const { currentSong, song } = this.props;
-    if (currentSong.id === song.id && currentSong.playing) {
+    const { audio, song } = this.props;
+    if (audio.currentSong.id === song.id && audio.playing) {
       return <FaPause />
     } else  {
       return <FaPlay />
@@ -48,7 +48,7 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user, currentSong, displayPlayer, changeCurrentTime } = this.props;
+    const { song, user, audio, displayPlayer, changeCurrentTime, fetchCurrentSongFileUrl, displayGlobalAudioPlayer } = this.props;
     return (
       <div className='song-item'>
         <img className='song-item-image' onClick={ this.openSongShow } src={ song.imageUrl } />
@@ -60,10 +60,16 @@ export default class SongShow extends React.Component {
                 <div className='song-item-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
                 <div className='song-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
               </div>
-              <div className='song-item-title'>{ song.title }</div>
+              <div className='song-item-title' onClick={this.openSongShow}>{ song.title }</div>
             </div>
           </div>
-          <SongItemWaveform currentSong={ currentSong } song={ song } displayPlayer={ displayPlayer } changeCurrentTime={ changeCurrentTime } />
+          <SongItemWaveform 
+            audio={ audio }
+            song={ song }
+            displayPlayer={ displayPlayer }
+            displayGlobalAudioPlayer={ displayGlobalAudioPlayer }
+            fetchCurrentSongFileUrl={fetchCurrentSongFileUrl }
+            changeCurrentTime={ changeCurrentTime } />
         </div>
       </div>
     )

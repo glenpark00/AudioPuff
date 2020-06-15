@@ -31,19 +31,21 @@ html, body {
 }
 
 #app-body {
-  height: calc(100% - 100px);
-  /* display: flex;
+  min-height: calc(100% - 51px);
+  display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center; */
+}
+
+#app-body > div:first-child {
+  flex: 1;
 }
 
 .no-select {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

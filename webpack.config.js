@@ -15,7 +15,10 @@ module.exports = {
 					loader: 'babel-loader',
 					query: {
 						presets: ['@babel/env', '@babel/react'],
-						plugins: ['@babel/plugin-proposal-class-properties']
+						plugins: [
+							'@babel/plugin-transform-runtime',
+							'@babel/plugin-proposal-class-properties'
+						]
 					}
 				},
 			}

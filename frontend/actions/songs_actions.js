@@ -26,14 +26,15 @@ const clearDeletedSong = songId => ({
   songId
 })
 
-const receiveCurrentSong = song => ({
-  type: RECEIVE_CURRENT_SONG,
-  song
-})
 
 const receiveSongs = data => ({
   type: RECEIVE_SONGS,
   data
+})
+
+const receiveCurrentSong = song => ({
+  type: RECEIVE_CURRENT_SONG,
+  song
 })
 
 export const changeCurrentTime = time => ({
@@ -81,7 +82,7 @@ export const fetchCurrentSongFileUrl = songId => dispatch => (
     song => dispatch(receiveCurrentSong(song))
   )
 )
-
+ 
 export const fetchNSongs = n => dispatch => (
   SongsApiUtil.fetchNSongs(n).then(
     data => dispatch(receiveSongs(data))

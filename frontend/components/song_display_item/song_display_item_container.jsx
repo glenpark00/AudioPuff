@@ -5,7 +5,7 @@ import SongDisplayItem from './song_display_item';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
-  currentSong: state.currentSong,
+  currentSong: state.audio.currentSong ? state.audio.currentSong : {},
   displayPlayer: state.ui.displayPlayer
 })
 

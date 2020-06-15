@@ -9,16 +9,18 @@ export default class GlobalAudioPlayer extends React.Component {
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
     this.updateTime = this.updateTime.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.playNextSong = this.playNextSong.bind(this);
   }
 
   handleControls() {
-    const player = document.querySelector('.global-audio-player')
-    if (this.props.currentSong.playing) {
+    const { audio, pauseAudio, playAudio } = this.props;
+    const player = document.querySelector('.global-audio-player');
+    if (audio.currentSong.playing) {
       player.pause();
-      this.props.pauseAudio();
+      pauseAudio();
     } else {
       player.play();
-      this.props.playAudio();
+      playAudio();
     }
   }
 
@@ -57,51 +59,62 @@ export default class GlobalAudioPlayer extends React.Component {
   } 
 
   currentProgress() {
-    return (this.props.currentSong.currentTime / this.props.currentSong.duration) * 100
+    return (this.props.audio.currentSong.currentTime / this.props.audio.currentSong.duration) * 100
   }
 
   handleClick(e) {
-    const { changeCurrentTime, currentSong } = this.props;
+    const { changeCurrentTime, audio } = this.props;
     let currentTargetRect = e.currentTarget.getBoundingClientRect();
     const offsetX = e.pageX - currentTargetRect.left;
-    const newTime = Math.floor((offsetX / e.currentTarget.offsetWidth) * currentSong.duration);
+    const newTime = Math.floor((offsetX / e.currentTarget.offsetWidth) * audio.currentSong.duration);
     changeCurrentTime(newTime);
     document.querySelector('.global-audio-player').currentTime = newTime;
   }
 
+  playNextSong() {
+    const { fetchCurrentSongFileUrl, audio } = this.props;
+    if (audio.songIds.length <= 1) {
+      const player = document.querySelector('.global-audio-player');
+      player.play();
+    } else {
+      fetchCurrentSongFileUrl(audio.nextSong);
+    }
+  }
+
   render() {
-    const { currentSong, displayPlayer, users } = this.props;
-    const user = users[currentSong.userUrl];
+    const { audio, displayPlayer, users } = this.props;
+    const user = (audio.currentSong ? users[audio.currentSong.userUrl] : null);
+    if (!displayPlayer || !audio.currentSong || !user) return null;
     const currentProgress = this.currentProgress()
-    if (!displayPlayer || !currentSong || !user) return <div className='phantom-audio-player'><div></div></div>;
     return (
       <>
+        <div className='phantom-audio-player'><div></div></div>
         <div className='global-audio-player-div'>
           <div onClick={this.handleControls}>{this.buttonContent()}</div>
           <div className='progress-bar'>
-            <div className='player-time'>{this.convertSecsToMins(currentSong.currentTime)}</div>
+            <div className='player-time'>{this.convertSecsToMins(audio.currentSong.currentTime)}</div>
             <div className='full-progress-line' onClick={this.handleClick}>
               <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
               <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
             </div>
-            <div className='player-time'>{this.convertSecsToMins(currentSong.duration)}</div>
+            <div className='player-time'>{this.convertSecsToMins(audio.currentSong.duration)}</div>
           </div>
           <div className='player-song-info-container'>
-            <img className='player-song-image' src={currentSong.imageUrl} />
+            <img className='player-song-image' src={audio.currentSong.imageUrl} />
             <div className='player-song-info'>
               <div className='player-song-name'>{user.displayName}</div>
-              <div className='player-song-title'>{currentSong.title}</div>
+              <div className='player-song-title'>{audio.currentSong.title}</div>
             </div>
           </div>
           <audio 
             muted hidden 
             className='global-audio-player' 
             onTimeUpdate={e => this.handleTimeUpdate(e)} 
+            onEnded={this.playNextSong}
             controls autoPlay 
-            src={currentSong.fileUrl}
+            src={audio.currentSong.fileUrl}
           ></audio>
         </div>
-        <div className='phantom-audio-player'><div></div></div>
       </>
     )
   }
