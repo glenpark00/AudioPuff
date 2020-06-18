@@ -13,6 +13,8 @@
 #
 class Song < ApplicationRecord
   validates :title, :song_url, :genre, :user_url, presence: true
+  validates :title, uniqueness: { scope: :user_url }
+  validates :song_url, uniqueness: { scope: :user_url }
 
   belongs_to :user,
     primary_key: :profile_url,

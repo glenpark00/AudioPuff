@@ -9,22 +9,27 @@ export default class SongItemWaveform extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.resizeProgressDiv);
-    window.resizeWaveform = true;
-    const { song } = this.props;
-    const progressDiv = document.querySelector(`#waveform-progress-${song.id}`);
-    progressDiv.style.width = '0%';
+    const { song, audio } = this.props;
     const progressImg = document.querySelector(`#waveform-progress-img-${song.id}`)
     progressImg.style.filter = 'invert(17%) sepia(86%) saturate(6300%) hue-rotate(330deg) brightness(80%) contrast(99%)';
-    progressImg.style.width = document.querySelector('.waveform-audio').offsetWidth + 'px';
+    const progressDiv = document.querySelector(`#waveform-progress-${song.id}`);
+    if (audio.currentSong.id === song.id) {
+      progressDiv.style.width = `${(audio.currentSong.currentTime / song.duration) * 100}%`;
+    } else {
+      progressDiv.style.width = '0%';
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.resizeProgressDiv);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { audio, song } = this.props;
     const progressDiv = document.querySelector(`#waveform-progress-${song.id}`);
+    if (!prevProps.audio.playing && audio.playing) {
+      this.resizeProgressDiv();
+    }
     if (audio.currentSong.id === song.id) {
       progressDiv.style.width = `${(audio.currentSong.currentTime / song.duration) * 100}%`;
     } else {
@@ -34,7 +39,7 @@ export default class SongItemWaveform extends React.Component {
 
   resizeProgressDiv() {
     const progressImg = document.querySelector(`#waveform-progress-img-${this.props.song.id}`)
-    progressImg.style.width = document.querySelector('.waveform-audio').offsetWidth + 'px';
+    progressImg.style.width = `${document.querySelector('.waveform-audio').offsetWidth}px`;
   } 
 
   convertSecsToMins(seconds) {
@@ -80,11 +85,13 @@ export default class SongItemWaveform extends React.Component {
 
   render() {
     const { song } = this.props;
+    const waveform = document.querySelector('.waveform-audio');
+    const waveformWidth = waveform ? waveform.offsetWidth : 0;
     return (
       <div className='song-item-waveform' onClick={this.handleClick}>
         <div className='waveform-audio'>
           <div id={`waveform-progress-${song.id}`} className='waveform-progress'>
-            <img id={`waveform-progress-img-${song.id}`} className='waveform-progress-img' src={song.waveform} alt="waveform" />
+            <img id={`waveform-progress-img-${song.id}`} className='waveform-progress-img' src={song.waveform} alt="waveform" width={`${waveformWidth}px`} />
           </div>
           <img className='waveform-default' src={song.waveform} alt="waveform" />
         </div>

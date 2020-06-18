@@ -10,8 +10,9 @@ class CreateSongs < ActiveRecord::Migration[5.2]
       t.string :waveform, null: false
       t.timestamps
     end
-
+    
     add_index :songs, :user_url
     add_index :songs, [:user_url, :song_url], unique: true
+    add_index :songs, [:user_url, :title], unique: true
   end
 end

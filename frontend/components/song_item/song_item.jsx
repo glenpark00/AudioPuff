@@ -14,7 +14,7 @@ export default class SongShow extends React.Component {
 
   handlePlayButton() {
     const { audio, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
-    if (audio.playing && song.id === currentSong.id) {
+    if (audio.playing && song.id === audio.currentSong.id) {
       const globalAudio = document.querySelector('.global-audio-player');
       globalAudio.pause();
       pauseAudio();

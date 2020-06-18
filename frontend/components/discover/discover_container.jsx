@@ -3,7 +3,7 @@ import Discover from './discover';
 import { fetchNSongs } from '../../actions/songs_actions';
 
 const mapStateToProps = state => ({
-  songs: state.entities.songs,
+  songs: Object.values(state.entities.songs),
   users: state.entities.users
 })
 

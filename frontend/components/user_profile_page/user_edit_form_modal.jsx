@@ -1,8 +1,9 @@
 import React from 'react';
 import UserEditImageUpload from './user_edit_image_upload';
 import UserEditProfileUrl from './user_edit_profile_url';
+import { withRouter } from 'react-router-dom';
 
-export default class UserEditFormModal extends React.Component {
+class UserEditFormModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +52,7 @@ export default class UserEditFormModal extends React.Component {
       const formData = this.prepareForm();
       this.props.updateUser(formData);
       this.props.handleCloseModal();
+      this.props.history.push(`/${this.state.profileUrl}`)
     }
   }
 
@@ -130,3 +132,5 @@ export default class UserEditFormModal extends React.Component {
     )
   }
 }
+
+export default withRouter(UserEditFormModal);

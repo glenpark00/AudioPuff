@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get 'songs/:id/file', to: 'songs#fetch_song_file'
     post 'songs/n', to: 'songs#fetch_n_songs'
     get 'song-search', to: 'songs#song_search'
+    
     resource :session, only: [:create, :destroy]
   end
 end

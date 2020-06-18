@@ -40,8 +40,53 @@
   font-size: 14px;
 }
 
-.new-songs-index {
+.songs-carousel-container {
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
+  padding: 0 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.songs-carousel {
   display: flex;
-  flex-wrap: wrap;
+  width: auto;
+  height: auto;
+  overflow-x: auto;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+.songs-carousel::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; 
+}
+
+.carousel-scroll-button {
+  border: 1px solid #999;
+  border-radius: 3px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  font-size: 20px;
+  line-height: 47px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 90px;
+}
+
+.carousel-scroll-button-container {
+  position: absolute;
+  top: -10%;
   height: 100%;
+  z-index: 1;
+}
+
+#carousel-left-button-container {
+  left: 0;
+}
+
+#carousel-right-button-container {
+  right: 0;
 }

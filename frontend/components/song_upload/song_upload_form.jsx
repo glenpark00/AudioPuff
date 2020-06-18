@@ -14,8 +14,7 @@ export default class SongUploadForm extends React.Component {
       songUrl: this.props.audioFile.name.split('.')[0],
       genre: 'None',
       description: '',
-      waveform: null,
-      titleError: false
+      waveform: null
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -25,6 +24,10 @@ export default class SongUploadForm extends React.Component {
 
   componentDidMount() {
     this.createSongWaveform(this.state.audioFile)
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   handleInput(type) {
@@ -58,7 +61,7 @@ export default class SongUploadForm extends React.Component {
 
   filterData(audioBuffer) {
     const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
-    const samples = 200; // Number of samples we want to have in our final data set
+    const samples = 170; // Number of samples we want to have in our final data set
     const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
     const filteredData = [];
     for (let i = 0; i < samples; i++) {
@@ -94,19 +97,6 @@ export default class SongUploadForm extends React.Component {
     return canvas.toDataURL();
   }
 
-  checkFields() {
-    if (this.state.title === '') {
-      this.setState({ titleError: true })
-    } else {
-      this.setState({ titleError: false })
-    }
-    if (this.state.songUrl === '') {
-      this.setState({ urlError: true })
-    } else {
-      this.setState({ urlError: false })
-    }
-  }
-
   prepareForm() {
     const formData = new FormData();
     const { audioFile, waveform, duration, imageFile, title, songUrl, genre, description } = this.state;
@@ -124,13 +114,10 @@ export default class SongUploadForm extends React.Component {
   }
 
   handleCreateSong() {
-    this.checkFields();
-    if (this.state.title != '' && this.state.songUrl != '') {
-      const formData = this.prepareForm();
-      this.props.createSong(formData).then(
-        () => this.props.history.push(`/${this.props.currentUser.profileUrl}/${this.state.songUrl}`)
-      );
-    }
+    const formData = this.prepareForm();
+    this.props.createSong(formData).then(
+      () => this.props.history.push(`/${this.props.currentUser.profileUrl}/${this.state.songUrl}`)
+    );
   }
 
   handleCancel() {
@@ -144,8 +131,23 @@ export default class SongUploadForm extends React.Component {
     this.props.setAudioFile(null);
   }
 
+  checkErrors() {
+    const { errors } = this.props;
+    if (!errors || errors === []) return {};
+    const res = {};
+    errors.map(err => {
+      if (err.includes('Title')) {
+        res.title = err;
+      } else if (err.includes('Song url')) {
+        res.url = err;
+      }
+    })
+    return res;
+  }
+
   render() {
     const { title, songUrl, genre, description } = this.state;
+    const errors = this.checkErrors();
     return (
       <div className='song-form-background'> 
         <div className='song-form'>
@@ -155,13 +157,18 @@ export default class SongUploadForm extends React.Component {
             <div className='song-info-form'>
               <div className='song-form-text'>Title</div>
               <input className='song-form-input' type="text" value={title} onChange={this.handleInput('title')} />
-              { this.state.titleError ? <div>You must provide a title</div> : '' }
-              <div className='song-url-field'>
-                <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.currentUser.profileUrl}/</span>
-                <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} urlError={this.state.urlError} />
+              { <div className='song-upload-error'>{errors.title}</div>  }
+              <div>
+                <div className='song-url-field'>
+                  <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.currentUser.profileUrl}/</span>
+                  <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} />
+                </div>
+                { <div className='song-upload-error'>{errors.url}</div> }
               </div>
-              <div className='song-form-text'>Genre</div>
+              <div className='song-genre-field'>
+                <div className='song-form-text'>Genre</div>
                 <SongUploadGenre genre={genre} handleInput={this.handleInput} />
+              </div>
               <div className='song-form-text'>Description</div>
               <textarea className='song-input-textarea'
                         value={description} 

@@ -167,6 +167,7 @@
   border: 1px solid #e5e5e5;
   padding: 2px;
   text-align: center;
+  cursor: pointer;
 }
 
 
@@ -202,7 +203,6 @@
   border: 1px solid #ccc;
   transition: border-color .1s;
   background: #fff;
-  margin-bottom: 20px;
   width: 100%;
 }
 
@@ -222,7 +222,6 @@
   border: 1px solid #ccc;
   transition: border-color .1s;
   background: #fff;
-  margin-bottom: 20px;
   width: 100%;
   padding: 3px 0;
 }
@@ -232,7 +231,6 @@
   font-weight: 100;
   font-size: 14px;
   color: #999;
-  margin-bottom: 20px;
   height: 25px;
   line-height: 25px;
 }
@@ -242,7 +240,6 @@
   font-weight: 100;
   font-size: 14px;
   color: black;
-  margin-bottom: 20px;
   height: 25px;
   line-height: 25px;
 }
@@ -250,11 +247,15 @@
 .song-url-edit-button {
   background-color: #e5e5e5;
   width: 30px;
-  height: 30px;
+  height: 20px;
   font-size: 20px;
   margin-left: auto;
   border: 1px solid #e5e5e5;
   border-radius: 3px;
+}
+
+.song-genre-field {
+  margin-bottom: 30px;
 }
 
 .song-input-textarea {
@@ -291,3 +292,16 @@
   margin: 0 25px;
   height: 26px;
 }
+
+.song-upload-error {
+  font-weight: 100;
+  color: #CE1141;
+  font-style: normal;
+  font-size: 12px;
+  font-family: Lucida Grande,Helvetica,Arial,sans-serif;
+  height: 20px;
+  font-size: 14px;
+  color: red;
+  margin: 10px 0;
+}
+

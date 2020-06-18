@@ -1,20 +1,20 @@
 .song-display {
   position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 15px;
+  width: 150px;
+  height: auto;
+  padding: 15px;
 }
 
 .song-display-image {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 
 .song-display-play {
   display: none;
   position: absolute;
-  top: 38%;
-  left: 38%;
+  top: 30%;
+  left: 36%;
   color: white;
   text-align: center;
   line-height: 40px;
@@ -24,6 +24,7 @@
   height: 50px;
   line-height: 55px;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .song-display-play:hover { 

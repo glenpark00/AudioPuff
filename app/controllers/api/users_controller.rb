@@ -34,6 +34,13 @@ class Api::UsersController < ApplicationController
       params[:user][:profile_image] = @user.profile_image
     end
     if @user.update(update_user_params)
+      new_profile_url = params[:user][:profile_url]
+      if new_profile_url != @user.profile_url
+        @old_songs = Song.where('user_url = ?', @user.profile_url)
+        @old_songs.each do |song|
+          song.update({ user_url: new_profile_url })
+        end
+      end
       render :show
     else
       render json: @user.errors.full_messages, status: 422

@@ -16,7 +16,7 @@ const receiveSong = data => ({
   data
 })
 
-const receiveSongErrors = errors => ({
+export const receiveSongErrors = errors => ({
   type: RECEIVE_SONG_ERRORS,
   errors
 })
@@ -54,7 +54,10 @@ export const pauseAudio = () => ({
 export const createSong = song => dispatch => (
   SongsApiUtil.createSong(song).then(
     song => dispatch(receiveSong(song)),
-    errors => dispatch(receiveSongErrors(errors.responseJSON))
+    errors => {
+      console.log(errors);
+      dispatch(receiveSongErrors(errors.responseJSON))
+    }
   )
 )
 

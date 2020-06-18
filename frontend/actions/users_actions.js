@@ -1,4 +1,5 @@
 import * as UsersApiUtil from '../util/users_api_util';
+import { receiveCurrentUser } from './session_actions'
 
 // Action Type Constants
 export const RECEIVE_USER = 'RECEIVE_USER';
@@ -35,7 +36,10 @@ export const fetchUsers = () => dispatch => (
 
 export const updateUser = user => dispatch => (
   UsersApiUtil.updateUser(user).then(
-    user => dispatch(receiveUser(user))
+    user => {
+      dispatch(receiveCurrentUser(user))
+      dispatch(receiveUser(user));
+    }
   )
 )
 

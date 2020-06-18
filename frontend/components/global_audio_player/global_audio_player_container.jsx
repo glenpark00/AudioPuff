@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import { playAudio, pauseAudio, changeCurrentTime, fetchCurrentSongFileUrl } from '../../actions/songs_actions';
-import GlobalAudioPlayer from './global_audio_player';
+import GlobalAudio from './global_audio';
 
 const mapStateToProps = state => ({
-  audio: state.audio,
+  audio: state.audio.currentSong ? state.audio : { currentSong: {}, songIds: state.audio.songIds, playing: false },
   displayPlayer: state.ui.displayPlayer,
   users: state.entities.users
 })
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
   fetchCurrentSongFileUrl: songId => dispatch(fetchCurrentSongFileUrl(songId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GlobalAudioPlayer);
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalAudio);

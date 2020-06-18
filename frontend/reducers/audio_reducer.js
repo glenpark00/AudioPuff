@@ -8,12 +8,17 @@ const audioReducer = (state = {}, action) => {
     case RECEIVE_CURRENT_SONG:
       const currentSong = { ...action.song, currentTime: 0 };
       if (state.songIds) {
-        let nextSongId = state.songIds.indexOf(action.song.id) + 1;
-        if (nextSongId >= state.songIds.length) {
-          nextSongId = 0;
+        let nextSongIdx = state.songIds.indexOf(action.song.id) + 1;
+        if (nextSongIdx >= state.songIds.length) {
+          nextSongIdx = 0;
         }
-        const nextSong = state.songIds[nextSongId];
-        return Object.assign(newState, { currentSong, nextSong, playing: true });
+        let prevSongIdx = state.songIds.indexOf(action.song.id) - 1;
+        if (prevSongIdx < 0) {
+          prevSongIdx = 0;
+        }
+        const nextSong = state.songIds[nextSongIdx];
+        const prevSong = state.songIds[prevSongIdx];
+        return Object.assign(newState, { currentSong, nextSong, prevSong, playing: true });
       } else {
         return Object.assign(newState, { currentSong, nextSong: action.song.id, songIds: [action.song.id], playing: true })
       }
@@ -27,10 +32,10 @@ const audioReducer = (state = {}, action) => {
       newState.playing = false;
       return newState;
     case RECEIVE_SONGS:
-      const songIds = Object.values(action.data.songs).map(song => song.id);
+      const songIds = action.data.songs ? Object.values(action.data.songs).map(song => song.id) : {};
       return Object.assign(newState, { songIds });
     case RECEIVE_USER_SONGS:
-      const userSongIds = Object.values(action.data.songs).map(song => song.id);
+      const userSongIds = action.data.songs ? Object.values(action.data.songs).map(song => song.id) : {};
       return Object.assign(newState, { songIds: userSongIds });
     default:
       return state;

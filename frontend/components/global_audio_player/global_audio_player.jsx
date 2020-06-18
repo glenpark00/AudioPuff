@@ -1,6 +1,7 @@
 import React from 'react';
 import { throttle } from 'throttle-debounce';
-import { FaPlay, FaPause } from 'react-icons/fa';
+import { FaPlay, FaPause, FaVolumeDown, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import { MdSkipPrevious, MdSkipNext } from 'react-icons/md'; 
 
 export default class GlobalAudioPlayer extends React.Component {
   constructor(props) {
@@ -10,12 +11,19 @@ export default class GlobalAudioPlayer extends React.Component {
     this.updateTime = this.updateTime.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.playNextSong = this.playNextSong.bind(this);
+    this.playPrevSong = this.playPrevSong.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+  }
+
+  componentDidMount() {
+    const player = document.querySelector('.global-audio-player');
+    player.volume = 0.5;
   }
 
   handleControls() {
     const { audio, pauseAudio, playAudio } = this.props;
     const player = document.querySelector('.global-audio-player');
-    if (audio.currentSong.playing) {
+    if (audio.playing) {
       player.pause();
       pauseAudio();
     } else {
@@ -51,6 +59,28 @@ export default class GlobalAudioPlayer extends React.Component {
     }
   }
 
+  volumeContent() {
+    const player = document.querySelector('.global-audio-player');
+    if (!player) {
+      return null;
+    }
+    if (player.volume === 0) {
+      return <FaVolumeMute />
+    } else if (player.volume < 0.5) {
+      return <FaVolumeDown />
+    } else {
+      return <FaVolumeUp />
+    }
+  }
+
+  onVolumeMouseEnter() {
+    document.querySelector('.global-audio-slider-container').style.display = 'flex';
+  }
+  
+  onVolumeMouseLeave() {
+    document.querySelector('.global-audio-slider-container').style.display = 'none';
+  }
+
   convertSecsToMins(seconds) {
     let mins = Math.floor(seconds / 60).toString();
     let secs = seconds % 60;
@@ -81,23 +111,78 @@ export default class GlobalAudioPlayer extends React.Component {
     }
   }
 
+  playPrevSong() {
+    const { fetchCurrentSongFileUrl, audio, changeCurrentTime } = this.props;
+    const player = document.querySelector('.global-audio-player');
+    if (audio.currentSong.currentTime > 1) {
+      changeCurrentTime(0);
+      player.currentTime = 0;
+    } else if (audio.songIds.length <= 1) {
+      player.play();
+    } else {
+      fetchCurrentSongFileUrl(audio.prevSong);
+    }
+  }
+
+  handleDotMouseEnter() {
+    document.querySelector('.progress-line-dot').style.display = 'block';
+  }
+
+  handleDotMouseLeave() {
+    document.querySelector('.progress-line-dot').style.display = 'none';
+  }
+
+  handleVolumeChange(e) {
+    const player = document.querySelector('.global-audio-player');
+    player.volume = e.target.value / 100;
+  }
+
+  handleVolumeClick() {
+    const player = document.querySelector('.global-audio-player');
+    const slider = document.querySelector('.global-audio-slider');
+    if (player.volume > 0) {
+      player.volume = 0;
+      slider.value = 0;
+    } else {
+      player.volume = 0.5;
+      slider.value = 50;
+    }
+  }
+
   render() {
-    const { audio, displayPlayer, users } = this.props;
-    const user = (audio.currentSong ? users[audio.currentSong.userUrl] : null);
-    if (!displayPlayer || !audio.currentSong || !user) return null;
-    const currentProgress = this.currentProgress()
+    const { audio, users } = this.props;
+    const user = (audio.currentSong.userUrl ? users[audio.currentSong.userUrl] : {});
+    const currentProgress = this.currentProgress();
     return (
       <>
         <div className='phantom-audio-player'><div></div></div>
         <div className='global-audio-player-div'>
-          <div onClick={this.handleControls}>{this.buttonContent()}</div>
-          <div className='progress-bar'>
+          <div className='global-audio-buttons'>
+            <div className='global-audio-skip-btn' onClick={this.playPrevSong}><MdSkipPrevious /></div>
+            <div onClick={this.handleControls}>{this.buttonContent()}</div>
+            <div className='global-audio-skip-btn' onClick={this.playNextSong}><MdSkipNext /></div>
+          </div>
+          <div className='progress-bar' onMouseEnter={this.handleDotMouseEnter} onMouseLeave={this.handleDotMouseLeave}>
             <div className='player-time'>{this.convertSecsToMins(audio.currentSong.currentTime)}</div>
             <div className='full-progress-line' onClick={this.handleClick}>
               <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
+              <div className='progress-line-dot'></div>
               <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
             </div>
             <div className='player-time'>{this.convertSecsToMins(audio.currentSong.duration)}</div>
+          </div>
+          <div className='global-audio-volume-container' onMouseEnter={this.onVolumeMouseEnter} onMouseLeave={this.onVolumeMouseLeave}>
+            <div className='global-audio-volume' onClick={this.handleVolumeClick}>
+              {this.volumeContent()}
+            </div>
+            <div className='global-audio-slider-container' onMouseEnter={this.onVolumeMouseEnter} onMouseLeave={this.onVolumeMouseLeave}>
+                <input 
+                  className='global-audio-slider' 
+                  type='range' 
+                  onChange={this.handleVolumeChange} 
+                  defaultValue='50'
+                  min='0' max='100' step='1' />
+              </div>
           </div>
           <div className='player-song-info-container'>
             <img className='player-song-image' src={audio.currentSong.imageUrl} />
@@ -107,11 +192,11 @@ export default class GlobalAudioPlayer extends React.Component {
             </div>
           </div>
           <audio 
-            muted hidden 
+            hidden 
             className='global-audio-player' 
             onTimeUpdate={e => this.handleTimeUpdate(e)} 
             onEnded={this.playNextSong}
-            controls autoPlay 
+            autoPlay 
             src={audio.currentSong.fileUrl}
           ></audio>
         </div>

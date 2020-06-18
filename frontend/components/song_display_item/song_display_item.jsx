@@ -12,13 +12,13 @@ export default class SongDisplayItem extends React.Component {
   }
   
   handlePlayButton() {
-    const { currentSong, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio, displayPlayer } = this.props;
-    if (currentSong.playing && song.id === currentSong.id) {
+    const { audio, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio, displayPlayer } = this.props;
+    if (audio.playing && song.id === audio.currentSong.id) {
       const globalAudio = document.querySelector('.global-audio-player');
       globalAudio.pause();
       pauseAudio();
     } else {
-      if (displayPlayer && currentSong.id === song.id) {
+      if (displayPlayer && audio.currentSong.id === song.id) {
         const globalAudio = document.querySelector('.global-audio-player');
         globalAudio.play();
         playAudio();
@@ -30,8 +30,8 @@ export default class SongDisplayItem extends React.Component {
   }
 
   playButtonContent() {
-    const { currentSong, song } = this.props;
-    if (currentSong.id === song.id && currentSong.playing) {
+    const { audio, song } = this.props;
+    if (audio.currentSong.id === song.id && audio.playing) {
       return <FaPause />
     } else {
       return <FaPlay />
@@ -58,34 +58,31 @@ export default class SongDisplayItem extends React.Component {
 
   render() {
     const { song, user } = this.props;
-    if (song && user) {
-      return (
-        <div className='song-display'>
-          <img 
-            className='song-display-image' 
-            onClick={this.openSongShow} 
-            onMouseOver={this.showPlayButton} 
-            onMouseLeave={this.hidePlayButton} 
-            src={song.imageUrl} 
-          />
-          <div 
-            id={`song-display-play-${song.id}`} 
-            className='song-display-play' 
-            onClick={this.handlePlayButton} 
-            onMouseOver={this.showPlayButton} 
-            onMouseLeave={this.showPlayButton} 
-            onClick={this.handlePlayButton}
-          >
-            {this.playButtonContent()}
-          </div> 
-          <div className='song-display-info'>
-            <div className='song-display-title' onClick={this.openSongShow}>{song.title}</div>
-            <div className='song-display-user-name' onClick={this.linkToProfile}>{user.displayName}</div>
-          </div>
+    if (!song || !user) return null;
+    return (
+      <div className='song-display' key={this.props.key}>
+        <img 
+          className='song-display-image' 
+          onClick={this.openSongShow} 
+          onMouseOver={this.showPlayButton} 
+          onMouseLeave={this.hidePlayButton} 
+          src={song.imageUrl} 
+        />
+        <div 
+          id={`song-display-play-${song.id}`} 
+          className='song-display-play' 
+          onClick={this.handlePlayButton} 
+          onMouseOver={this.showPlayButton} 
+          onMouseLeave={this.showPlayButton} 
+          onClick={this.handlePlayButton}
+        >
+          {this.playButtonContent()}
+        </div> 
+        <div className='song-display-info'>
+          <div className='song-display-title' onClick={this.openSongShow}>{song.title}</div>
+          <div className='song-display-user-name' onClick={this.linkToProfile}>{user.displayName}</div>
         </div>
-      )
-    } else {
-      return null;
-    }
+      </div>
+    )
   }
 }
