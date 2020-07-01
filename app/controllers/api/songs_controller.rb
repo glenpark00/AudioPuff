@@ -40,8 +40,8 @@ class Api::SongsController < ApplicationController
   end
 
   def index
-    @users = [User.find_by(profile_url: params[:user_id])]
-    @songs = Song.where('user_url = ?', params[:user_id])
+    @users = [User.with_attached_profile_image.find_by(profile_url: params[:user_id])]
+    @songs = Song.with_attached_image_file.where('user_url = ?', params[:user_id])
     render :index
   end
 
@@ -52,14 +52,23 @@ class Api::SongsController < ApplicationController
 
   def fetch_n_songs
     # @songs = Song.all.order('RANDOM()').limit(params[:n])
-    @songs = Song.all.limit(params[:n])
+    @songs = Song.with_attached_image_file.eager_load(:user).all.limit(params[:n])
     userUrls = @songs.map { |song| song.user_url }.uniq
-    @users = User.where(profile_url: userUrls)
+    @users = User.with_attached_profile_image.where(profile_url: userUrls)
     render :index
   end
 
-  def song_search
-
+  def search
+    @songs = Song.with_attached_image_file.includes(:user).where('LOWER(title) LIKE ?', "%#{params[:fragment].downcase}%")
+    @users = []
+    users = User.with_attached_profile_image.where('LOWER(display_name) LIKE ?', "#{params[:fragment].downcase}%")
+    @songs.each do |song|
+      @users.push(song.user)
+    end
+    users.each do |user|
+      @users.push(user)
+    end
+    render :index
   end
 
   protected

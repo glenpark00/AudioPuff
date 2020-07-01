@@ -1,0 +1,95 @@
+.search-container {
+  width: 30%;
+  position: relative;
+}
+
+.search-bar {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  top: 19%;
+  right: -1%;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+.search-input {
+  background-color: white;
+  width: 100%;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.search-dropdown-container {
+  background-color: rgb(31, 31, 31);
+  position: absolute;
+  top: 120%;
+  left: -1%;
+  width: 105%;
+  height: auto;
+}
+
+.search-dropdown-query {
+  color: rgb(165, 165, 165);
+  height: auto;
+  padding: 10px 15px;
+  background-color: #333;
+  cursor: pointer; 
+  font-size: 14px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.search-dropdown-query:hover {
+  background-color: rgb(43, 41, 41);
+  color: rgb(216, 216, 216);
+}
+
+.search-dropdown-result {
+  color: #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 25px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.search-dropdown-query, .search-dropdown-result {
+  border-bottom: 0.5px solid rgb(31, 31, 31);;
+}
+
+.search-dropdown-result:hover {
+  background-color: #333;
+}
+
+.search-dropdown-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-dropdown-user-img {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.search-dropdown-song-img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.search-dropdown-info > div {
+  font-size: 12px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  height: 12px;
+  line-height: 22px;
+}
+
+.search-dropdown-result > div {
+  font-size: 25px;
+}

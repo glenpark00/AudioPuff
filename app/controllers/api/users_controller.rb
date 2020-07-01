@@ -15,7 +15,7 @@ class Api::UsersController < ApplicationController
 
   # The index controller method will eventually be used for searching users that match some criteria; instead of using User.all, you'll probably have to create your own ActiveRecord User model method to query for specific results; you'll likely use the query string params as the input for that method, and you'll use a .where() with username LIKE 'substring%' SQL method
   def index
-    @users = User.all
+    @users = User.with_attached_profile_image.all
     render :index
   end
  
@@ -29,19 +29,23 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by(id: params[:id])
+    @users = [User.find_by(id: params[:id])]
+    @songs = []
     if params[:user][:profile_image] == 'null'
-      params[:user][:profile_image] = @user.profile_image
+      params[:user][:profile_image] = @users[0].profile_image
     end
-    if @user.update(update_user_params)
+    old_profile_url = @users[0].profile_url
+    if @users[0].update(update_user_params)
       new_profile_url = params[:user][:profile_url]
-      if new_profile_url != @user.profile_url
-        @old_songs = Song.where('user_url = ?', @user.profile_url)
+      if new_profile_url != old_profile_url
+        @old_songs = Song.where('user_url = ?', old_profile_url)
         @old_songs.each do |song|
-          song.update({ user_url: new_profile_url })
+          if song.update({ user_url: new_profile_url })
+            @songs.push(song)
+          end
         end
       end
-      render :show
+      render 'api/songs/index'
     else
       render json: @user.errors.full_messages, status: 422
     end

@@ -49,6 +49,7 @@ class SongShowEditModal extends React.Component {
       const formData = this.prepareForm();
       this.props.updateSong(formData);
       this.props.history.push(`/${this.props.user.profileUrl}`);
+      this.props.history.go();
     }
   }
 

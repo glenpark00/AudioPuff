@@ -60,7 +60,7 @@ export default class SongDisplayItem extends React.Component {
     const { song, user } = this.props;
     if (!song || !user) return null;
     return (
-      <div className='song-display' key={this.props.key}>
+      <div className='song-display' >
         <img 
           className='song-display-image' 
           onClick={this.openSongShow} 

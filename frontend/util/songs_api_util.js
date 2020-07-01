@@ -54,3 +54,11 @@ export const fetchNSongs = n => (
     
   })
 )
+
+export const search = fragment => (
+  $.ajax({
+    url: 'api/search',
+    method: 'GET',
+    data: { fragment }
+  })
+)

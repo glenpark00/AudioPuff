@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 const mapStateToProps = (state, ownProps) => ({
   audio: state.audio.currentSong ? state.audio : { currentSong: {}, songIds: state.audio.songIds, playing: false },
   currentUserUrl: state.session.currentUserUrl,
-  song: state.entities.songs[`${ownProps.match.params.profileUrl}${ownProps.match.params.songUrl}`],
+  song: state.entities.songs[`${ownProps.match.params.profileUrl}${ownProps.match.params.songUrl.split('').filter(c => c !== '_').join('')}`],
   user: state.entities.users[ownProps.match.params.profileUrl]
 })
 

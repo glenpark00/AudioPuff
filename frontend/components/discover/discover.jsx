@@ -13,7 +13,6 @@ export default class Discover extends React.Component {
 
   render() {
     const { users, songs } = this.props;
-    if (!songs) return null;
     return (
       <div className='discover-page-background'>
         <div className='discover-page'>

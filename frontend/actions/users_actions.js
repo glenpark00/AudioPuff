@@ -12,7 +12,7 @@ const receiveUser = user => ({
   user
 });
 
-const receiveManyUsers = users => ({
+export const receiveManyUsers = users => ({
   type: RECEIVE_MANY_USERS,
   users
 });

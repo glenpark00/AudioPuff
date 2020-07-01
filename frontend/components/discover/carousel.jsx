@@ -7,7 +7,7 @@ export default class Carousel extends React.Component {
     super(props);
     this.state = {
       position: 0,
-    }    
+    }
   }
 
   scrollCarousel(side) {
@@ -18,7 +18,7 @@ export default class Carousel extends React.Component {
     if (side === 'left' && position > 0) {
       let newPosition = position - width;
       if (position > scrollWidth) {
-        newPosition -= 2* width;
+        newPosition -= 2 * width;
       }
       if (newPosition < 0) {
         newPosition = 0;
@@ -30,7 +30,7 @@ export default class Carousel extends React.Component {
         newPosition = scrollWidth + width;
       }
       this.scrollTo(newPosition);
-    } 
+    }
   }
 
   scrollTo(position) {
@@ -58,15 +58,15 @@ export default class Carousel extends React.Component {
 
   scrollButton(side) {
     return (
-        <div 
-          id={`carousel-${side}-button-container`} 
-          className='carousel-scroll-button-container' 
-          onClick={() => this.scrollCarousel(side)}
-        >
-          <div id={`carousel-${side}-button`} className='carousel-scroll-button' onMouseEnter={() => this.scrollOnHover(side)}>
-            {side === 'left' ? <MdKeyboardArrowLeft /> : <MdKeyboardArrowRight />}
-          </div>
+      <div
+        id={`carousel-${side}-button-container`}
+        className='carousel-scroll-button-container'
+        onClick={() => this.scrollCarousel(side)}
+      >
+        <div id={`carousel-${side}-button`} className='carousel-scroll-button' onMouseEnter={() => this.scrollOnHover(side)}>
+          {side === 'left' ? <MdKeyboardArrowLeft /> : <MdKeyboardArrowRight />}
         </div>
+      </div>
     )
   }
 

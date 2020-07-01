@@ -9,6 +9,7 @@ export const RECEIVE_SONGS = 'RECEIVE_SONGS';
 export const CHANGE_CURRENT_TIME = 'CHANGE_CURRENT_TIME';
 export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
+export const RECEIVE_SEARCH_RESULTS = 'RECEIVE_SEARCH_RESULTS';
 
 // Regular Action Creators
 const receiveSong = data => ({
@@ -37,6 +38,11 @@ const receiveCurrentSong = song => ({
   song
 })
 
+export const receiveSearchResults = data => ({
+  type: RECEIVE_SEARCH_RESULTS,
+  data
+})
+
 export const changeCurrentTime = time => ({
   type: CHANGE_CURRENT_TIME,
   time
@@ -55,7 +61,6 @@ export const createSong = song => dispatch => (
   SongsApiUtil.createSong(song).then(
     song => dispatch(receiveSong(song)),
     errors => {
-      console.log(errors);
       dispatch(receiveSongErrors(errors.responseJSON))
     }
   )
@@ -91,3 +96,14 @@ export const fetchNSongs = n => dispatch => (
     data => dispatch(receiveSongs(data))
   )
 )
+
+export const search = fragment => dispatch => {
+  if (fragment === '') {
+    dispatch(receiveSearchResults({ songs: {}, users: {} }))
+  } else {
+    SongsApiUtil.search(fragment).then(
+      data => dispatch(receiveSearchResults(data))
+    )
+  }
+
+}
