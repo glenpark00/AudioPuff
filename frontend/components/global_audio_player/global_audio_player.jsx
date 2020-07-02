@@ -192,7 +192,7 @@ export default class GlobalAudioPlayer extends React.Component {
             </div>
           </div>
           <audio 
-            hidden 
+            hidden muted
             className='global-audio-player' 
             onTimeUpdate={e => this.handleTimeUpdate(e)} 
             onEnded={this.playNextSong}

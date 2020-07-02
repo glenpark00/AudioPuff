@@ -23,8 +23,12 @@ const audioReducer = (state = {}, action) => {
         return Object.assign(newState, { currentSong, nextSong: action.song.id, songIds: [action.song.id], playing: true })
       }
     case CHANGE_CURRENT_TIME:
-      newState.currentSong.currentTime = action.time;
-      return newState;
+      if (action.time !== state.currentSong.currentTime) {
+        newState.currentSong.currentTime = action.time;
+        return newState;
+      } else {
+        return state;
+      }
     case PLAY_AUDIO:
       newState.playing = true;
       return newState;

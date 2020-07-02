@@ -23,24 +23,15 @@
 }
 
 .waveform-progress {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // height: 90px;
   overflow: hidden;
 }
 
 .waveform-progress-img {
   height: 90px;
 }
-  
+    
 .waveform-progress-playing {
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // height: 90px;
   overflow: hidden;
-  // display: none;
 }
 
 .waveform-progress-playing-img {
@@ -69,7 +60,6 @@
 }
 
 .waveform-time > div:first-child {
-  display: hidden;
   color: #CE1141;
 }
 
