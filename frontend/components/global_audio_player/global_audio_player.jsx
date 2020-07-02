@@ -6,6 +6,11 @@ import { MdSkipPrevious, MdSkipNext } from 'react-icons/md';
 export default class GlobalAudioPlayer extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      currentProgress: 0,
+      down: false,
+      showDot: false
+    }
     this.handleControls = this.handleControls.bind(this);
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
     this.updateTime = this.updateTime.bind(this);
@@ -13,6 +18,11 @@ export default class GlobalAudioPlayer extends React.Component {
     this.playNextSong = this.playNextSong.bind(this);
     this.playPrevSong = this.playPrevSong.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.updateDrag = this.updateDrag.bind(this);
+    this.handleDotMousedown = this.handleDotMousedown.bind(this);
+    this.onVolumeMouseLeave = this.onVolumeMouseLeave.bind(this);
+    this.handleDotMouseLeave = this.handleDotMouseLeave.bind(this);
+    this.handleDotMouseUp = this.handleDotMouseUp.bind(this);
   }
 
   componentDidMount() {
@@ -39,8 +49,15 @@ export default class GlobalAudioPlayer extends React.Component {
   }
 
   handleTimeUpdate(e) {
+    const { audio } = this.props;
     const globalAudioTime = e.target.currentTime;
-    this.updateTime(globalAudioTime);
+    if (!this.state.down) {
+      this.setState({ currentProgress: (globalAudioTime / audio.currentSong.duration) * 100 }, () => {
+        this.updateTime(globalAudioTime);
+      })
+    } else {
+      this.updateTime(globalAudioTime)
+    }
   }
 
   updateTime = throttle(200, time => {
@@ -78,7 +95,9 @@ export default class GlobalAudioPlayer extends React.Component {
   }
   
   onVolumeMouseLeave() {
-    document.querySelector('.global-audio-slider-container').style.display = 'none';
+    if (!this.state.down) {
+      document.querySelector('.global-audio-slider-container').style.display = 'none';
+    }
   }
 
   convertSecsToMins(seconds) {
@@ -87,10 +106,6 @@ export default class GlobalAudioPlayer extends React.Component {
     secs = (secs < 10 ? '0' + secs.toString() : secs.toString());
     return `${mins}:${secs}`
   } 
-
-  currentProgress() {
-    return (this.props.audio.currentSong.currentTime / this.props.audio.currentSong.duration) * 100
-  }
 
   handleClick(e) {
     const { changeCurrentTime, audio } = this.props;
@@ -124,12 +139,55 @@ export default class GlobalAudioPlayer extends React.Component {
     }
   }
 
-  handleDotMouseEnter() {
-    document.querySelector('.progress-line-dot').style.display = 'block';
+  handleDotMouseLeave() {
+    if (!this.state.down) {
+      this.setState({ showDot: false })
+    }
   }
 
-  handleDotMouseLeave() {
-    document.querySelector('.progress-line-dot').style.display = 'none';
+  handleDotMousedown(e) {
+    e.preventDefault();
+    e.persist();
+    this.setState({ down: true }, () => {
+      document.addEventListener('mouseup', this.handleDotMouseUp);
+      document.addEventListener('mousemove', this.updateDrag);
+      this.updateDrag(e)
+    })
+  }
+
+  handleDotMouseUp(e) {
+    this.setState({ down: false }, () => {
+      document.removeEventListener('mousemove', this.updateDrag);
+      document.removeEventListener('mouseup', this.handleDotMouseUp);
+      const progressLine = document.querySelector('.full-progress-line');
+      const progressWidth = progressLine.offsetWidth;
+      const progressLeft = progressLine.offsetLeft;
+      if (e.pageX < progressLeft) {
+        this.setState({ showDot: false, currentProgress: 0 }, () => {
+          document.querySelector('.global-audio-player').currentTime = 0;
+          this.updateTime(0);
+        })
+      } else if (e.pageX > progressLeft + progressWidth) {
+        const { audio } = this.props;
+        this.setState({ showDot: false, currentProgress: audio.currentSong.duration - 1 }, () => {
+          document.querySelector('.global-audio-player').currentTime = audio.currentSong.duration - 1;
+          this.updateTime(audio.currentSong.duration - 1);
+        })
+      } else if (e.pageY < 714) {
+        this.setState({ showDot: false })
+      }
+    });
+  }
+
+  updateDrag(e) {
+    const progressLine = document.querySelector('.full-progress-line')
+    const offsetX = e.pageX - progressLine.offsetLeft;
+    if (this.state.down && e.pageX >= progressLine.offsetLeft && e.pageX <= (progressLine.offsetLeft + progressLine.offsetWidth)) {
+      const newPosition = Math.floor((offsetX / progressLine.offsetWidth) * 100);
+      this.setState({ currentProgress: newPosition }, () => {
+        document.querySelector('.current-progress-line').style.width = `${newPosition}%`
+      })
+    }
   }
 
   handleVolumeChange(e) {
@@ -151,8 +209,8 @@ export default class GlobalAudioPlayer extends React.Component {
 
   render() {
     const { audio, users } = this.props;
+    const { currentProgress, down } = this.state;
     const user = (audio.currentSong.userUrl ? users[audio.currentSong.userUrl] : {});
-    const currentProgress = this.currentProgress();
     return (
       <>
         <div className='phantom-audio-player'><div></div></div>
@@ -162,11 +220,28 @@ export default class GlobalAudioPlayer extends React.Component {
             <div onClick={this.handleControls}>{this.buttonContent()}</div>
             <div className='global-audio-skip-btn' onClick={this.playNextSong}><MdSkipNext /></div>
           </div>
-          <div className='progress-bar' onMouseEnter={this.handleDotMouseEnter} onMouseLeave={this.handleDotMouseLeave}>
-            <div className='player-time'>{this.convertSecsToMins(audio.currentSong.currentTime)}</div>
-            <div className='full-progress-line' onClick={this.handleClick}>
+          <div className='progress-bar'>
+            <div className='player-time'>
+              { down ? 
+                this.convertSecsToMins(Math.floor(currentProgress))
+                : this.convertSecsToMins(audio.currentSong.currentTime) 
+              }
+            </div>
+            <div 
+              className='full-progress-line' 
+              onClick={this.handleClick} 
+              onMouseEnter={() => this.setState({ showDot: true })}
+              onMouseLeave={this.handleDotMouseLeave}
+            >
               <div className='current-progress-line' style={{ width: `${currentProgress}%` }}></div>
-              <div className='progress-line-dot'></div>
+              { this.state.showDot ? (
+                <div
+                  className='progress-dot-container'
+                  onMouseDown={this.handleDotMousedown}
+                >
+                  <div className='progress-line-dot'></div>
+                </div>
+              ) : null }
               <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
             </div>
             <div className='player-time'>{this.convertSecsToMins(audio.currentSong.duration)}</div>

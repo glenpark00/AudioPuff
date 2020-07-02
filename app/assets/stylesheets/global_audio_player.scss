@@ -15,6 +15,7 @@
 
 .global-audio-buttons {
   display: flex;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
 }
@@ -24,14 +25,16 @@
   justify-content: space-between;
   align-items: center;
   width: 60%;
+  height: 50px;
 }
 
 .full-progress-line {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: 1px;
+  padding: 11.5px 0;
   z-index: 1;
   cursor: pointer;
 }
@@ -45,24 +48,32 @@
 }
 
 .current-progress-line {
-  height: 25px;
+  height: 1px;
   align-self: flex-start;
-  border-bottom: 1.25px solid #CE1141;
+  background-color: #CE1141;
+}
+
+.progress-dot-container {
+  width: auto;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .progress-line-dot {
-  display: none;
+  // display: none;
   border-radius: 50%;
   background-color: rgb(173, 15, 55);
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   margin-top: 0.8px;
 }
 
 .progress-line {
-  height: 25px;
+  height: 1px;
   align-self: flex-start;
-  border-bottom: 1.25px solid grey;
+  background-color: grey;
 }
 
 .player-song-image {
@@ -117,7 +128,7 @@
 
 .global-audio-skip-btn {
   font-size: 20px;
-  margin: 0 20px;
+  margin: 2.5px 20px 0 20px;
 }
 
 .global-audio-volume-container {
