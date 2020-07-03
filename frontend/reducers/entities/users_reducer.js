@@ -1,6 +1,6 @@
 import { RECEIVE_CURRENT_USER } from '../../actions/session_actions';
 import { RECEIVE_USER, RECEIVE_MANY_USERS, RECEIVE_USER_SONGS } from '../../actions/users_actions';
-import { RECEIVE_SONGS, RECEIVE_SEARCH_RESULTS } from '../../actions/songs_actions';
+import { RECEIVE_SONG, RECEIVE_SONGS, RECEIVE_SEARCH_RESULTS } from '../../actions/songs_actions';
 
 const usersReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -18,6 +18,8 @@ const usersReducer = (state = {}, action) => {
       const newState = Object.assign({}, state, { [user.profileUrl]: user });
       newState[user.profileUrl]['songs'] = userSongIdArray;
       return newState;
+    case RECEIVE_SONG:
+      return Object.assign({}, state, action.data.likers)
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.data.users);
     case RECEIVE_SEARCH_RESULTS:

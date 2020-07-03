@@ -5,36 +5,24 @@ export default class SongItemWaveform extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      waveformWidth: 0,
       hovering: false
     }
     this.handleClick = this.handleClick.bind(this);
-    this.resizeProgressDiv = this.resizeProgressDiv.bind(this);
+    this.resizeProgress = this.resizeProgress.bind(this);
   }
 
   componentDidMount() {
-    if (!window.resizeWaveform) {
-      window.addEventListener('resize', this.resizeProgressDiv);
-      window.resizeWaveform = true;
-    }
+    window.addEventListener('resize', this.resizeProgress);
   }
 
   componentWillUnmount() {
-    if (window.resizeWaveform) {
-      window.removeEventListener('resize', this.resizeProgressDiv);
-    }
+    window.removeEventListener('resize', this.resizeProgress);
   }
 
-  componentDidUpdate(prevProps) {
-    const { audio } = this.props;
-    if (!prevProps.audio.playing && audio.playing) {
-      this.resizeProgressDiv();
-    }
-  }
-
-  resizeProgressDiv() {
-    const progressImgs = document.querySelectorAll('.waveform-progress-full');
+  resizeProgress() {
     const waveformWidth = document.querySelector('.waveform-audio').offsetWidth;
-    progressImgs.forEach(img => img.style.width = `${waveformWidth}px`);
+    this.setState({ waveformWidth });
   } 
 
   convertSecsToMins(seconds) {
@@ -74,7 +62,7 @@ export default class SongItemWaveform extends React.Component {
     } else {
       this.displayPlayer(e)
         .then((e) => {
-          this.resizeProgressDiv();
+          this.resizeProgress();
           changeCurrentTime(0);
           document.querySelector('.global-audio-player').currentTime = 0;
           const progressDiv = document.querySelector(`#waveform-progress-${song.id}`);
@@ -91,29 +79,38 @@ export default class SongItemWaveform extends React.Component {
   }
 
   render() {
-    const { song, audio } = this.props;
+    const { song, audio, item } = this.props;
+    const { hovering } = this.state;
     const waveform = document.querySelector('.waveform-audio');
     const waveformWidth = waveform ? waveform.offsetWidth : 0;
-
+    const hasFilter = item && (!hovering && audio.currentSong.id !== song.id)
+    
     return (
-      <div className='song-item-waveform' onClick={this.handleClick}>
+      <div 
+        className='song-item-waveform' 
+        onClick={this.handleClick} 
+        style={item ? { height: '60px' } : {}}
+      >
         <div 
           className='waveform-audio' 
           onMouseEnter={() => this.setHovering(true)}
           onMouseLeave={() => this.setHovering(false)}
+          style={hasFilter ? { opacity: 0.7 } : {}}
         >
           { audio.currentSong.id === song.id ? 
             <WaveformProgress 
               song={song}
               audio={audio}
-              hovering={this.state.hovering}
+              hovering={hovering}
               waveformWidth={waveformWidth}
               convertSecsToMins={this.convertSecsToMins}
+              item={item}
               /> : null
           }
           <img 
             className='waveform-default' 
             src={song.waveform} alt='waveform'
+            style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '70px' } : {}}
           />
         </div>
         <div id={`waveform-time-${song.id}`} className='waveform-time'>

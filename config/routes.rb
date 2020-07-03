@@ -17,5 +17,8 @@ Rails.application.routes.draw do
     get 'search', to: 'songs#search'
     
     resource :session, only: [:create, :destroy]
+    
+    resources :likes, only: [:create]
+    delete 'likes', to: 'likes#destroy'
   end
 end

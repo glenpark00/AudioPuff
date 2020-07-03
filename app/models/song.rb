@@ -7,7 +7,9 @@
 #  song_url    :string           not null
 #  description :text             default(""), not null
 #  genre       :string           not null
-#  user_id     :integer          not null
+#  user_url    :string           not null
+#  duration    :integer          not null
+#  waveform    :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
@@ -20,6 +22,15 @@ class Song < ApplicationRecord
     primary_key: :profile_url,
     foreign_key: :user_url,
     class_name: 'User'
+
+  has_many :likes,
+    primary_key: :song_url,
+    foreign_key: :song_url,
+    class_name: 'Like'
+
+  has_many :likers,
+    through: :likes,
+    source: :user
 
   has_one_attached :audio_file
 

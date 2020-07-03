@@ -38,18 +38,6 @@ export default class SongUploadForm extends React.Component {
     this.setState({ imageFile })
   }
 
-  // createSongWaveform(audioFile) {
-  //   window.AudioContext = window.AudioContext || window.webkitAudioContext;
-  //   const audioContext = new AudioContext();
-  //   audioFile.arrayBuffer()
-  //     .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-  //     .then(audioBuffer => this.setState({ waveform: this.drawWaveform(this.normalizeData(this.filterData(audioBuffer))) }, () => {
-  //       let can = this.state.waveform;
-  //       can.style.filter = 'invert(17%) sepia(86%) saturate(6300%) hue-rotate(330deg) brightness(80%) contrast(99%)'
-  //       document.querySelector('.song-form-background').append(can);
-  //     }))
-  // }
-
   createSongWaveform(audioFile) {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     const audioContext = new AudioContext();
@@ -61,7 +49,7 @@ export default class SongUploadForm extends React.Component {
 
   filterData(audioBuffer) {
     const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
-    const samples = 170; // Number of samples we want to have in our final data set
+    const samples = 225; // Number of samples we want to have in our final data set
     const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
     const filteredData = [];
     for (let i = 0; i < samples; i++) {

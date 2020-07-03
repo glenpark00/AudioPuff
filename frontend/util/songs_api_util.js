@@ -50,8 +50,7 @@ export const fetchNSongs = n => (
   $.ajax({
     url: `api/songs/n`,
     method: 'POST',
-    data: { n }
-    
+    data: { n }  
   })
 )
 

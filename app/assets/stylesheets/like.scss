@@ -1,0 +1,20 @@
+.like-button {
+  display: flex;
+  font-size: 12px;
+  width: min-content;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.like-button-text {
+  font-size: 13px;
+  margin-left: 4px;
+}
+
+
+.like-button-border {
+  border: 1px solid #c9c9c9;
+  border-radius: 3px;
+  width: fit-content;
+  padding: 3px 6px;
+}

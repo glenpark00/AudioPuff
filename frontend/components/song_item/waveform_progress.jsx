@@ -7,9 +7,14 @@ export default class WaveformProgress extends React.Component {
   }
 
   componentDidMount() {
-    const { song, audio } = this.props;
+    const { song, audio, item } = this.props;
     document.querySelector(`#waveform-progress-${song.id}`).style.width = `${(audio.currentSong.currentTime / song.duration) * 100}%`;
     document.querySelector(`#waveform-progress-playing-${song.id}`).style.width = '0';
+    if (item) {
+      document.querySelectorAll(`#waveform-progress-full-${song.id} img`).forEach(img => {
+        img.style.height = '70px';
+      })
+    }
   }
 
   componentDidUpdate() {
@@ -71,7 +76,7 @@ export default class WaveformProgress extends React.Component {
             id={`waveform-progress-img-${song.id}`} className='waveform-progress-img'
             src={song.waveform} alt="waveform"
             width={`${waveformWidth}px`}
-            style={{ filter: 'invert(17%) sepia(86%) saturate(6300%) hue-rotate(330deg) brightness(80%) contrast(99%)' }}
+            style={{ filter: 'invert(17%) sepia(86%) saturate(6300%) hue-rotate(330deg) brightness(80%) contrast(99%)', width: `${waveformWidth}px` }}
           />
         </div>
         <div
@@ -81,8 +86,8 @@ export default class WaveformProgress extends React.Component {
             id={`waveform-progress-playing-img-${song.id}`} className='waveform-progress-playing-img'
             src={song.waveform} alt="waveform"
             width={`${waveformWidth}px`}
-            style={{ filter: 'invert(21%) sepia(62%) saturate(1084%) hue-rotate(305deg) brightness(95%) contrast(89%)' }}
-          />
+            style={{ filter: 'invert(21%) sepia(62%) saturate(1084%) hue-rotate(305deg) brightness(95%) contrast(89%)', width: `${waveformWidth}px` }}
+        />
         </div>
       </div>
     )

@@ -1,5 +1,6 @@
 import React from 'react';
 import SongItemWaveform from './song_item_waveform';
+import LikeButton from '../like_button';
 import { timeElapsed } from '../../util/general_util';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
@@ -69,7 +70,11 @@ export default class SongShow extends React.Component {
             displayPlayer={ displayPlayer }
             displayGlobalAudioPlayer={ displayGlobalAudioPlayer }
             fetchCurrentSongFileUrl={fetchCurrentSongFileUrl }
-            changeCurrentTime={ changeCurrentTime } />
+            changeCurrentTime={ changeCurrentTime }
+            item={true} />
+          <div className='like-button-border'>
+            <LikeButton song={song} text={song.likers.length} />
+          </div>  
         </div>
       </div>
     )

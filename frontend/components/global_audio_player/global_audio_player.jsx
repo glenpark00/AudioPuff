@@ -9,7 +9,8 @@ export default class GlobalAudioPlayer extends React.Component {
     this.state = {
       currentProgress: 0,
       down: false,
-      showDot: false
+      showDot: false,
+      volume: 0.5
     }
     this.handleControls = this.handleControls.bind(this);
     this.handleTimeUpdate = this.handleTimeUpdate.bind(this);
@@ -18,6 +19,7 @@ export default class GlobalAudioPlayer extends React.Component {
     this.playNextSong = this.playNextSong.bind(this);
     this.playPrevSong = this.playPrevSong.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.handleVolumeClick = this.handleVolumeClick.bind(this);
     this.updateDrag = this.updateDrag.bind(this);
     this.handleDotMousedown = this.handleDotMousedown.bind(this);
     this.onVolumeMouseLeave = this.onVolumeMouseLeave.bind(this);
@@ -193,6 +195,7 @@ export default class GlobalAudioPlayer extends React.Component {
   handleVolumeChange(e) {
     const player = document.querySelector('.global-audio-player');
     player.volume = e.target.value / 100;
+    this.setState({ volume: player.volume })
   }
 
   handleVolumeClick() {
@@ -201,9 +204,11 @@ export default class GlobalAudioPlayer extends React.Component {
     if (player.volume > 0) {
       player.volume = 0;
       slider.value = 0;
+      this.setState({ volume: 0 })
     } else {
       player.volume = 0.5;
       slider.value = 50;
+      this.setState({ volume: 0.5 })
     }
   }
 

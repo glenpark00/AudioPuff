@@ -7,7 +7,9 @@
 #  song_url    :string           not null
 #  description :text             default(""), not null
 #  genre       :string           not null
-#  user_id     :integer          not null
+#  user_url    :string           not null
+#  duration    :integer          not null
+#  waveform    :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

@@ -31,6 +31,15 @@ class User < ApplicationRecord
     foreign_key: :user_url,
     class_name: 'Song'
 
+  has_many :likes,
+    primary_key: :profile_url,
+    foreign_key: :user_url,
+    class_name: 'Like'
+
+  has_many :liked_songs,
+    through: :likes,
+    source: :song
+
   before_validation :ensure_session_token
 
   attr_reader :password
