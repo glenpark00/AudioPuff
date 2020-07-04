@@ -84,13 +84,19 @@
 
 .player-song-info-container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: 300px;
+  padding: 0 10px;
 }
 
 .player-song-info {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-song-details {
   margin: 5px;
 }
 
@@ -101,15 +107,17 @@
 .player-song-name {
   color: #999;
   font-size: 11px;
-  font: 12px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .player-song-title {
   font-size: 11px;
   color: #666;
-  font: 12px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   cursor: pointer;
+  margin-bottom: 2px;
 }
 
 .phantom-audio-player {
@@ -138,6 +146,7 @@
   // display: flex;
   // justify-content: center;
   cursor: pointer;
+  margin: 0 20px;
 }
 
 .global-audio-slider-container {

@@ -12,6 +12,7 @@ json.users do
   @users.each do |user|
     json.set! user.profile_url do
       json.partial! partial: 'api/users/user', locals: { user: user }
+      json.liked_songs user.liked_songs.map { |song| "#{song.user_url}#{song.song_url.tr('_', '')}" } 
     end
   end 
 end

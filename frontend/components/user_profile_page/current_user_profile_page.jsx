@@ -53,6 +53,20 @@ export default class CurrentUserProfilePage extends React.Component {
                 : null
               }
             </div>
+            <div className='profile-subheader-text'>Liked</div>
+            <div className='index-recent-songs'>
+              {currentUser.likedSongs ?
+                currentUser.likedSongs.map(songId => {
+                  let song = songs[songId];
+                  if (song) return (
+                    <div className='song-index-key' key={song.id}>
+                      <SongItemContainer song={song} user={currentUser} />
+                    </div>
+                  )
+                })
+                : null
+              }
+            </div>
           </div>
         </div>
       )

@@ -1,5 +1,6 @@
 import React from 'react';
 import WaveformProgress from './waveform_progress';
+import { convertSecsToMins } from '../../util/general_util';
 
 export default class SongItemWaveform extends React.Component {
   constructor(props) {
@@ -10,6 +11,8 @@ export default class SongItemWaveform extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.resizeProgress = this.resizeProgress.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
   }
 
   componentDidMount() {
@@ -25,19 +28,12 @@ export default class SongItemWaveform extends React.Component {
     this.setState({ waveformWidth });
   } 
 
-  convertSecsToMins(seconds) {
-    let mins = Math.floor(seconds / 60).toString();
-    let secs = seconds % 60;
-    secs = (secs < 10 ? '0' + secs.toString() : secs.toString());
-    return `${mins}:${secs}`
-  }
-
   currentTimeContent() {
     const { audio, song } = this.props;
     if (audio.currentSong.id === song.id && audio.currentSong.currentTime) {
-      return this.convertSecsToMins(audio.currentSong.currentTime);
+      return convertSecsToMins(audio.currentSong.currentTime);
     } else {
-      return this.convertSecsToMins(0);
+      return convertSecsToMins(0);
     }
   }
 
@@ -74,8 +70,28 @@ export default class SongItemWaveform extends React.Component {
     }
   }
 
-  setHovering(bool) {
-    this.setState({ hovering: bool })
+  handleMouseEnter() {
+    const { audio, song } = this.props;
+    this.setState({ hovering: true }, () => {
+      if (audio.currentSong.id !== song.id) {
+        document.querySelector(`#waveform-audio-${song.id}`).animate([
+          { opacity: 0.7 },
+          { opacity: 1.0 }
+        ], 200)
+      }
+    })
+  }
+
+  handleMouseLeave() {
+    const { audio, song } = this.props;
+    this.setState({ hovering: false }, () => {
+      if (audio.currentSong.id !== song.id) {
+        document.querySelector(`#waveform-audio-${song.id}`).animate([
+          { opacity: 1.0 },
+          { opacity: 0.7 }
+        ], 200)
+      }
+    })
   }
 
   render() {
@@ -83,8 +99,8 @@ export default class SongItemWaveform extends React.Component {
     const { hovering } = this.state;
     const waveform = document.querySelector('.waveform-audio');
     const waveformWidth = waveform ? waveform.offsetWidth : 0;
-    const hasFilter = item && (!hovering && audio.currentSong.id !== song.id)
-    
+    const hasFilter = !hovering && audio.currentSong.id !== song.id
+
     return (
       <div 
         className='song-item-waveform' 
@@ -92,9 +108,12 @@ export default class SongItemWaveform extends React.Component {
         style={item ? { height: '60px' } : {}}
       >
         <div 
+          id={`waveform-audio-${song.id}`}
           className='waveform-audio' 
-          onMouseEnter={() => this.setHovering(true)}
-          onMouseLeave={() => this.setHovering(false)}
+          onMouseEnter={() => this.handleMouseEnter()}
+          onMouseLeave={() => this.handleMouseLeave()}
+          // onMouseEnter={() => this.setState({ hovering: true })}
+          // onMouseLeave={() => this.setState({ hovering: false })}
           style={hasFilter ? { opacity: 0.7 } : {}}
         >
           { audio.currentSong.id === song.id ? 
@@ -103,7 +122,7 @@ export default class SongItemWaveform extends React.Component {
               audio={audio}
               hovering={hovering}
               waveformWidth={waveformWidth}
-              convertSecsToMins={this.convertSecsToMins}
+              convertSecsToMins={convertSecsToMins}
               item={item}
               /> : null
           }
@@ -120,7 +139,7 @@ export default class SongItemWaveform extends React.Component {
             >
             {this.state.hovering ? '0:00' : this.currentTimeContent()}
           </div> 
-          <div className='waveform-time-text' onClick={e => e.stopPropagation()}>{this.convertSecsToMins(song.duration)}</div>
+          <div className='waveform-time-text' onClick={e => e.stopPropagation()}>{convertSecsToMins(song.duration)}</div>
         </div>
       </div>
     )

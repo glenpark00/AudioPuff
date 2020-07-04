@@ -62,6 +62,7 @@ export default class WaveformProgress extends React.Component {
 
   render() {
     const { song, waveformWidth } = this.props;
+    const audioPlayer = document.querySelector('.global-audio-player');
 
     return (
       <div

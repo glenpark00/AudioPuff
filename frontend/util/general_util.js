@@ -34,3 +34,10 @@ export const timeElapsed = time => {
   }
   return 'no date'
 }
+
+export const convertSecsToMins = seconds => {
+  let mins = Math.floor(seconds / 60).toString();
+  let secs = seconds % 60;
+  secs = (secs < 10 ? '0' + secs.toString() : secs.toString());
+  return `${mins}:${secs}`
+}

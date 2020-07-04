@@ -44,7 +44,13 @@ class Api::SongsController < ApplicationController
 
   def index
     @users = [User.with_attached_profile_image.find_by(profile_url: params[:user_id])]
-    @songs = Song.with_attached_image_file.includes(:likers).where('user_url = ?', params[:user_id])
+    @songs = @users[0].liked_songs.map { |song| song }
+    songs = Song.with_attached_image_file.includes(:likers).where('user_url = ?', params[:user_id])
+    songs.each do |song| 
+      unless @songs.include?(song)
+        @songs.push(song)
+      end
+    end
     render :index
   end
 

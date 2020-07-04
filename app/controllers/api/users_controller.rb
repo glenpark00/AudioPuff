@@ -13,7 +13,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  # The index controller method will eventually be used for searching users that match some criteria; instead of using User.all, you'll probably have to create your own ActiveRecord User model method to query for specific results; you'll likely use the query string params as the input for that method, and you'll use a .where() with username LIKE 'substring%' SQL method
   def index
     @users = User.with_attached_profile_image.all
     render :index

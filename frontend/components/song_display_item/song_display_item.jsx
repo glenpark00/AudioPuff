@@ -1,4 +1,5 @@
 import React from 'react';
+import LikeButton from '../like_button';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
 export default class SongDisplayItem extends React.Component {
@@ -49,11 +50,16 @@ export default class SongDisplayItem extends React.Component {
   showPlayButton() {
     const songImage = document.querySelector(`#song-display-play-${this.props.song.id}`);
     if (songImage) songImage.style.display = "block";
+    const overlay = document.querySelector(`#song-display-overlay-${this.props.song.id}`);
+    if (overlay) overlay.style.display = "flex";
+    document.querySelector(`#song-display-overlay-${this.props.song.id} > .like-button`).color
   }
 
   hidePlayButton() {
     const songImage = document.querySelector(`#song-display-play-${this.props.song.id}`);
     if (songImage) songImage.style.display = "none";
+    const overlay = document.querySelector(`#song-display-overlay-${this.props.song.id}`);
+    if (overlay) overlay.style.display = "none";
   }
 
   render() {
@@ -61,23 +67,33 @@ export default class SongDisplayItem extends React.Component {
     if (!song || !user) return null;
     return (
       <div className='song-display' >
-        <img 
-          className='song-display-image' 
-          onClick={this.openSongShow} 
-          onMouseOver={this.showPlayButton} 
-          onMouseLeave={this.hidePlayButton} 
-          src={song.imageUrl} 
-        />
-        <div 
-          id={`song-display-play-${song.id}`} 
-          className='song-display-play' 
-          onClick={this.handlePlayButton} 
-          onMouseOver={this.showPlayButton} 
-          onMouseLeave={this.showPlayButton} 
-          onClick={this.handlePlayButton}
-        >
-          {this.playButtonContent()}
-        </div> 
+        <div className='song-display-image-container'>
+          <img 
+            className='song-display-image' 
+            onClick={this.openSongShow} 
+            onMouseOver={this.showPlayButton} 
+            onMouseLeave={this.hidePlayButton} 
+            src={song.imageUrl} 
+          />
+          <div 
+            id={`song-display-play-${song.id}`} 
+            className='song-display-play' 
+            onClick={this.handlePlayButton} 
+            onMouseOver={this.showPlayButton} 
+            onMouseLeave={this.showPlayButton} 
+            onClick={this.handlePlayButton}
+          >
+            {this.playButtonContent()}
+          </div>
+          <div 
+            id={`song-display-overlay-${song.id}`} 
+            className='song-display-overlay'
+            onMouseOver={this.showPlayButton}
+            onMouseLeave={this.showPlayButton} 
+          >
+            <LikeButton song={song} />
+          </div>
+        </div>
         <div className='song-display-info'>
           <div className='song-display-title' onClick={this.openSongShow}>{song.title}</div>
           <div className='song-display-user-name' onClick={this.linkToProfile}>{user.displayName}</div>

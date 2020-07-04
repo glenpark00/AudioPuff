@@ -63,9 +63,14 @@ export default class SongUploadForm extends React.Component {
     return filteredData;
   };
 
+  // normalizeData(filteredData) {
+  //   const multiplier = Math.pow(Math.max(...filteredData), -1);
+  //   return filteredData.map(n => n * multiplier);
+  // }
+
   normalizeData(filteredData) {
-    const multiplier = Math.pow(Math.max(...filteredData), -1);
-    return filteredData.map(n => n * multiplier);
+    const multiplier = Math.pow(Math.pow(Math.max(...filteredData), 2), -1);
+    return filteredData.map(n => Math.pow(n, 2) * multiplier);
   }
 
   drawWaveform(data) {

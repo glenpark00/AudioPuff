@@ -1,4 +1,6 @@
 import React from 'react';
+import LikeButton from '../like_button';
+import { convertSecsToMins } from '../../util/general_util';
 import { throttle } from 'throttle-debounce';
 import { FaPlay, FaPause, FaVolumeDown, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import { MdSkipPrevious, MdSkipNext } from 'react-icons/md'; 
@@ -101,13 +103,6 @@ export default class GlobalAudioPlayer extends React.Component {
       document.querySelector('.global-audio-slider-container').style.display = 'none';
     }
   }
-
-  convertSecsToMins(seconds) {
-    let mins = Math.floor(seconds / 60).toString();
-    let secs = seconds % 60;
-    secs = (secs < 10 ? '0' + secs.toString() : secs.toString());
-    return `${mins}:${secs}`
-  } 
 
   handleClick(e) {
     const { changeCurrentTime, audio } = this.props;
@@ -213,7 +208,7 @@ export default class GlobalAudioPlayer extends React.Component {
   }
 
   render() {
-    const { audio, users } = this.props;
+    const { audio, users, song } = this.props;
     const { currentProgress, down } = this.state;
     const user = (audio.currentSong.userUrl ? users[audio.currentSong.userUrl] : {});
     return (
@@ -228,8 +223,8 @@ export default class GlobalAudioPlayer extends React.Component {
           <div className='progress-bar'>
             <div className='player-time'>
               { down ? 
-                this.convertSecsToMins(Math.floor(currentProgress))
-                : this.convertSecsToMins(audio.currentSong.currentTime) 
+                convertSecsToMins(Math.floor(currentProgress))
+                : convertSecsToMins(audio.currentSong.currentTime) 
               }
             </div>
             <div 
@@ -249,7 +244,7 @@ export default class GlobalAudioPlayer extends React.Component {
               ) : null }
               <div className='progress-line' style={{ width: `${100 - currentProgress}%` }}></div>
             </div>
-            <div className='player-time'>{this.convertSecsToMins(audio.currentSong.duration)}</div>
+            <div className='player-time'>{convertSecsToMins(audio.currentSong.duration)}</div>
           </div>
           <div className='global-audio-volume-container' onMouseEnter={this.onVolumeMouseEnter} onMouseLeave={this.onVolumeMouseLeave}>
             <div className='global-audio-volume' onClick={this.handleVolumeClick}>
@@ -265,11 +260,14 @@ export default class GlobalAudioPlayer extends React.Component {
               </div>
           </div>
           <div className='player-song-info-container'>
-            <img className='player-song-image' src={audio.currentSong.imageUrl} />
             <div className='player-song-info'>
-              <div className='player-song-name'>{user.displayName}</div>
-              <div className='player-song-title'>{audio.currentSong.title}</div>
+              <img className='player-song-image' src={audio.currentSong.imageUrl} />
+              <div className='player-song-details'>
+                <div className='player-song-name'>{user.displayName}</div>
+                <div className='player-song-title'>{audio.currentSong.title}</div>
+              </div>
             </div>
+            { song ? <LikeButton song={song} /> : null }
           </div>
           <audio 
             hidden muted

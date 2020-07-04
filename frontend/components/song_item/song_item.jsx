@@ -65,16 +65,20 @@ export default class SongShow extends React.Component {
             </div>
           </div>
           <SongItemWaveform 
-            audio={ audio }
-            song={ song }
-            displayPlayer={ displayPlayer }
-            displayGlobalAudioPlayer={ displayGlobalAudioPlayer }
-            fetchCurrentSongFileUrl={fetchCurrentSongFileUrl }
-            changeCurrentTime={ changeCurrentTime }
+            audio={audio}
+            song={song}
+            displayPlayer={displayPlayer}
+            displayGlobalAudioPlayer={displayGlobalAudioPlayer}
+            fetchCurrentSongFileUrl={fetchCurrentSongFileUrl}
+            changeCurrentTime={changeCurrentTime}
             item={true} />
-          <div className='like-button-border'>
-            <LikeButton song={song} text={song.likers.length} />
-          </div>  
+          <div className='song-item-buttons'>
+            <div className='like-button-border'>
+              <LikeButton 
+                song={song}
+                text={song.likers.length > 0 ? song.likers.length : 'Like'} />
+            </div>  
+          </div>
         </div>
       </div>
     )

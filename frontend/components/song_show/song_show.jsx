@@ -2,7 +2,8 @@ import React from 'react';
 import SongItemWaveform from '../song_item/song_item_waveform';
 import { timeElapsed } from '../../util/general_util'; 
 import SongShowEditModal from './song_show_edit_modal';
-import SongShowDeleteModal from './song_show_delete_modal'
+import SongShowDeleteModal from './song_show_delete_modal';
+import LikeButton from '../like_button';
 import { FaPlay, FaPause, FaTrash, FaPencilAlt } from 'react-icons/fa';
 import Footer from '../footer';
 
@@ -107,13 +108,20 @@ export default class SongShow extends React.Component {
               <img src={ song.imageUrl } className='song-show-image' />
             </div>
           </div>
-          {this.props.currentUserUrl === user.profileUrl ?
-            <div className='user-song-item-buttons'>
-              <div className='user-song-item-button' onClick={ () => this.setState({ showEditModal: true }) }>{ <FaPencilAlt /> } Edit</div>
-              <div className='user-song-item-button' onClick={() => this.setState({ showDeleteModal: true })}>{ <FaTrash /> } Delete track</div>
+          <div className='user-song-item-buttons'>
+            <div className='like-button-border'>
+              <LikeButton
+                song={song}
+                text={song.likers.length > 0 ? song.likers.length : 'Like'} />
             </div>
-            : null
-          }
+            {this.props.currentUserUrl === user.profileUrl ?
+              <>
+                <div className='user-song-item-button' onClick={ () => this.setState({ showEditModal: true }) }>{ <FaPencilAlt /> } Edit</div>
+                <div className='user-song-item-button' onClick={() => this.setState({ showDeleteModal: true })}>{ <FaTrash /> } Delete track</div>
+              </>
+              : null
+            }
+          </div>
         </div>
         <Footer></Footer>
       </div>
