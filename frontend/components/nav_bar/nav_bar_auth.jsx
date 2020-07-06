@@ -1,4 +1,5 @@
 import React from 'react';
+import SiteDropdownButton from './site_dropdown_button';
 
 const NavBarAuth = ({ enableModalDisplay }) => (
   <>
@@ -8,6 +9,7 @@ const NavBarAuth = ({ enableModalDisplay }) => (
     <button className='signup-button' onClick={ enableModalDisplay }>
       Create account
     </button>
+    <SiteDropdownButton loggedIn={false} />
   </>
 )
   

@@ -24,8 +24,8 @@ class Song < ApplicationRecord
     class_name: 'User'
 
   has_many :likes,
-    primary_key: :song_url,
-    foreign_key: :song_url,
+    primary_key: :id,
+    foreign_key: :song_id,
     class_name: 'Like'
 
   has_many :likers,

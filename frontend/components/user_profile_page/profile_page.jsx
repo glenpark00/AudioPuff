@@ -1,6 +1,7 @@
 import React from 'react';
 import SongItemContainer from '../song_item/song_item_container';
 import ProfileUserHeader from '../profile_user_header/profile_user_header';
+import FollowButton from '../follow_button';
 import { withRouter } from 'react-router-dom';
 
 class ProfilePage extends React.Component {
@@ -19,6 +20,9 @@ class ProfilePage extends React.Component {
       <div className='current-user-profile-background'>
         <div className='current-user-profile-page'>
           <ProfileUserHeader user={user} />
+          <div className='profile-page-buttons'>
+            <FollowButton user={user} />
+          </div>
           <div className='profile-subheader-text'>Recent</div>
           <div className='index-recent-songs'>
             {user.songs ?

@@ -81,7 +81,6 @@ export default class SongDisplayItem extends React.Component {
             onClick={this.handlePlayButton} 
             onMouseOver={this.showPlayButton} 
             onMouseLeave={this.showPlayButton} 
-            onClick={this.handlePlayButton}
           >
             {this.playButtonContent()}
           </div>

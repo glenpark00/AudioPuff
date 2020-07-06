@@ -4,62 +4,94 @@ $white-theme: #e5e5e5;
 $black-theme: rgb(51, 51, 51);
 $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
 
-.nav-bar {
+.nav-bar-container {
   position: fixed;
   top: 0;
-  right: 0;
+  right: 0%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: 46px;
   background-color: $black_theme;
   z-index: 999;
+}
+
+.nav-bar-space {
+  width: 10%;
+  height: 100%;
+  background-color: $black_theme;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+}
+
+.nav-bar a:hover, .profile-button > div:hover {
+  color: white;
 }
 
 .phantom-nav-bar {
   display: block;
   width: 100%;
-  height: 50px;
+  height: 46px;
+  
 }
 
 .nav-left-links {
   display: flex;
   justify-content: center;
-  max-height: 50px;
+  max-height: 46px;
   height: 100%;
 }
 
 .nav-left-link {
-  padding: 0 30px;
+  font-size: 13px;
+  padding: 0 25px;
   height: 100%;
-  line-height: 45px;
+  line-height: 46px;
   border-right: 1px solid black;
   text-align: center;
   box-sizing: border-box;
 }
 
+.nav-right-link {
+  font-size: 13px;
+  height: 100%;
+  line-height: 46px;
+  padding: 0 15px;
+  text-align: center;
+  min-width: fit-content;
+}
+
+.link-selected {
+  background-color: #111111;
+}
+
 .homepage-link {
-  line-height: 50px;
+  line-height: 46px;
   height: 100%;
   font-family: Josefin Sans;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 18px;
   color: $white-theme;
   padding: 0 10px;
   background-color: $red-theme;
-  max-height: 50px;
-  min-width: 185px;
+  max-height: 46px;
+  min-width: 160px;
   text-align: center;
 }
 
 .login-button {
   color: white;
   background-color: rgb(51, 51, 51);;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 100;
   font-family: $form-button-text-fam;
-  width: 80px;
+  width: 70px;
   height: 26px;
   border-radius: 3px;
   border: 1px solid #e5e5e5;
@@ -69,29 +101,40 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 .signup-button {
   color: white;
   font-family: $form-button-text-fam;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 100;
   background-color: $yellow-theme;
-  width: 125px;
+  width: 110px;
   height: 26px;
   border-radius: 3px;
   border: 1px solid #e5e5e5;
-  padding: 2px 11px 2px 10px;
+  padding: 2px 4px 2px 4px;
 }
 
 .profile-button {
+  display: flex;
+  align-items: center;
+  width: 140px;
+  height: 100%;
+  cursor: pointer;
+  max-width: 45%;
+}
+
+.profile-button > img {
   width: 33px;
   height: 33px;
   border-radius: 50%;
-  cursor: pointer;
 }
 
-// .site-dropdown {
-//   position: relative;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// }
+.profile-button > div {
+  color: #c9c9c9;
+  margin-left: 10px;
+  font-size: 13px;
+  font-family: $form-button-text-fam;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 .site-dropdown-button {
   position: relative;
@@ -101,7 +144,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   width: 50px;
   height: 100%;
   line-height: 38px;
-  color: white;
+  color: #c9c9c9;
   cursor: pointer;
   outline-style:none;
 }
@@ -121,6 +164,10 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   height: auto;
   border-radius: 0 0 3px 3px;
   padding: 5px;
+}
+
+.site-dropdown-button:hover {
+  color: white;
 }
 
 .site-dropdown-div > a {

@@ -3,23 +3,21 @@
 # Table name: likes
 #
 #  id         :bigint           not null, primary key
-#  song_url   :string           not null
-#  user_url   :string           not null
+#  song_id    :string           not null
+#  user_id    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 class Like < ApplicationRecord
-  # attr_accessor :song_url, :user_url
-
-  validates :user_url, uniqueness: { scope: :song_url }
+  validates :user_id, uniqueness: { scope: :song_id }
 
   belongs_to :song,
-    primary_key: :song_url,
-    foreign_key: :song_url,
+    primary_key: :id,
+    foreign_key: :song_id,
     class_name: 'Song'
 
   belongs_to :user,
-    primary_key: :profile_url,
-    foreign_key: :user_url,
+    primary_key: :id,
+    foreign_key: :user_id,
     class_name: 'User'
 end

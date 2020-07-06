@@ -10,15 +10,19 @@ class ProfileDropdownButton extends React.Component {
   componentDidMount() {
     this.props.fetchUser(this.props.currentUser.id);
   }
-  
-  // This and the withRouter should be removed later; this is for testing song uploads by making a user songs index
+
   handleClick() {
     this.props.history.push(`/${this.props.currentUser.profileUrl}`);
   }
 
   render() {
+    const { currentUser } = this.props;
+
     return (
-      <img className='profile-button' src={this.props.currentUser.imageUrl} onClick={ this.handleClick } /> 
+      <div className='profile-button' onClick={this.handleClick}>
+        <img src={currentUser.imageUrl}/> 
+        <div>{currentUser.displayName}</div>
+      </div>
     )
   }
 }

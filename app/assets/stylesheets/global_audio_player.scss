@@ -2,9 +2,9 @@
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 80%;
+  width: 75%;
   height: 50px;
-  padding: 0 10%;
+  padding: 0 12.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -154,11 +154,12 @@
   display: none;
   position: absolute;
   bottom: 100%;
-  left: -140%;
-  width: 50px;
+  left: -60%;
+  width: 30px;
   height: 100px;
   padding: 10px 0;
   border: 1px solid lightgrey;
+  border-radius: 2px;
   justify-content: center;
 }
 

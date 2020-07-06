@@ -1,10 +1,13 @@
 .search-container {
-  width: 30%;
+  max-width: 40%;
+  width: 400px;
   position: relative;
+  padding: 0 15px;
 }
 
 .search-bar {
   position: relative;
+  width: 100%;
 }
 
 .search-icon {

@@ -16,13 +16,20 @@ export default class Discover extends React.Component {
     return (
       <div className='discover-page-background'>
         <div className='discover-page'>
-          <div className='discover-heading-container'>
-            <h2 className='discover-header'>New Music Now</h2>
-            <div className='discover-subheader'>The latest hits, updated all the time</div>
+          <div className='page-full-content'>
+            <div className='page-main-content'>
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>New Music Now</h2>
+                <div className='discover-subheader'>The latest hits, updated all the time</div>
+              </div>
+              <Carousel songs={songs} users={users}/>
+              <Footer></Footer>
+            </div>
+            <div className='side-bar'>
+              
+            </div>
           </div>
-          <Carousel songs={songs} users={users}/>
         </div>
-        <Footer></Footer>
       </div>
     )
   }

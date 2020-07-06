@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 const mapStateToProps = (state, ownProps) => ({
   currentUser: state.entities.users[state.session.currentUserUrl],
   user: state.entities.users[ownProps.match.params.profileUrl],
+  users: state.entities.users,
   songs: state.entities.songs
 })
 

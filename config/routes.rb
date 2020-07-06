@@ -20,5 +20,8 @@ Rails.application.routes.draw do
     
     resources :likes, only: [:create]
     delete 'likes', to: 'likes#destroy'
+
+    resources :follows, only: [:create]
+    delete 'follows', to: 'follows#destroy'
   end
 end

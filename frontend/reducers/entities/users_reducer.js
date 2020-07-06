@@ -12,12 +12,7 @@ const usersReducer = (state = {}, action) => {
     case RECEIVE_MANY_USERS:
       return Object.assign({}, state, action.users);
     case RECEIVE_USER_SONGS:
-      const user = Object.values(action.data.users)[0];
-      const userSongIdArray = (action.data.songs ? Object.keys(action.data.songs) : []);
-      // You might be clearing your state too much on your reducers, think more about that
-      const newState = Object.assign({}, state, { [user.profileUrl]: user });
-      newState[user.profileUrl]['songs'] = userSongIdArray;
-      return newState;
+      return Object.assign({}, state, action.data.users);
     case RECEIVE_SONG:
       return Object.assign({}, state, action.data.likers)
     case RECEIVE_SONGS:

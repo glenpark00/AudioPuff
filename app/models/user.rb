@@ -32,13 +32,31 @@ class User < ApplicationRecord
     class_name: 'Song'
 
   has_many :likes,
-    primary_key: :profile_url,
-    foreign_key: :user_url,
+    primary_key: :id,
+    foreign_key: :user_id,
     class_name: 'Like'
 
   has_many :liked_songs,
     through: :likes,
     source: :song
+
+  has_many :followerRecords,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: 'Follow'
+
+  has_many :followers,
+    through: :followerRecords,
+    source: :follower
+
+  has_many :followingRecords,
+    primary_key: :id,
+    foreign_key: :follower_id,
+    class_name: 'Follow'
+
+  has_many :followings,
+    through: :followingRecords,
+    source: :user
 
   before_validation :ensure_session_token
 

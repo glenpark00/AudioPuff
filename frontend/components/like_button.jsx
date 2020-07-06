@@ -5,9 +5,8 @@ import { fetchSongFromUrl } from '../actions/songs_actions';
 import { FaHeart } from 'react-icons/fa';
 
 export default function LikeButton({ song, text }) {
-  const currentUser = useSelector(state => state.entities.users[state.session.currentUserUrl])  
+  const currentUser = useSelector(state => state.entities.users[state.session.currentUserUrl]) || {}; 
   const [liked, setLiked] = useState(song.likers.includes(currentUser.profileUrl));
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,12 +18,14 @@ export default function LikeButton({ song, text }) {
       className='like-button'
       style={liked ? { color: '#CE1141' } : {}}
       onClick={() => {
-        if (liked) {
-          unlike({ userUrl: currentUser.profileUrl, songUrl: song.songUrl })
-            .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
-        } else {
-          like({ userUrl: currentUser.profileUrl, songUrl: song.songUrl })
-            .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
+        if (currentUser.id) {
+          if (liked) {
+            unlike({ userId: currentUser.id, songId: song.id })
+              .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
+          } else {
+            like({ userId: currentUser.id, songId: song.id })
+              .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
+          }
         }
       }}>
       <FaHeart /> 
@@ -33,7 +34,6 @@ export default function LikeButton({ song, text }) {
           {`${text}`}
         </div>
       ) : null}
-      
     </div>
   );
 }

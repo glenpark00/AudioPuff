@@ -3,8 +3,8 @@
 # Table name: likes
 #
 #  id         :bigint           not null, primary key
-#  song_url   :string           not null
-#  user_url   :string           not null
+#  song_id    :string           not null
+#  user_id    :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

@@ -132,7 +132,11 @@ export default class SongItemWaveform extends React.Component {
             style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '70px' } : {}}
           />
         </div>
-        <div id={`waveform-time-${song.id}`} className='waveform-time'>
+        <div 
+          id={`waveform-time-${song.id}`} 
+          className='waveform-time' 
+          style={item ? { bottom: '25%' } : {}}
+        >
           <div 
             className='waveform-time-text' 
             onClick={e => e.stopPropagation()}
