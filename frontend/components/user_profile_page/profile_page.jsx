@@ -1,6 +1,6 @@
 import React from 'react';
-import SongItemContainer from '../song_item/song_item_container';
-import ProfileUserHeader from '../profile_user_header/profile_user_header';
+import SongItem from '../song_item/song_item';
+import ProfileUserHeader from './profile_user_header';
 import FollowButton from '../follow_button';
 import { withRouter } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ class ProfilePage extends React.Component {
                 let song = songs[songId];
                 if (song) return (
                   <div className='song-index-key' key={song.id}>
-                    <SongItemContainer song={song} user={user} />
+                    <SongItem song={song} user={user} />
                   </div>
                 )
               })

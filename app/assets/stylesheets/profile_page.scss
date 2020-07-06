@@ -38,7 +38,7 @@
 }
 
 .profile-subheader-text {
-  margin: 5px 30px;
+  // margin: 0 30px;
   font-size: 23px;
   font-weight: 100;
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
@@ -68,6 +68,7 @@
 .current-user-buttons {
   display: flex;
   justify-content: flex-end;
+  margin: 10px 30px;
 }
 
 .user-info-edit-button {
@@ -81,7 +82,6 @@
   font-weight: 100;
   text-align: center;
   vertical-align: baseline;
-  margin: 8px;
   cursor: pointer;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import SongItemContainer from '../song_item/song_item_container';
-import ProfileUserHeader from '../profile_user_header/profile_user_header';
+import SongItem from '../song_item/song_item';
+import ProfileUserHeader from './profile_user_header';
 import UserEditFormModal from './user_edit_form_modal';
 import SideBarProfileInfo from '../sidebar/sidebar_profile_info';
 import SideBarSection from '../sidebar/sidebar_section';
@@ -28,8 +28,8 @@ export default class CurrentUserProfilePage extends React.Component {
   render() {
     const { currentUser, songs, updateUser, users } = this.props;
     const userSongs = currentUser.songs ? currentUser.songs.map(songId => songs[songId]) : []
-    const likedSongs = currentUser.likedSongs ? currentUser.likedSongs.map(songId => songs[songId]) : [];
-    const followings = currentUser.followings && users ? currentUser.followings.map(userId => users[userId]) : [];
+    const likedSongs = currentUser.likedSongs ? currentUser.likedSongs.map(songId => songs[songId]).filter(song => song) : [];
+    const followings = currentUser.followings && users ? currentUser.followings.map(userId => users[userId]).filter(song => song) : [];
 
     if (currentUser) {
       return (
@@ -47,16 +47,13 @@ export default class CurrentUserProfilePage extends React.Component {
             <div className='current-user-buttons'>
               <div className='user-info-edit-button' onClick={ () => this.setState({ showEditModal: true }) }><FaPencilAlt /> Edit</div>
             </div>
-            <div className='page-border-container'>
-              <div className='page-top-border'></div>
-            </div>
             <div className='page-full-content'>
               <div className='page-main-content'>
                 <div className='profile-subheader-text'>Recent</div>
                 <div className='index-recent-songs'>
                   {userSongs.map(song => (
                     <div className='song-index-key' key={song.id}>
-                      <SongItemContainer song={song} user={currentUser} />
+                      <SongItem song={song} user={currentUser} />
                     </div>
                   ))}
                 </div>
@@ -64,21 +61,21 @@ export default class CurrentUserProfilePage extends React.Component {
                 <div className='index-recent-songs'>
                   {likedSongs.map(song => (
                     <div className='song-index-key' key={song.id}>
-                      <SongItemContainer song={song} user={currentUser} />
+                      <SongItem song={song} user={currentUser} />
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className='page-border-container'>
-                <div className='page-left-border'></div>
               </div>
               <div className='side-bar'>
                 <SideBarProfileInfo user={currentUser} />
                 <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`}/>
                 <SideBarSection icon={<FaUserFriends />} items={followings} component={<SideBarUserItem />} text={`${followings.length} following`} />
-              </div>
+                <div className='page-border-container'>
+                  <div className='page-top-border'></div>
+                </div>
               </div>
             </div>
+          </div>
         </div>
       )
     } else {

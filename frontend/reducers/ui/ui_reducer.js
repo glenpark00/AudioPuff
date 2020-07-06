@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import showModalReducer from './show_modal_reducer';
+import modalReducer from './modal_reducer';
 import displayGlobalPlayerReducer from "./display_global_player_reducer";
 
 const uiReducer = combineReducers({
-  showModal: showModalReducer,
+  modal: modalReducer,
   displayPlayer: displayGlobalPlayerReducer
 });
 

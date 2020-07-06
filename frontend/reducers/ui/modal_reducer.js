@@ -1,14 +1,14 @@
 import { ENABLE_MODAL_DISPLAY, DISABLE_MODAL_DISPLAY } from '../../actions/ui_actions';
 
-const showModalReducer = (state = false, action) => {
+const modalReducer = (state = false, action) => {
   switch (action.type) {
     case ENABLE_MODAL_DISPLAY:
-      return true;
+      return { showModal: true, type: action.kind, data: action.data };
     case DISABLE_MODAL_DISPLAY: 
-      return false;
+      return { showModal: false };
     default:
       return state;
   }
 }
 
-export default showModalReducer;
+export default modalReducer;

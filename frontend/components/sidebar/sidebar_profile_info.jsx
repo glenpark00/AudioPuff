@@ -12,7 +12,7 @@ const SideBarProfileInfo = ({ user }) => {
   )
 
   return (
-    <div>
+    <div className='side-bar-profile-info-container'>
       <div className='side-bar-profile-info'>
         { count('Followers', user.followers.length) }
         { count('Following', user.followings.length) }

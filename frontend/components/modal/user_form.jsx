@@ -29,7 +29,7 @@ export default class UserForm extends React.Component {
   render() {
     return (
       <div className='form-modal'>
-        <div className='form-header'>Sign in or create an account</div>
+        <div className='form-header'>Enter your profile URL to sign in or your email to sign up</div>
         <input className='form-modal-input' 
           type="text"
           value={this.state.identifier}

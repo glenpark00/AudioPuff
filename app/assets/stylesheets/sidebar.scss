@@ -1,21 +1,25 @@
 .page-full-content {
   display: flex;
-  // border-top: 1px solid #e5e5e5;
   height: auto;
+  border-top: 1px solid #e5e5e5;
+  margin: 0 30px;
+  padding-top: 30px;
 }
 
 .page-main-content {
-  min-width: calc(100% - 300px);
+  min-width: calc(100% - 440px);
 }
 
 .side-bar {
-  width: 300px;
-  padding: 0 20px 0 20px;
-  // border-left: 1px solid #e5e5e5;
+  width: 380px;
+  padding-left: 30px;
+  margin-left: 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  border-bottom: 1px solid #cccccc;
+  border-left: 1px solid #e5e5e5;
+  box-sizing: border-box;
+  height: fit-content;
 }
 
 .page-border-container {
@@ -25,21 +29,15 @@
 }
 
 .page-top-border {
-  width: 97%;
+  width: 360px;
   height: 0.5px;
-  background-color: #cccccc;
-  margin-bottom: 20px;
-}
-
-.page-left-border {
-  width: 1px;
-  height: 99.3%;
-  background-color: #cccccc;
+  background-color: #e5e5e5;
 }
 
 // Side bar section
 .side-bar-section {
-  min-height: 220px;
+  height: auto;
+  padding-bottom: 15px;
 }
 
 .side-bar-section-top {
@@ -67,16 +65,74 @@
 
 .side-bar-section-line {
   width: 100%;
-  background-color: #cccccc;
+  background-color: #e5e5e5;
   height: 1px;
   margin: 15px 0;
 }
 
+// My Info 
+.my-info {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.my-info-pic {
+  // background-image: url('red_clouds.png');
+  // background-size: cover;
+  background-color: #e5e5e5;
+  width: 100%;
+  height: 220px;
+}
+
+.my-info-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  background-color: white;
+  width: 70%;
+  height: 60%;
+  font-size: 14px;
+  font-weight: 100;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  color: #999;
+}
+
+.my-info-content > div:first-child {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.my-info-content > div:first-child > div:first-child {
+  margin-right: 5px;
+}
+
+.my-info-icons {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.my-info-icons > a {
+  font-size: 25px;
+  color: #CE1141;
+}
+
 // Current User Count
+.side-bar-profile-info-container {
+  height: 150px;
+}
+
 .side-bar-profile-info {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding-bottom: 5px;
 }
 
 .side-bar-profile-info > div:first-child, .side-bar-profile-info > div:nth-child(2) {
@@ -85,7 +141,7 @@
 }
 
 .profile-counter > div {
-  padding: 5px 30px 3px 0;
+  padding: 0 30px 3px 0;
 }
 
 .profile-counter > div:first-child {
@@ -111,7 +167,6 @@
   font: 12px/1.4 Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   color: #333;
   margin-top: 10px;
-  margin-bottom: 50px;
 }
 
 // Song item
@@ -146,7 +201,7 @@
   cursor: pointer;
 }
 
-.play-button-icon {
+.side-bar-play-button-icon {
   transform: translateX(-7%);
 }
 
@@ -214,6 +269,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .side-bar-user-item > div {
@@ -231,15 +287,26 @@
   padding-left: 10px;
 }
 
+.side-bar-user-stats {
+  display: flex;
+}
+
 .side-bar-user-stats > div {
   display: flex;
+  align-items: center;
+  padding-right: 5px;
 }
 
 .side-bar-user-text {
   font-size: 13px;
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   color: #333;
-  margin-bottom: 4px;
+}
+
+.side-bar-stats-text {
+  font-size: 13px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  color: #333;
 }
 
 .side-bar-user-stats > div > div {

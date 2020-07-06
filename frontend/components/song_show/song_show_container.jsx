@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { fetchSongFromUrl, updateSong, deleteSong } from '../../actions/songs_actions';
-import { displayGlobalAudioPlayer } from '../../actions/ui_actions';
-import { fetchCurrentSongFileUrl, playAudio, pauseAudio, changeCurrentTime } from '../../actions/songs_actions';
+import { fetchSongFromUrl } from '../../actions/songs_actions';
+import { enableModalDisplay } from '../../actions/ui_actions';
 import SongShow from './song_show';
 import { withRouter } from 'react-router-dom';
 
@@ -14,13 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSongFromUrl: (songUrl, profileUrl) => dispatch(fetchSongFromUrl(songUrl, profileUrl)),
-  fetchCurrentSongFileUrl: songId => dispatch(fetchCurrentSongFileUrl(songId)),
-  displayGlobalAudioPlayer: () => dispatch(displayGlobalAudioPlayer()),
-  playAudio: () => dispatch(playAudio()),
-  pauseAudio: () => dispatch(pauseAudio()),
-  updateSong: song => dispatch(updateSong(song)),
-  deleteSong: songId => dispatch(deleteSong(songId)),
-  changeCurrentTime: time => dispatch(changeCurrentTime(time))
+  enableModalDisplay: data => dispatch(enableModalDisplay(data))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SongShow));

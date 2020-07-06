@@ -1,5 +1,5 @@
 import React from 'react';
-import SongItemContainer from '../song_item/song_item_container';
+import SongItem from '../song_item/song_item';
 import SearchUserItem from './search_user_item';
 
 export default class SearchEverything extends React.Component {
@@ -31,7 +31,7 @@ export default class SearchEverything extends React.Component {
               return <SearchUserItem user={el} />
             } else {
               const user = songUsers[el.userUrl]
-              return <SongItemContainer song={el} user={user} />
+              return <SongItem song={el} user={user} />
             }
           })}
         </div>

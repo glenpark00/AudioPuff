@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { displayGlobalAudioPlayer } from '../actions/ui_actions';
 import { fetchCurrentSongFileUrl, playAudio, pauseAudio } from '../actions/songs_actions';
@@ -34,7 +34,7 @@ const PlayButton = ({ song, type }) => {
       onClick={handlePlayButton}
     > 
       {audio.playing && audio.currentSong.id === song.id ?
-        <FaPause className='play-button-icon' /> : <FaPlay className='play-button-icon' />
+        <FaPause className={`${type}-play-button-icon`} /> : <FaPlay className={`${type}-play-button-icon`} />
       }
     </div>
   )

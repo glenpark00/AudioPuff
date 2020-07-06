@@ -36,20 +36,20 @@ class DemoLoginForm extends React.Component {
 
   handleLogin() {
     const { demoIdentifier, demoPassword, login, handleCloseModal } = this.props;
-    login({ identifier: demoIdentifier, password: demoPassword }).then( () => handleCloseModal() );
+    login({ identifier: demoIdentifier, password: demoPassword }).then(() => handleCloseModal());
   }
 
   render() {
     const { demoIdentifier, prevStep } = this.props;
     return (
       <div className='form-modal'>
-        <div className='form-prev-button' onClick={prevStep}>◀  { demoIdentifier }</div>
+        <div className='form-prev-button' onClick={prevStep}>◀  {demoIdentifier}</div>
         <input className='form-modal-input' 
           type="password"
-          value={ this.state.currentPassword }
+          value={this.state.currentPassword}
           placeholder='Your Password'
-          onChange={ e => this.setState({ currentPassword: e.target.value }) } />
-        <button className='form-submit-button' ref={ this.simulateClick } onClick={ this.handleLogin }>Sign In</button>
+          onChange={e => this.setState({ currentPassword: e.target.value })} />
+        <button className='form-submit-button' ref={this.simulateClick} onClick={this.handleLogin}>Sign In</button>
         <a href="">Don't know your password?</a>
       </div>
     )

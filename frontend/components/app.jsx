@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBarContainer from './nav_bar/nav_bar_container';
-import UserFormModalContainer from './form_modal/user_form_modal_container';
+import Modal from './modal/modal';
 import { Route, Switch } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 import GlobalAudioPlayerContainer from './global_audio_player/global_audio_player_container';
@@ -15,7 +15,7 @@ import LogoutPage from './logout_page';
 
 const App = () => (
 	<div id='app'>
-		<UserFormModalContainer />
+		<Modal />
 		<NavBarContainer />
 		<div id='app-body'>
 			<Switch>

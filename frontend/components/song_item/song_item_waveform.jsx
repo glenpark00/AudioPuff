@@ -1,35 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import WaveformProgress from './waveform_progress';
+import { displayGlobalAudioPlayer } from '../../actions/ui_actions';
+import { fetchCurrentSongFileUrl, changeCurrentTime } from '../../actions/songs_actions';
 import { convertSecsToMins } from '../../util/general_util';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default class SongItemWaveform extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      waveformWidth: 0,
-      hovering: false
+const SongItemWaveform = ({ song, item }) => {
+  const [width, setWidth] = useState(0),
+    [hovering, setHovering] = useState(false),
+    audio = useSelector(state => state.audio),
+    dispatch = useDispatch();
+
+  useEffect(() => {
+    window.addEventListener('resize', resizeProgress);
+    return () => {
+      window.removeEventListener('resize', resizeProgress);
     }
-    this.handleClick = this.handleClick.bind(this);
-    this.resizeProgress = this.resizeProgress.bind(this);
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  }
+  })
 
-  componentDidMount() {
-    window.addEventListener('resize', this.resizeProgress);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeProgress);
-  }
-
-  resizeProgress() {
-    const waveformWidth = document.querySelector('.waveform-audio').offsetWidth;
-    this.setState({ waveformWidth });
+  const resizeProgress = () => {
+    const width = document.querySelector('.waveform-audio').offsetWidth;
+    setWidth(width);
   } 
 
-  currentTimeContent() {
-    const { audio, song } = this.props;
+  const currentTimeContent = () => {
     if (audio.currentSong.id === song.id && audio.currentSong.currentTime) {
       return convertSecsToMins(audio.currentSong.currentTime);
     } else {
@@ -37,16 +31,14 @@ export default class SongItemWaveform extends React.Component {
     }
   }
 
-  async displayPlayer(e) {
-    const { fetchCurrentSongFileUrl, displayGlobalAudioPlayer, song } = this.props;
-    await fetchCurrentSongFileUrl(song.id);
-    await displayGlobalAudioPlayer();
+  const showPlayer = async e => {
+    await dispatch(fetchCurrentSongFileUrl(song.id));
+    await dispatch(displayGlobalAudioPlayer());
     return e;
   }
 
-  handleClick(e) {
+  const handleClick = e => {
     e.persist();
-    const { audio, song, changeCurrentTime } = this.props;
     if (audio.currentSong.id === song.id) {
       const newTime = Math.floor((e.nativeEvent.offsetX / e.target.offsetWidth) * song.duration);
       changeCurrentTime(newTime);
@@ -56,9 +48,9 @@ export default class SongItemWaveform extends React.Component {
       progressDiv.style.width = `${(newTime / song.duration) * 100}%`;
       playingProgressDiv.style.width = '0';
     } else {
-      this.displayPlayer(e)
+      showPlayer(e)
         .then((e) => {
-          this.resizeProgress();
+          resizeProgress();
           changeCurrentTime(0);
           document.querySelector('.global-audio-player').currentTime = 0;
           const progressDiv = document.querySelector(`#waveform-progress-${song.id}`);
@@ -70,82 +62,74 @@ export default class SongItemWaveform extends React.Component {
     }
   }
 
-  handleMouseEnter() {
-    const { audio, song } = this.props;
-    this.setState({ hovering: true }, () => {
-      if (audio.currentSong.id !== song.id) {
-        document.querySelector(`#waveform-audio-${song.id}`).animate([
-          { opacity: 0.7 },
-          { opacity: 1.0 }
-        ], 200)
-      }
-    })
+  const handleMouseEnter = () => {
+    setHovering(true);
+    if (audio.currentSong.id !== song.id) {
+      document.querySelector(`#waveform-audio-${song.id}`).animate([
+        { opacity: 0.7 },
+        { opacity: 1.0 }
+      ], 200)
+    }
   }
 
-  handleMouseLeave() {
-    const { audio, song } = this.props;
-    this.setState({ hovering: false }, () => {
-      if (audio.currentSong.id !== song.id) {
-        document.querySelector(`#waveform-audio-${song.id}`).animate([
-          { opacity: 1.0 },
-          { opacity: 0.7 }
-        ], 200)
-      }
-    })
+  const handleMouseLeave = () => {
+    setHovering(false);
+    if (audio.currentSong.id !== song.id) {
+      document.querySelector(`#waveform-audio-${song.id}`).animate([
+        { opacity: 1.0 },
+        { opacity: 0.7 }
+      ], 200)
+    }
   }
 
-  render() {
-    const { song, audio, item } = this.props;
-    const { hovering } = this.state;
-    const waveform = document.querySelector('.waveform-audio');
-    const waveformWidth = waveform ? waveform.offsetWidth : 0;
-    const hasFilter = !hovering && audio.currentSong.id !== song.id
+  const waveform = document.querySelector('.waveform-audio');
+  const waveformWidth = waveform ? waveform.offsetWidth : 0;
+  const hasFilter = !hovering && audio.currentSong.id !== song.id;
 
-    return (
+  return (
+    <div 
+      className='song-item-waveform' 
+      onClick={handleClick} 
+      style={item ? { height: '60px' } : {}}
+    >
       <div 
-        className='song-item-waveform' 
-        onClick={this.handleClick} 
-        style={item ? { height: '60px' } : {}}
+        id={`waveform-audio-${song.id}`}
+        className='waveform-audio' 
+        onMouseOver={() => handleMouseEnter()}
+        onMouseLeave={() => handleMouseLeave()}
+        style={hasFilter ? { opacity: 0.7 } : {}}
+      >
+        { audio.currentSong.id === song.id ? 
+          <WaveformProgress 
+            song={song}
+            audio={audio}
+            hovering={hovering}
+            waveformWidth={waveformWidth}
+            convertSecsToMins={convertSecsToMins}
+            item={item}
+          /> : null
+        }
+        <img 
+          className='waveform-default' 
+          src={song.waveform} alt='waveform'
+          style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '70px' } : {}}
+        />
+      </div>
+      <div 
+        id={`waveform-time-${song.id}`} 
+        className='waveform-time' 
+        style={item ? { bottom: '25%' } : {}}
       >
         <div 
-          id={`waveform-audio-${song.id}`}
-          className='waveform-audio' 
-          onMouseEnter={() => this.handleMouseEnter()}
-          onMouseLeave={() => this.handleMouseLeave()}
-          // onMouseEnter={() => this.setState({ hovering: true })}
-          // onMouseLeave={() => this.setState({ hovering: false })}
-          style={hasFilter ? { opacity: 0.7 } : {}}
-        >
-          { audio.currentSong.id === song.id ? 
-            <WaveformProgress 
-              song={song}
-              audio={audio}
-              hovering={hovering}
-              waveformWidth={waveformWidth}
-              convertSecsToMins={convertSecsToMins}
-              item={item}
-              /> : null
-          }
-          <img 
-            className='waveform-default' 
-            src={song.waveform} alt='waveform'
-            style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '70px' } : {}}
-          />
-        </div>
-        <div 
-          id={`waveform-time-${song.id}`} 
-          className='waveform-time' 
-          style={item ? { bottom: '25%' } : {}}
-        >
-          <div 
-            className='waveform-time-text' 
-            onClick={e => e.stopPropagation()}
-            >
-            {this.state.hovering ? '0:00' : this.currentTimeContent()}
-          </div> 
-          <div className='waveform-time-text' onClick={e => e.stopPropagation()}>{convertSecsToMins(song.duration)}</div>
-        </div>
+          className='waveform-time-text' 
+          onClick={e => e.stopPropagation()}
+          >
+          {hovering ? '0:00' : currentTimeContent()}
+        </div> 
+        <div className='waveform-time-text' onClick={e => e.stopPropagation()}>{convertSecsToMins(song.duration)}</div>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+export default SongItemWaveform;

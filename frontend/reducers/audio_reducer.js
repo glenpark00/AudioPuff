@@ -1,7 +1,9 @@
 import { RECEIVE_CURRENT_SONG, PLAY_AUDIO, PAUSE_AUDIO, CHANGE_CURRENT_TIME, RECEIVE_SONGS } from '../actions/songs_actions';
 import { RECEIVE_USER_SONGS } from '../actions/users_actions';
 
-const audioReducer = (state = {}, action) => {
+const defaultState = { currentSong: {}, songIds: [], playing: false };
+
+const audioReducer = (state = defaultState, action) => {
   Object.freeze(state);
   const newState = Object.assign({}, state);
   switch (action.type) {

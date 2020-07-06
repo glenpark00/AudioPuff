@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SideBarSection = ({ icon, items, component, text }) => {
-  if (!items) return null;
+  if (!items || items.length === 0) return null;
 
   return (
     <div className='side-bar-section'>
@@ -10,7 +10,7 @@ const SideBarSection = ({ icon, items, component, text }) => {
           {icon}
           <div>{text}</div>
         </div>
-        <div>{items.length > 3 ? 'View all' : ''}</div>
+        <div>{items.length > 3 ? (text === 'Who to follow' ? 'Refresh' : 'View all') : ''}</div>
       </div>
       <div className='side-bar-section-line'></div>
       <div>

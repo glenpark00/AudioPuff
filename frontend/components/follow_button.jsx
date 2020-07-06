@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { follow, unfollow } from '../util/follows_api_util';
 import { fetchUser } from '../actions/users_actions';
-import { FaPlus } from 'react-icons/fa';
+import { FaUserPlus } from 'react-icons/fa';
 
-export default function FollowButton({ user }) {
+export default function FollowButton({ user, type }) {
   const currentUser = useSelector(state => state.entities.users[state.session.currentUserUrl])
   const [followed, setFollowed] = useState(user.followers.includes(currentUser.profileUrl));
 
@@ -16,7 +16,7 @@ export default function FollowButton({ user }) {
 
   return (
     <div
-      className='like-button'
+      className={`follow-button-${type}`}
       style={followed ? { color: '#CE1141' } : {}}
       onClick={() => {
         if (followed) {
@@ -27,8 +27,8 @@ export default function FollowButton({ user }) {
             .then(() => dispatch(fetchUser(user.id)))
         }
       }}>
-      <FaPlus />
-      <div className='like-button-text'>
+      <FaUserPlus />
+      <div className={`follow-button-${type}-text`}>
         {followed ? 'Following' : 'Follow'}
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBarAuthContainer from './nav_bar_auth_container';
+import NavBarAuth from './nav_bar_auth';
 import NavBarProtectedContainer from './nav_bar_protected_container';
 import { Link, withRouter } from 'react-router-dom';
 import SearchBarContainer from '../search/search_bar_container';
@@ -20,7 +20,7 @@ class NavBar extends React.Component {
               <Link to='/' className='nav-left-link'>Library</Link>
             </div>
             <SearchBarContainer />
-            {!this.props.loggedIn ? <NavBarAuthContainer /> : <NavBarProtectedContainer />}
+            {!this.props.loggedIn ? <NavBarAuth /> : <NavBarProtectedContainer />}
           </div>
           <div className='nav-bar-space'></div>
         </div>

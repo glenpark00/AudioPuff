@@ -1,86 +1,79 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import SongItemWaveform from './song_item_waveform';
+import PlayButton from '../play_button';
 import LikeButton from '../like_button';
+import { enableModalDisplay } from '../../actions/ui_actions';
 import { timeElapsed } from '../../util/general_util';
-import { FaPlay, FaPause } from 'react-icons/fa';
+import { withRouter } from 'react-router-dom';
+import { FaTrash, FaPencilAlt } from 'react-icons/fa'
 
-export default class SongShow extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handlePlayButton = this.handlePlayButton.bind(this);
-    this.playButtonContent = this.playButtonContent.bind(this);
-    this.openSongShow = this.openSongShow.bind(this);
-    this.linkToProfile = this.linkToProfile.bind(this);
-  }
+const SongItem = ({ song, user, audio, history }) => {
+  const currentUserUrl = useSelector(state => state.session.currentUserUrl),
+    dispatch = useDispatch(),
+    openModal = type => dispatch(enableModalDisplay({ type, data: { song, user } }));
 
-  handlePlayButton() {
-    const { audio, song, displayGlobalAudioPlayer, fetchCurrentSongFileUrl, playAudio, pauseAudio } = this.props;
-    if (audio.playing && song.id === audio.currentSong.id) {
-      const globalAudio = document.querySelector('.global-audio-player');
-      globalAudio.pause();
-      pauseAudio();
-    } else {
-      if (audio.currentSong.id === song.id) {
-        const globalAudio = document.querySelector('.global-audio-player');
-        globalAudio.play();
-        playAudio();
-      } else {
-        displayGlobalAudioPlayer();
-        fetchCurrentSongFileUrl(song.id);
-      }
-    }
-  }
-
-  playButtonContent() {
-    const { audio, song } = this.props;
-    if (audio.currentSong.id === song.id && audio.playing) {
-      return <FaPause />
-    } else  {
-      return <FaPlay />
-    }
-  }
-
-  openSongShow() {
-    this.props.history.push(`/${this.props.user.profileUrl}/${this.props.song.songUrl}`);
-  }
-
-  linkToProfile() {
-    this.props.history.push(`/${this.props.user.profileUrl}`);
-  }
-
-  render() {
-    const { song, user, audio, displayPlayer, changeCurrentTime, fetchCurrentSongFileUrl, displayGlobalAudioPlayer } = this.props;
-    return (
-      <div className='song-item'>
-        <img className='song-item-image' onClick={ this.openSongShow } src={ song.imageUrl } />
-        <div className='song-item-content-container'>
-          <div className='song-item-content'>
-            <div className='song-item-play' onClick={ this.handlePlayButton }>{ this.playButtonContent() }</div>
-            <div className='song-item-info'>
-              <div className='song-item-info-top-line'>
-                <div className='song-item-display-name' onClick={this.linkToProfile}>{ user.displayName }</div>
-                <div className='song-time-elapsed'>{ timeElapsed(song.createdAt) }</div>
+  return (
+    <div className='song-item'>
+      <img 
+        className='song-item-image' 
+        src={song.imageUrl}
+        onClick={() => history.push(`/${user.profileUrl}/${song.songUrl}`)}
+      />
+      <div className='song-item-content-container'>
+        <div className='song-item-content'>
+          <PlayButton song={song} type='item' />
+          <div className='song-item-info'>
+            <div className='song-item-info-top-line'>
+              <div 
+                className='song-item-display-name' 
+                onClick={() => history.push(`/${user.profileUrl}`)}
+              >
+                {user.displayName}
               </div>
-              <div className='song-item-title' onClick={this.openSongShow}>{ song.title }</div>
+              <div className='song-time-elapsed'>{timeElapsed(song.createdAt)}</div>
+            </div>
+            <div className='song-item-info-bottom-line'>
+              <div 
+                className='song-item-title' 
+                onClick={() => history.push(`/${user.profileUrl}/${song.songUrl}`)}
+              >
+                {song.title}
+              </div>
+              { song.genre !== 'None' ?
+                <div className='song-item-genre'>#{song.genre}</div>
+                : null
+              }
             </div>
           </div>
-          <SongItemWaveform 
-            audio={audio}
-            song={song}
-            displayPlayer={displayPlayer}
-            displayGlobalAudioPlayer={displayGlobalAudioPlayer}
-            fetchCurrentSongFileUrl={fetchCurrentSongFileUrl}
-            changeCurrentTime={changeCurrentTime}
-            item={true} />
-          <div className='song-item-buttons'>
-            <div className='like-button-border'>
-              <LikeButton 
-                song={song}
-                text={song.likers.length > 0 ? song.likers.length : 'Like'} />
-            </div>  
+        </div>
+        <SongItemWaveform 
+          audio={audio}
+          song={song}
+          item={true} />
+        <div className='song-item-buttons'>
+          <div className='like-button-border'>
+            <LikeButton 
+              song={song}
+              text={song.likers.length > 0 ? song.likers.length : 'Like'} 
+          />
           </div>
+          {currentUserUrl === user.profileUrl ?
+            (
+              <>
+                <div className='song-item-button' onClick={() => openModal('songEdit')} > 
+                  {<FaPencilAlt />} Edit
+                </div>
+                <div className='song-item-button' onClick={() => openModal('songDelete')}>
+                  {<FaTrash />} Delete track
+                </div>
+              </>
+            ) : null
+          }  
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
+
+export default withRouter(SongItem);

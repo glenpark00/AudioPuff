@@ -27,80 +27,13 @@
 .discover-header {
   font-size: 23px;
   font-weight: 100;
-  margin-top: 25px;
-  margin-left: 15px;
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
 }
 
 .discover-subheader {
-  margin: 10px 0 20px 15px;
+  margin: 10px 0 20px 0;
   font-weight: 100;
   color: #999;
   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
   font-size: 14px;
-}
-
-.songs-carousel-container {
-  width: auto;
-  height: auto;
-  overflow-x: hidden;
-  padding: 0 10px;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.songs-carousel {
-  display: flex;
-  justify-content: flex-start;
-  width: auto;
-  height: auto;
-  overflow-x: auto;
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-}
-
-.songs-carousel > div {
-  padding-left: 25px;
-}
-
-.songs-carousel > div:first-child {
-  padding-left: 0;
-}
-
-.songs-carousel::-webkit-scrollbar {
-  width: 0px;
-  background: transparent; 
-}
-
-.carousel-scroll-button {
-  border: 1px solid rgb(206, 206, 206);
-  border-radius: 3px;
-  width: 32px;
-  height: 32px;
-  background-color: white;
-  font-size: 20px;
-  line-height: 40px;
-  text-align: center;
-  cursor: pointer;
-  margin-top: 90px;
-}
-
-.carousel-scroll-button:hover {
-  border: 1px solid #CE1141;
-  color: #CE1141;
-}
-
-.carousel-scroll-button-container {
-  position: absolute;
-  top: -7.5%;
-  height: 100%;
-  z-index: 1;
-}
-
-#carousel-left-button-container {
-  left: 0;
-}
-
-#carousel-right-button-container {
-  right: 0;
 }

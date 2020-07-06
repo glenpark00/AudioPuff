@@ -29,11 +29,6 @@ export default class GlobalAudioPlayer extends React.Component {
     this.handleDotMouseUp = this.handleDotMouseUp.bind(this);
   }
 
-  componentDidMount() {
-    const player = document.querySelector('.global-audio-player');
-    player.volume = 0.5;
-  }
-
   handleControls() {
     const { audio, pauseAudio, playAudio } = this.props;
     const player = document.querySelector('.global-audio-player');
@@ -106,8 +101,7 @@ export default class GlobalAudioPlayer extends React.Component {
 
   handleClick(e) {
     const { changeCurrentTime, audio } = this.props;
-    let currentTargetRect = e.currentTarget.getBoundingClientRect();
-    const offsetX = e.pageX - currentTargetRect.left;
+    const offsetX = e.pageX - e.currentTarget.offsetLeft;
     const newTime = Math.floor((offsetX / e.currentTarget.offsetWidth) * audio.currentSong.duration);
     changeCurrentTime(newTime);
     document.querySelector('.global-audio-player').currentTime = newTime;
@@ -153,6 +147,10 @@ export default class GlobalAudioPlayer extends React.Component {
   }
 
   handleDotMouseUp(e) {
+    const { changeCurrentTime, audio } = this.props;
+    console.log(e.pageY)
+    console.log(window.outerHeight)
+
     this.setState({ down: false }, () => {
       document.removeEventListener('mousemove', this.updateDrag);
       document.removeEventListener('mouseup', this.handleDotMouseUp);
@@ -165,13 +163,23 @@ export default class GlobalAudioPlayer extends React.Component {
           this.updateTime(0);
         })
       } else if (e.pageX > progressLeft + progressWidth) {
-        const { audio } = this.props;
         this.setState({ showDot: false, currentProgress: audio.currentSong.duration - 1 }, () => {
           document.querySelector('.global-audio-player').currentTime = audio.currentSong.duration - 1;
           this.updateTime(audio.currentSong.duration - 1);
         })
-      } else if (e.pageY < 714) {
-        this.setState({ showDot: false })
+      } else if (e.pageY < window.innerHeight - 50) {
+          this.setState({ showDot: false }, () => {
+            const { changeCurrentTime, audio } = this.props;
+            const offsetX = e.pageX - progressLeft;
+            const newTime = Math.floor((offsetX / progressWidth) * audio.currentSong.duration);
+            changeCurrentTime(newTime);
+            document.querySelector('.global-audio-player').currentTime = newTime;
+          })
+      } else {
+        const offsetX = e.pageX - progressLeft;
+        const newTime = Math.floor((offsetX / progressWidth) * audio.currentSong.duration);
+        changeCurrentTime(newTime);
+        document.querySelector('.global-audio-player').currentTime = newTime;
       }
     });
   }
@@ -208,9 +216,12 @@ export default class GlobalAudioPlayer extends React.Component {
   }
 
   render() {
-    const { audio, users, song } = this.props;
-    const { currentProgress, down } = this.state;
+    const { audio, users, song, displayPlayer } = this.props;
+    const { currentProgress, down, volume } = this.state;
     const user = (audio.currentSong.userUrl ? users[audio.currentSong.userUrl] : {});
+
+    if (!displayPlayer) return null;
+
     return (
       <>
         <div className='phantom-audio-player'><div></div></div>
@@ -276,6 +287,7 @@ export default class GlobalAudioPlayer extends React.Component {
             onEnded={this.playNextSong}
             autoPlay 
             src={audio.currentSong.fileUrl}
+            ref={() => this.volume = volume}
           ></audio>
         </div>
       </>

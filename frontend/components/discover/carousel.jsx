@@ -1,5 +1,5 @@
 import React from 'react';
-import SongDisplayItemContainer from '../song_display_item/song_display_item_container';
+import CarouselItem from './carousel_item';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 export default class Carousel extends React.Component {
@@ -76,14 +76,16 @@ export default class Carousel extends React.Component {
     const scrollWidth = (carousel ? carousel.scrollWidth : 9999);
 
     return (
-      <div className='songs-carousel-container'>
+      <div className='songs-carousel-buttons'>
         {this.state.position > 0 ? this.scrollButton('left') : null}
-        <div className='songs-carousel'>
-          {songs.map(song => {
-            const user = users[song.userUrl];
-            return <SongDisplayItemContainer song={song} user={user} key={song.id} />
-          }
-          )}
+        <div className='songs-carousel-container'>
+          <div className='songs-carousel'>
+            {songs.map(song => {
+              const user = users[song.userUrl];
+              return <CarouselItem song={song} user={user} key={song.id} />
+            }
+            )}
+          </div>
         </div>
         {this.state.position < scrollWidth ? this.scrollButton('right') : null}
       </div>

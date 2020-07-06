@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { playAudio, pauseAudio, changeCurrentTime, fetchCurrentSongFileUrl } from '../../actions/songs_actions';
-import GlobalAudio from './global_audio';
+import GlobalAudioPlayer from './global_audio_player';
 
 const mapStateToProps = state => {
   let song = null;
-  let audio = { currentSong: {}, songIds: state.audio.songIds, playing: false };
-  if (state.audio.currentSong) {
+  let audio = state.audio;
+  if (state.audio.currentSong.id) {
     const songKey = state.audio.currentSong.userUrl + state.audio.currentSong.songUrl.split('').filter(c => c !== '_').join('');
     song = state.entities.songs[songKey];
     audio = state.audio
@@ -25,4 +25,4 @@ const mapDispatchToProps = dispatch => ({
   fetchCurrentSongFileUrl: songId => dispatch(fetchCurrentSongFileUrl(songId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GlobalAudio);
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalAudioPlayer);
