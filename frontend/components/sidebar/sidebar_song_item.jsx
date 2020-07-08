@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import LikeButton from '../like_button';
 import PlayButton from '../play_button';
 import { FaHeart } from 'react-icons/fa';

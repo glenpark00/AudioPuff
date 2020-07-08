@@ -12,7 +12,7 @@ export default class WaveformProgress extends React.Component {
     document.querySelector(`#waveform-progress-playing-${song.id}`).style.width = '0';
     if (item) {
       document.querySelectorAll(`#waveform-progress-full-${song.id} img`).forEach(img => {
-        img.style.height = '70px';
+        img.style.height = '60px';
       })
     }
   }
@@ -62,7 +62,6 @@ export default class WaveformProgress extends React.Component {
 
   render() {
     const { song, waveformWidth } = this.props;
-    // console.log(this.props.hovering)
 
     return (
       <div

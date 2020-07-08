@@ -20,6 +20,7 @@ export default class SongUploadForm extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleCreateSong = this.handleCreateSong.bind(this);
     this.setImageFile = this.setImageFile.bind(this);
+    this.setSongUrl = this.setSongUrl.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,10 @@ export default class SongUploadForm extends React.Component {
 
   setImageFile(imageFile) {
     this.setState({ imageFile })
+  }
+
+  setSongUrl(val) {
+    this.setState({ songUrl: val })
   }
 
   createSongWaveform(audioFile) {
@@ -62,11 +67,6 @@ export default class SongUploadForm extends React.Component {
     }
     return filteredData;
   };
-
-  // normalizeData(filteredData) {
-  //   const multiplier = Math.pow(Math.max(...filteredData), -1);
-  //   return filteredData.map(n => n * multiplier);
-  // }
 
   normalizeData(filteredData) {
     const multiplier = Math.pow(Math.pow(Math.max(...filteredData), 2), -1);
@@ -150,14 +150,12 @@ export default class SongUploadForm extends React.Component {
             <div className='song-info-form'>
               <div className='song-form-text'>Title</div>
               <input className='song-form-input' type="text" value={title} onChange={this.handleInput('title')} />
-              { <div className='song-upload-error'>{errors.title}</div>  }
-              <div>
-                <div className='song-url-field'>
+              <div className='song-upload-error'>{errors.title}</div>
+              <div className='song-url-field'>
                   <span className='song-url-static'>audiopuff.herokuapp.com/{this.props.currentUser.profileUrl}/</span>
-                  <SongUploadSongUrl songUrl={songUrl} handleInput={this.handleInput} />
-                </div>
-                { <div className='song-upload-error'>{errors.url}</div> }
+                  <SongUploadSongUrl songUrl={songUrl} handleInput={this.setSongUrl} />
               </div>
+              <div className='song-upload-error'>{errors.url}</div>
               <div className='song-genre-field'>
                 <div className='song-form-text'>Genre</div>
                 <SongUploadGenre genre={genre} handleInput={this.handleInput} />

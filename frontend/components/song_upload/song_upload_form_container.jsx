@@ -4,7 +4,7 @@ import SongUploadForm from './song_upload_form';
 import { withRouter } from 'react-router-dom';
 
 const mapStateToProps = state => ({
-  currentUser: state.entities.users[state.session.currentUserUrl],
+  currentUser: state.entities.users[state.session.currentUser.profileUrl],
   errors: state.errors.songs
 })
 

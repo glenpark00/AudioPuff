@@ -148,8 +148,6 @@ export default class GlobalAudioPlayer extends React.Component {
 
   handleDotMouseUp(e) {
     const { changeCurrentTime, audio } = this.props;
-    console.log(e.pageY)
-    console.log(window.outerHeight)
 
     this.setState({ down: false }, () => {
       document.removeEventListener('mousemove', this.updateDrag);

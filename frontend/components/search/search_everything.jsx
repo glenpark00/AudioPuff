@@ -26,7 +26,6 @@ export default class SearchEverything extends React.Component {
         <div>Found {songs.length} tracks, {users.length} people</div>
         <div>
           {everything.map(el => {
-            // console.log(el)
             if (el.displayName) {
               return <SearchUserItem user={el} />
             } else {

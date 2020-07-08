@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import UserFormModalContainer from './user_form_modal_container';
 import SongShowEditModal from './song_show_edit_modal';
 import SongShowDeleteModal from './song_show_delete_modal';
+import UserEditFormModal from './user_edit_form_modal';
 import { receiveSongErrors } from '../../actions/songs_actions';
 import { clearSessionErrors } from '../../actions/session_actions';
 import { disableModalDisplay } from '../../actions/ui_actions';
@@ -35,6 +36,8 @@ const Modal = () => {
         return <SongShowEditModal song={modal.data.song} user={modal.data.user} handleCloseModal={handleCloseModal} />;
       case 'songDelete':
         return <SongShowDeleteModal song={modal.data.song} user={modal.data.user} handleCloseModal={handleCloseModal} />;
+      case 'userEdit':
+        return <UserEditFormModal user={modal.data.user} handleCloseModal={handleCloseModal} />
     }
   }  
 

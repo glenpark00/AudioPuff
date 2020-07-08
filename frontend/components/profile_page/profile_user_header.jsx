@@ -1,10 +1,6 @@
 import React from 'react';
 
 export default class ProfileUserHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { user } = this.props;
     return (

@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../footer';
 import Carousel from './carousel';
+import Playlist from './playlist';
 import SideBarMyInfo from '../sidebar/sidebar_my_info';
 import SideBarSection from '../sidebar/sidebar_section';
 import SideBarUserItem from '../sidebar/sidebar_user_item';
@@ -28,6 +29,15 @@ export default class Discover extends React.Component {
       whoToFollow[j] = temp;
     }
     const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
+    
+    let theUpload = Object.values(songs);
+    // for (let i = theUpload.length - 1; i > 0; i--) {
+    //   const j = Math.floor(Math.random() * i)
+    //   const temp = theUpload[i];
+    //   theUpload[i] = theUpload[j];
+    //   theUpload[j] = temp;
+    // }
+    theUpload = theUpload.slice(0, 15);
 
     return (
       <div className='discover-page-background'>
@@ -35,10 +45,15 @@ export default class Discover extends React.Component {
           <div className='page-full-content'>
             <div className='page-main-content'>
               <div className='discover-heading-container'>
-                <h2 className='discover-header'>New Music Now</h2>
-                <div className='discover-subheader'>The latest hits, updated all the time</div>
+                <h2 className='discover-header'>AudioPuff: Trending</h2>
+                <div className='discover-subheader'>Up-and-coming tracks on AudioPuff</div>
               </div>
               <Carousel songs={Object.values(songs)} users={users}/>
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>The Upload</h2>
+                <div className='discover-subheader'>Newly posted tracks. Just for you</div>
+              </div>
+              <Playlist songs={theUpload} users={users} />
               <Footer></Footer>
             </div>
             <div className='side-bar'>

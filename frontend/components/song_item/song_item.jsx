@@ -8,8 +8,8 @@ import { timeElapsed } from '../../util/general_util';
 import { withRouter } from 'react-router-dom';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa'
 
-const SongItem = ({ song, user, audio, history }) => {
-  const currentUserUrl = useSelector(state => state.session.currentUserUrl),
+const SongItem = ({ song, user, audio, hideCreation, history }) => {
+  const currentUserUrl = useSelector(state => state.session.currentUser.profileUrl),
     dispatch = useDispatch(),
     openModal = type => dispatch(enableModalDisplay({ type, data: { song, user } }));
 
@@ -31,7 +31,7 @@ const SongItem = ({ song, user, audio, history }) => {
               >
                 {user.displayName}
               </div>
-              <div className='song-time-elapsed'>{timeElapsed(song.createdAt)}</div>
+              <div className='song-time-elapsed'>{hideCreation ? '' : timeElapsed(song.createdAt)}</div>
             </div>
             <div className='song-item-info-bottom-line'>
               <div 

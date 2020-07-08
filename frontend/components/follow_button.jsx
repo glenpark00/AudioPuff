@@ -5,7 +5,7 @@ import { fetchUser } from '../actions/users_actions';
 import { FaUserPlus } from 'react-icons/fa';
 
 export default function FollowButton({ user, type }) {
-  const currentUser = useSelector(state => state.entities.users[state.session.currentUserUrl])
+  const currentUser = useSelector(state => state.entities.users[state.session.currentUser.profileUrl])
   const [followed, setFollowed] = useState(user.followers.includes(currentUser.profileUrl));
 
   const dispatch = useDispatch();

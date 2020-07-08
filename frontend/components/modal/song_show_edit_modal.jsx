@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import SongShowUploadImage from './song_show_upload_image';
 import SongUploadSongUrl from '../song_upload/song_upload_song_url';
 import SongUploadGenre from '../song_upload/song_upload_genre';
@@ -12,26 +12,23 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
       [songUrl, setSongUrl] = useState(song.songUrl),
       [genre, setGenre] = useState(song.genre),
       [description, setDescription] = useState(song.description),
-      [titleError, setTitleError] = useState(false),
-      [urlError, setUrlError] = useState(false)
+      errors = useSelector(state => state.errors.songs),
+      dispatch = useDispatch();
 
-  const dispatch = useDispatch();
-
-  const checkFields = () => {
-    if (title === '') {
-      setTitleError(true);
-    } else {
-      setTitleError(false);
-    }
-    if (songUrl === '') {
-      setUrlError(true);
-    } else {
-      setUrlError(false);
-    }
+  const checkErrors = () => {
+    if (!errors || errors === []) return {};
+    const res = {};
+    errors.map(err => {
+      if (err.includes('Title')) {
+        res.title = err;
+      } else if (err.includes('Song url')) {
+        res.url = err;
+      }
+    })
+    return res;
   }
 
   const handleSubmit = () => {
-    checkFields();
     if (title != '' && songUrl != '') {
       const formData = prepareForm();
       handleCloseModal()
@@ -65,6 +62,8 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
     handleCloseModal();
   }
 
+  const errs = checkErrors();
+
   return (
     <div className='song-form'>
       <h2>Basic Info</h2>
@@ -73,11 +72,12 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
         <div className='song-info-form'>
           <div className='song-form-text'>Title</div>
           <input className='song-form-input' type="text" value={title} onChange={setTitle} />
-          {titleError ? <div>You must provide a title</div> : ''}
+          <div className='song-upload-error'>{errs.title}</div>
           <div className='song-url-field'>
             <span className='song-url-static'>audiopuff.herokuapp.com/{user.profileUrl}/</span>
-            <SongUploadSongUrl songUrl={songUrl} handleInput={setSongUrl} urlError={urlError} />
+            <SongUploadSongUrl songUrl={songUrl} handleInput={setSongUrl} />
           </div>
+          <div className='song-upload-error'>{errs.url}</div>
           <div className='song-form-text'>Genre</div>
           <SongUploadGenre genre={genre} handleInput={setGenre} />
           <div className='song-form-text'>Description</div>

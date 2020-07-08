@@ -1,0 +1,106 @@
+.playlist-container {
+  display: flex;
+  align-items: center;
+  // background: linear-gradient(135deg, rgb(134, 151, 149) 0%, rgb(67, 62, 55) 100%);
+  background: linear-gradient(135deg, rgb(148, 154, 141) 0%, rgb(158, 99, 90) 100%);
+  width: 100%;
+  height: 220px;
+  padding: 0 5px 0 20px;
+  box-sizing: border-box;
+}
+
+.playlist-img {
+  width: 180px;
+  height: 180px;
+}
+
+.playlist-songs {
+  width: 100%;
+  height: calc(100% - 40px);
+  overflow-y: hidden;
+  margin: 10px 0 10px 15px;
+  box-sizing: border-box;
+}
+
+.playlist-songs:hover {
+  overflow-y: auto;
+}
+
+.playlist-songs:hover > .playlist-item {
+  margin-right: 0;
+}
+
+.playlist-songs::-webkit-scrollbar {
+  display: hidden;
+  background-color: transparent;
+  width: 8px;
+}
+
+.playlist-songs::-webkit-scrollbar-thumb {
+  background-color: rgba(63, 63, 63, 0.8);
+  border: 0.2px solid rgba(126, 126, 126, 0.6);
+  border-radius: 5px;
+}
+
+.playlist-img-container {
+  position: relative;
+}
+
+.song-playlist-play {
+  position: absolute;
+  top: 33%;
+  left: 33%;
+  color: white;
+  text-align: center;
+  vertical-align: bottom;
+  background-color: #CE1141;
+  border-radius: 50%;
+  width: 57px;
+  height: 57px;
+  line-height: 66px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.playlist-play-button-icon {
+  transform: translateX(-0.5%);
+}
+
+.song-playlist-play:hover { 
+  box-shadow: inset 0 0 0 99999px rgba(49, 47, 47, 0.2);
+}
+
+.playlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px;
+  margin-right: 8px;
+  color: #fff;
+  box-sizing: border-box;
+  height: 40px;
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+  font-weight: 100;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.playlist-item > div {
+  display: flex;
+  align-items: center;
+}
+
+.playlist-item > div > div:first-child {
+  white-space: pre;
+  color: hsla(0,0%,100%,.7)
+}
+
+.playlist-item-like-button {
+  margin-right: 5px;
+  border: 1px solid #c9c9c9;
+  border-radius: 3px;
+  width: fit-content;
+  height: fit-content;
+  padding: 3px 6px;
+}

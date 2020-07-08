@@ -13,7 +13,10 @@ document.addEventListener("DOMContentLoaded", () => {
 				}
 			},
 			session: {
-				currentUserUrl: window.currentUser.profileUrl
+				currentUser: { 
+					id: window.currentUser.id,
+					profileUrl: window.currentUser.profileUrl
+				}
 			},
 			errors: {
 				session: []
@@ -21,9 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		};
 	}
 	const store = configureStore(preloadedState);
-
-	// TESTING
-	window.getState = store.getState;
 
 	const root = document.getElementById("root");
 	ReactDOM.render(<Root store={store}/>, root);

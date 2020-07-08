@@ -14,10 +14,10 @@ class NavBar extends React.Component {
           <div className='nav-bar-space'></div>
           <div className='nav-bar'>
             <div className='nav-left-links'>
-              <Link to='/' className='homepage-link nav-bar-item'>A U D I O P U F F</Link>
-              <Link to='/' className={`nav-left-link ${location === '/' ? 'link-selected' : ''}`}>Home</Link>
-              <Link to='/' className='nav-left-link'>Stream</Link>
-              <Link to='/' className='nav-left-link'>Library</Link>
+              <Link to='/discover' className='homepage-link nav-bar-item'>A U D I O P U F F</Link>
+              <Link to='/discover' className={`nav-left-link ${location === '/discover' ? 'link-selected' : ''}`}>Home</Link>
+              <Link to='/stream' className={`nav-left-link ${location === '/stream' ? 'link-selected' : ''}`}>Stream</Link>
+              <Link to='/library' className={`nav-left-link ${location === '/library' ? 'link-selected' : ''}`}>Library</Link>
             </div>
             <SearchBarContainer />
             {!this.props.loggedIn ? <NavBarAuth /> : <NavBarProtectedContainer />}

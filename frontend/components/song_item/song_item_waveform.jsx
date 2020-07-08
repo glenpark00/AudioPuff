@@ -112,13 +112,13 @@ const SongItemWaveform = ({ song, item }) => {
         <img 
           className='waveform-default' 
           src={song.waveform} alt='waveform'
-          style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '70px' } : {}}
+          style={item ? { filter: 'invert(10%) sepia(0%) saturate(100%) hue-rotate(600deg) brightness(50%) contrast(35%)', height: '60px' } : {}}
         />
       </div>
       <div 
         id={`waveform-time-${song.id}`} 
         className='waveform-time' 
-        style={item ? { bottom: '25%' } : {}}
+        style={item ? { bottom: '38%' } : {}}
       >
         <div 
           className='waveform-time-text' 
