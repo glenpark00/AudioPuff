@@ -6,10 +6,10 @@ import SideBarSection from './sidebar/sidebar_section';
 import SideBarUserItem from './sidebar/sidebar_user_item';
 import SideBarSongItem from './sidebar/sidebar_song_item';
 import Footer from './footer';
-import { fetchUserSongs } from '../actions/users_actions';
+import { fetchUserSongs, fetchUser } from '../actions/users_actions';
 import { FaUserFriends, FaHeart } from 'react-icons/fa';
 import { timeElapsed } from '../util/general_util';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 const Stream = ({ history }) => {
   const songs = useSelector(state => state.entities.songs),
@@ -18,20 +18,25 @@ const Stream = ({ history }) => {
     dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchUser(currentUser.id))
+  }, [])
+
+  useEffect(() => {
     if (currentUser.followings) {
       currentUser.followings.forEach(userUrl => dispatch(fetchUserSongs(userUrl)));
     }
   }, [currentUser])
 
-  const followedUsersSongs = [];
+  let followedUsersSongs = [];
 
   if (currentUser.followings) {
     currentUser.followings.forEach(userUrl => {
       const user = users[userUrl];
-      if (user) {
-        user.songs.map(songKey => followedUsersSongs.push(songs[songKey]))
+      if (user && user.songs) {
+        user.songs.forEach(songKey => followedUsersSongs.push(songs[songKey]))
       }
     })
+    followedUsersSongs = followedUsersSongs.filter(song => song)
   }
 
   const whoToFollow = currentUser ? Object.values(users).filter(user => (
@@ -56,7 +61,7 @@ const Stream = ({ history }) => {
             <div className='stream-header-sub'>Follow your favorite artists, labels and friends on SoundCloud and see every track they post right here.</div>
             <div className='stream-subheader'>Hear the latest posts from the people you’re following:</div>
             { followedUsersSongs.length < 1 ? 
-              <div>Your stream is currently empty. Go to Search or Home to find music &#38; audio to listen to.</div>
+              <div className='stream-empty-text'>Your stream is currently empty. Go to <Link to='/search/'>Search</Link> or <Link to='/discover'>Home</Link> to find music &#38; audio to listen to.</div>
               : 
               <div className='stream-items'>
                 { followedUsersSongs.map(song => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SongItem from '../song_item/song_item';
 import ProfileUserHeader from './profile_user_header';
 import SideBarProfileInfo from '../sidebar/sidebar_profile_info';
@@ -6,7 +6,7 @@ import SideBarSection from '../sidebar/sidebar_section';
 import SideBarSongItem from '../sidebar/sidebar_song_item';
 import SideBarUserItem from '../sidebar/sidebar_user_item';
 import FollowButton from '../follow_button';
-import { fetchUserSongs } from '../../actions/users_actions';
+import { fetchAllUserInfo } from '../../actions/users_actions';
 import { enableModalDisplay } from '../../actions/ui_actions';
 import { FaPencilAlt, FaHeart, FaUserFriends } from 'react-icons/fa';
 import { IoIosPerson } from 'react-icons/io';
@@ -19,15 +19,15 @@ const ProfilePage = ({ match }) => {
     users = useSelector(state => state.entities.users),
     songs = useSelector(state => state.entities.songs),
     dispatch = useDispatch(),
-    openModal = () => dispatch(enableModalDisplay({ type: 'userEdit', data: { user } }));
-
+    fetchUserInfo = () => dispatch(fetchAllUserInfo(match.params.profileUrl))
+   
   useEffect(() => {
-    dispatch(fetchUserSongs(match.params.profileUrl));
-  }, [user])
-
+    fetchUserInfo()
+  }, [match.params.profileUrl])
+  
   if (!user) return null;
-
-  const userSongs = user.songs ? user.songs.map(songId => songs[songId]) : []
+    
+  const userSongs = user.songs ? user.songs.map(songId => songs[songId]).filter(song => song) : []
   const likedSongs = user.likedSongs ? user.likedSongs.map(songId => songs[songId]).filter(song => song) : [];
   const followings = user.followings && users ? user.followings.map(userUrl => users[userUrl]).filter(song => song) : [];
   const followers = user.followers && users ? user.followers.map(userUrl => users[userUrl]).filter(song => song) : [];
@@ -38,7 +38,12 @@ const ProfilePage = ({ match }) => {
         <ProfileUserHeader user={user} />
         <div className='current-user-buttons'>
           { currentUserUrl === user.profileUrl ?
-            <div className='user-info-edit-button' onClick={openModal}><FaPencilAlt /> Edit</div>
+            <div 
+              className='user-info-edit-button' 
+              onClick={() => dispatch(enableModalDisplay({ type: 'userEdit', data: { user, songs: userSongs.map(song => song.songUrl) } }))}
+            >
+              <FaPencilAlt /> Edit
+            </div>
             : <FollowButton user={user} type='profile' />
           }
         </div>

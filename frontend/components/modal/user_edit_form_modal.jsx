@@ -5,7 +5,7 @@ import { updateUser } from '../../actions/users_actions';
 import { withRouter } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-const UserEditFormModal = ({ user, handleCloseModal, history }) => {
+const UserEditFormModal = ({ user, songs, handleCloseModal, history }) => {
   const [imageFile, setImageFile] = useState(null),
     [imageUrl, setImageUrl] = useState(user.imageUrl),
     [displayName, setDisplayName] = useState(user.displayName),
@@ -17,6 +17,7 @@ const UserEditFormModal = ({ user, handleCloseModal, history }) => {
     [bio, setBio] = useState(user.bio),
     [nameError, setNameError] = useState(false),
     [urlError, setUrlError] = useState(false),
+    originalProfileUrl = user.profileUrl,
     dispatch = useDispatch();
 
   const checkFields = () => {
@@ -36,9 +37,9 @@ const UserEditFormModal = ({ user, handleCloseModal, history }) => {
     checkFields();
     if (displayName != '' && profileUrl != '') {
       const formData = prepareForm();
-      dispatch(updateUser(formData))
-      .then(() => history.push(`/${profileUrl}`))
-      .then(() => handleCloseModal())
+      dispatch(updateUser(formData, originalProfileUrl, songs))
+        .then(() => history.push(`/${profileUrl}`))
+        .then(() => handleCloseModal())
     }
   }
 

@@ -10,10 +10,10 @@ import SideBarSongItem from '../sidebar/sidebar_song_item';
 
 export default class Discover extends React.Component {
   componentDidMount() {
-    const { fetchNSongs, fetchUserSongs, currentUser } = this.props;
+    const { fetchNSongs, fetchAllUserInfo, currentUser } = this.props;
     fetchNSongs(10);
     if (currentUser) {
-      fetchUserSongs(currentUser.profileUrl);
+      fetchAllUserInfo(currentUser.profileUrl);
     }
   }
 

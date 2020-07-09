@@ -68,6 +68,23 @@ class Api::UsersController < ApplicationController
     end
   end
 
+  def fetch_all_info
+    @user = User.with_attached_profile_image.includes(:followings, :followers, :songs, :liked_songs).find_by(profile_url: params[:profile_url])
+    @follows = @user.followings.with_attached_profile_image.includes(:followers).includes(:songs).map { |user| user }
+    @user.followers.with_attached_profile_image.includes(:followers).includes(:songs).each do |user|
+      unless @follows.include?(user)
+        @follows.push(user)
+      end
+    end
+    @songs = @user.liked_songs.map { |song| song }
+    @user.songs.with_attached_image_file.includes(:likers).each do |song| 
+      unless @songs.include?(song)
+        @songs.push(song)
+      end
+    end
+    render :fetch_all
+  end
+
   protected
   def create_user_params
     params.require(:user).permit(:email, :age, :gender, :password, :profile_url, :display_name)

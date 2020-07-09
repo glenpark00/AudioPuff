@@ -37,7 +37,7 @@ const Modal = () => {
       case 'songDelete':
         return <SongShowDeleteModal song={modal.data.song} user={modal.data.user} handleCloseModal={handleCloseModal} />;
       case 'userEdit':
-        return <UserEditFormModal user={modal.data.user} handleCloseModal={handleCloseModal} />
+        return <UserEditFormModal user={modal.data.user} songs={modal.data.songs} handleCloseModal={handleCloseModal} />
     }
   }  
 

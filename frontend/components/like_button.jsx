@@ -12,7 +12,7 @@ export default function LikeButton({ song, text }) {
 
   useEffect(() => {
     setLiked(song.likers.includes(currentUser.profileUrl))
-  })
+  }, [currentUser])
 
   return (
     <div

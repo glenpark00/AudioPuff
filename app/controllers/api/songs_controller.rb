@@ -39,19 +39,12 @@ class Api::SongsController < ApplicationController
   def destroy
     @song = Song.find_by(id: params[:id])
     @song.destroy
-    render json: ['Song successfully deleted']
+    render :show
   end
 
   def index
-    @users = [User.with_attached_profile_image.includes(:followings).find_by(profile_url: params[:user_id])]
-    @followings = @users[0].followings.includes(:followers).includes(:songs)
-    @songs = @users[0].liked_songs.map { |song| song }
-    songs = Song.with_attached_image_file.includes(:likers).where('user_url = ?', params[:user_id])
-    songs.each do |song| 
-      unless @songs.include?(song)
-        @songs.push(song)
-      end
-    end
+    @user = User.with_attached_profile_image.find_by(profile_url: params[:user_id])
+    @songs = Song.with_attached_image_file.includes(:likers).where('user_url = ?', params[:user_id])
     render :index
   end
 
@@ -65,7 +58,7 @@ class Api::SongsController < ApplicationController
     @songs = Song.with_attached_image_file.eager_load(:user).includes(:likers).all.limit(params[:n])
     userUrls = @songs.map { |song| song.user_url }.uniq
     @users = User.with_attached_profile_image.includes(:songs).where(profile_url: userUrls)
-    render :index
+    render :songs_users
   end
 
   def search
@@ -78,7 +71,7 @@ class Api::SongsController < ApplicationController
     users.each do |user|
       @users.push(user)
     end
-    render :index
+    render :songs_users
   end
 
   protected

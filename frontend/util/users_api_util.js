@@ -37,3 +37,10 @@ export const fetchUserSongs = profileUrl => (
     method: 'GET'
   })
 )
+
+export const fetchAllUserInfo = profileUrl => (
+  $.ajax({
+    url: `api/users/${profileUrl}/fetch-all-info`,
+    method: 'GET'
+  })
+)

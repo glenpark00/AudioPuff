@@ -1,10 +1,13 @@
 import * as UsersApiUtil from '../util/users_api_util';
+import { clearDeletedSongs } from './songs_actions';
 import { receiveCurrentUser } from './session_actions'
 
 // Action Type Constants
 export const RECEIVE_USER = 'RECEIVE_USER';
 export const RECEIVE_MANY_USERS = 'RECEIVE_MANY_USERS';
 export const RECEIVE_USER_SONGS = 'RECEIVE_USER_SONGS';
+export const CLEAR_USER = 'CLEAR_USER';
+export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO';
 
 // Regular Action Creators
 const receiveUser = user => ({
@@ -22,6 +25,16 @@ const receiveUserSongs = data => ({
   data
 })
 
+const clearUser = profileUrl => ({
+  type: CLEAR_USER,
+  profileUrl
+})
+
+const receiveUserInfo = data => ({
+  type: RECEIVE_USER_INFO,
+  data
+})
+
 // Thunk Action Creators
 export const fetchUser = userId => dispatch => (
   UsersApiUtil.fetchUser(userId).then(
@@ -34,11 +47,16 @@ export const fetchUsers = () => dispatch => (
   )
 );
 
-export const updateUser = user => dispatch => (
+export const updateUser = (user, userUrl, songs) => dispatch => (
   UsersApiUtil.updateUser(user).then(
-    user => {
-      dispatch(receiveCurrentUser(user))
-      dispatch(receiveUser(user));
+    data => {
+      const updatedUser = Object.values(data.users)[0];
+      dispatch(receiveCurrentUser(updatedUser));
+      dispatch(receiveUserSongs(data));
+      if (updatedUser.profileUrl !== userUrl) {
+        dispatch(clearUser(userUrl));
+        dispatch(clearDeletedSongs({ userUrl, songs }));
+      }
     }
   )
 )
@@ -46,5 +64,11 @@ export const updateUser = user => dispatch => (
 export const fetchUserSongs = profileUrl => dispatch => (
   UsersApiUtil.fetchUserSongs(profileUrl).then(
     data => dispatch(receiveUserSongs(data))
+  )
+)
+
+export const fetchAllUserInfo = profileUrl => dispatch => (
+  UsersApiUtil.fetchAllUserInfo(profileUrl).then(
+    data => dispatch(receiveUserInfo(data))
   )
 )

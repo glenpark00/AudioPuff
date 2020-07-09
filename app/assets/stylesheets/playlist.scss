@@ -17,6 +17,7 @@
 .playlist-songs {
   width: 100%;
   height: calc(100% - 40px);
+  overflow-x: hidden;
   overflow-y: hidden;
   margin: 10px 0 10px 15px;
   box-sizing: border-box;

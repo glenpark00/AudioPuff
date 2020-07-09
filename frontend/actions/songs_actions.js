@@ -4,6 +4,7 @@ import * as SongsApiUtil from '../util/songs_api_util';
 export const RECEIVE_SONG = 'RECEIVE_SONG';
 export const RECEIVE_SONG_ERRORS = 'RECEIVE_SONG_ERRORS';
 export const CLEAR_DELETED_SONG = 'CLEAR_DELETED_SONG';
+export const CLEAR_DELETED_SONGS = 'CLEAR_DELETED_SONGS';
 export const RECEIVE_CURRENT_SONG = 'RECEIVE_CURRENT_SONG';
 export const RECEIVE_SONGS = 'RECEIVE_SONGS';
 export const CHANGE_CURRENT_TIME = 'CHANGE_CURRENT_TIME';
@@ -22,11 +23,15 @@ export const receiveSongErrors = errors => ({
   errors
 })
 
-const clearDeletedSong = songId => ({
+const clearDeletedSong = song => ({
   type: CLEAR_DELETED_SONG,
-  songId
+  song
 })
 
+export const clearDeletedSongs = data => ({
+  type: CLEAR_DELETED_SONGS,
+  data
+})
 
 const receiveSongs = data => ({
   type: RECEIVE_SONGS,
@@ -66,16 +71,21 @@ export const createSong = song => dispatch => (
   )
 )
 
-export const updateSong = song => dispatch => (
+export const updateSong = (song, songUrl) => dispatch => (
   SongsApiUtil.updateSong(song).then(
-    song => dispatch(receiveSong(song)),
+    data => {
+      dispatch(receiveSong(data))
+      if (data.song.songUrl !== songUrl) {
+        dispatch(clearDeletedSong({ userUrl: data.song.userUrl, songUrl }))
+      }
+    },
     errors => dispatch(receiveSongErrors(errors.responseJSON))
   )
 )
 
 export const deleteSong = songId => dispatch => (
   SongsApiUtil.deleteSong(songId).then(
-    () => dispatch(clearDeletedSong(songId))
+    song => dispatch(clearDeletedSong(song))
   )
 )
 

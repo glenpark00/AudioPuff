@@ -6,14 +6,15 @@ import SongUploadGenre from '../song_upload/song_upload_genre';
 import { updateSong } from '../../actions/songs_actions';
 import { withRouter } from 'react-router-dom';
 
-const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
-    const [imageFile, setImageFile] = useState(null),
-      [title, setTitle] = useState(song.title),
-      [songUrl, setSongUrl] = useState(song.songUrl),
-      [genre, setGenre] = useState(song.genre),
-      [description, setDescription] = useState(song.description),
-      errors = useSelector(state => state.errors.songs),
-      dispatch = useDispatch();
+const SongShowEditModal = ({ song, user, history, match, handleCloseModal }) => {
+  const [imageFile, setImageFile] = useState(null),
+    [title, setTitle] = useState(song.title),
+    [songUrl, setSongUrl] = useState(song.songUrl),
+    [genre, setGenre] = useState(song.genre),
+    [description, setDescription] = useState(song.description ? song.description : ''),
+    errors = useSelector(state => state.errors.songs),
+    originalSongUrl = song.songUrl,
+    dispatch = useDispatch();
 
   const checkErrors = () => {
     if (!errors || errors === []) return {};
@@ -29,15 +30,14 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
   }
 
   const handleSubmit = () => {
-    if (title != '' && songUrl != '') {
-      const formData = prepareForm();
-      handleCloseModal()
-        .then(() => {
-          dispatch(updateSong(formData));
-          history.push(`/${user.profileUrl}`);
-          history.go();
-        })
-    }
+    const formData = prepareForm();
+    dispatch(updateSong(formData, originalSongUrl))
+      .then(() => {
+        handleCloseModal();
+        if (match.params.songUrl && match.params.songUrl !== songUrl) {
+          history.push(`/${user.profileUrl}/${songUrl}`);
+        }
+      })
   }
 
   const prepareForm = () => {
@@ -53,12 +53,6 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
   }
 
   const handleCancel = () => {
-    this.setState({
-      title: '',
-      songUrl: '',
-      genre: '',
-      description: ''
-    })
     handleCloseModal();
   }
 
@@ -71,7 +65,7 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
         <SongShowUploadImage originalImageUrl={song.imageUrl} setImageFile={setImageFile} />
         <div className='song-info-form'>
           <div className='song-form-text'>Title</div>
-          <input className='song-form-input' type="text" value={title} onChange={setTitle} />
+          <input className='song-form-input' type="text" value={title} onChange={e => setTitle(e.target.value)} />
           <div className='song-upload-error'>{errs.title}</div>
           <div className='song-url-field'>
             <span className='song-url-static'>audiopuff.herokuapp.com/{user.profileUrl}/</span>
@@ -79,11 +73,11 @@ const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
           </div>
           <div className='song-upload-error'>{errs.url}</div>
           <div className='song-form-text'>Genre</div>
-          <SongUploadGenre genre={genre} handleInput={setGenre} />
+          <SongUploadGenre genre={genre} handleInput={e => setGenre(e.target.value)} />
           <div className='song-form-text'>Description</div>
           <textarea className='song-input-textarea'
             value={description}
-            onChange={setDescription}
+            onChange={e => setDescription(e.target.value)}
             cols="30" rows="10"
             placeholder='Describe your track'></textarea>
         </div>

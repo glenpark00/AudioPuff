@@ -11,6 +11,8 @@ export default function SideBarSongItem({ item }) {
 
   const playing = audio.playing && audio.currentSong.id === item.id;
 
+  if (!user) return null;
+
   return (
     <div 
       className='side-bar-song-item' 

@@ -23,6 +23,25 @@
   margin-top: 20px;
 }
 
+.stream-empty-text {
+  font-size: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
+  color: #999;
+  padding: 20px 0;
+}
+
+.stream-empty-text > a {
+  font-size: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
+  color: #333333;
+}
+
+.stream-empty-text > a:hover {
+  color: black;
+}
+
 .stream-items {
   padding: 20px 0;
 }

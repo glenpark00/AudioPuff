@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 
     get 'user-display/:id', to: 'users#display'
     get 'exists', to: 'users#user_exists?'
+    get 'users/:profile_url/fetch-all-info', to: 'users#fetch_all_info'
 
     get ':profile_url/:song_url', to: 'songs#show'
     get 'songs/:id/file', to: 'songs#fetch_song_file'
