@@ -5,7 +5,7 @@ import { fetchCurrentSongFileUrl, changeCurrentTime } from '../../actions/songs_
 import { convertSecsToMins } from '../../util/general_util';
 import { useDispatch, useSelector } from 'react-redux';
 
-const SongItemWaveform = ({ song, item }) => {
+const SongItemWaveform = ({ song, songIds, item }) => {
   const [width, setWidth] = useState(0),
     [hovering, setHovering] = useState(false),
     audio = useSelector(state => state.audio),
@@ -32,7 +32,7 @@ const SongItemWaveform = ({ song, item }) => {
   }
 
   const showPlayer = async e => {
-    await dispatch(fetchCurrentSongFileUrl(song.id));
+    await dispatch(fetchCurrentSongFileUrl(song.id, songIds));
     await dispatch(displayGlobalAudioPlayer());
     return e;
   }

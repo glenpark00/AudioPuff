@@ -38,9 +38,9 @@ const receiveSongs = data => ({
   data
 })
 
-const receiveCurrentSong = song => ({
+const receiveCurrentSong = data => ({
   type: RECEIVE_CURRENT_SONG,
-  song
+  data
 })
 
 export const receiveSearchResults = data => ({
@@ -95,9 +95,9 @@ export const fetchSongFromUrl = (songUrl, profileUrl) => dispatch => (
   )
 )
 
-export const fetchCurrentSongFileUrl = songId => dispatch => (
+export const fetchCurrentSongFileUrl = (songId, songIds) => dispatch => (
   SongsApiUtil.fetchSongFileUrl(songId).then(
-    song => dispatch(receiveCurrentSong(song))
+    song => dispatch(receiveCurrentSong({ song, songIds }))
   )
 )
  

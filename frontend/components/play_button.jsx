@@ -4,7 +4,7 @@ import { displayGlobalAudioPlayer } from '../actions/ui_actions';
 import { fetchCurrentSongFileUrl, playAudio, pauseAudio } from '../actions/songs_actions';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
-const PlayButton = ({ song, type }) => {
+const PlayButton = ({ song, songIds, type }) => {
   const audio = useSelector(state => state.audio);
   const displayPlayer = useSelector(state => state.ui.displayPlayer);
 
@@ -22,7 +22,7 @@ const PlayButton = ({ song, type }) => {
         dispatch(playAudio());
       } else {
         dispatch(displayGlobalAudioPlayer());
-        dispatch(fetchCurrentSongFileUrl(song.id));
+        dispatch(fetchCurrentSongFileUrl(song.id, songIds));
       }
     }
   }

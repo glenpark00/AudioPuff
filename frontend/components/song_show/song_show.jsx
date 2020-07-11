@@ -36,7 +36,7 @@ export default class SongShow extends React.Component {
         <div className='song-show-page'>
           <div className='song-show-header'>
             <div className='song-show-info-container'>
-              <PlayButton song={song} type='show' />
+              <PlayButton song={song} songIds={[song.id]} type='show' />
               <div className='song-show-info'>
                 <div className='song-show-upper'> 
                   <div className='song-show-info-top-line'>
@@ -48,7 +48,7 @@ export default class SongShow extends React.Component {
                     {song.genre !== 'None' ? <div className='song-show-genre'>#{song.genre}</div> : null}
                   </div>
                 </div>
-                <SongItemWaveform song={song} />
+                <SongItemWaveform song={song} songIds={[song.id]} />
               </div>
               <img src={song.imageUrl} className='song-show-image' />
             </div>

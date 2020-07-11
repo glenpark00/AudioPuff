@@ -1,16 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PlayButton from '../play_button';
 import LikeButton from '../like_button';
 import { FaHeart } from 'react-icons/fa';
-import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const Playlist = ({ songs, users, history }) => {
+const Playlist = ({ songs, users }) => {
   if (!songs[0]) return null;
 
   const audio = useSelector(state => state.audio);
-  const ids = songs.map(song => song.id);
-  const [currentIndex, setCurrentIndex] = useState(ids.includes(audio.currentSong.id) ? ids.indexOf(audio.currentSong.id) : 0);
   
   const handleMouseEnter = e => {
     e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
@@ -29,7 +26,7 @@ const Playlist = ({ songs, users, history }) => {
       <div className='playlist'>
         <div className='playlist-img-container'>
           <img className='playlist-img' src={songs[0].imageUrl} alt=""/>
-          <PlayButton song={songs[0]} type='playlist'/> 
+          <PlayButton song={songs[0]} songIds={songs.map(song => song.id)} type='playlist'/> 
         </div>
         <div className='playlist-songs'>
           { songs.map((song, i) => {
@@ -66,4 +63,4 @@ const Playlist = ({ songs, users, history }) => {
   )
 }
 
-export default withRouter(Playlist);
+export default Playlist;

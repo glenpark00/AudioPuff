@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   changeCurrentTime: time => dispatch(changeCurrentTime(time)), 
   playAudio: () => dispatch(playAudio()),
   pauseAudio: () => dispatch(pauseAudio()),
-  fetchCurrentSongFileUrl: songId => dispatch(fetchCurrentSongFileUrl(songId))
+  fetchCurrentSongFileUrl: (songId, songs) => dispatch(fetchCurrentSongFileUrl(songId, songs))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalAudioPlayer);

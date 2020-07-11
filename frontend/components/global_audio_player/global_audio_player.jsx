@@ -111,7 +111,7 @@ export default class GlobalAudioPlayer extends React.Component {
     const { fetchCurrentSongFileUrl, audio } = this.props;
     if (audio.songIds.length <= 1) {
       const player = document.querySelector('.global-audio-player');
-      player.play();
+      player.currentTime = 0;
     } else {
       fetchCurrentSongFileUrl(audio.nextSong);
     }

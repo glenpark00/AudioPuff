@@ -7,7 +7,7 @@ import SideBarSection from './sidebar/sidebar_section';
 import SideBarUserItem from './sidebar/sidebar_user_item';
 import SideBarSongItem from './sidebar/sidebar_song_item';
 import Footer from './footer';
-import { fetchUserSongs, fetchUser } from '../actions/users_actions';
+import { fetchUserSongs, fetchUser, fetchUsers } from '../actions/users_actions';
 import { FaUserFriends, FaHeart } from 'react-icons/fa';
 import { timeElapsed } from '../util/general_util';
 import { withRouter, Link } from 'react-router-dom';
@@ -19,6 +19,7 @@ const Stream = ({ history }) => {
     dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(fetchUsers());
     if (currentUser.id) {
       dispatch(fetchUser(currentUser.id));
     }
@@ -28,7 +29,7 @@ const Stream = ({ history }) => {
     if (currentUser.followings) {
       currentUser.followings.forEach(userUrl => dispatch(fetchUserSongs(userUrl)));
     }
-  }, [currentUser])
+  }, [currentUser.followings])
 
   if (!currentUser.id) {
     return <SignedOutFormPage text='Join AudioPuff to hear the latest from people you follow' />;
@@ -81,7 +82,7 @@ const Stream = ({ history }) => {
                           <div> posted a track </div>
                           <div>{timeElapsed(song.createdAt)}</div>
                         </div>
-                        <SongItem song={song} user={user} hideCreation={true} />
+                        <SongItem song={song} songIds={Object.values(songs).map(song => song.id)} user={user} hideCreation={true} />
                       </div>
                     </div>
                   )

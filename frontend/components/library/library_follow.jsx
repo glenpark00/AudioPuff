@@ -10,7 +10,7 @@ const LibraryFollow = ({ users, overview, text, profile }) => {
       <div className='library-content'>
         { users.length > 0 ?
           users.map(user => 
-            <LibraryUserItem user={user} />
+            <LibraryUserItem user={user} key={`library-user-item-${user.id}`} />
           ) :
            <div className='library-empty-content'>
             <div>There's nothing here. <Link to='/discover'>Browse music</Link></div>

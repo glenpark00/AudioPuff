@@ -8,7 +8,7 @@ import { timeElapsed } from '../../util/general_util';
 import { withRouter } from 'react-router-dom';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa'
 
-const SongItem = ({ song, user, audio, hideCreation, history }) => {
+const SongItem = ({ song, songIds, user, audio, hideCreation, history }) => {
   const currentUserUrl = useSelector(state => state.session.currentUser ? state.session.currentUser.profileUrl : null),
     dispatch = useDispatch(),
     openModal = type => dispatch(enableModalDisplay({ type, data: { song, user } }));
@@ -22,7 +22,7 @@ const SongItem = ({ song, user, audio, hideCreation, history }) => {
       />
       <div className='song-item-content-container'>
         <div className='song-item-content'>
-          <PlayButton song={song} type='item' />
+          <PlayButton song={song} songIds={songIds} type='item' />
           <div className='song-item-info'>
             <div className='song-item-info-top-line'>
               <div 
@@ -50,7 +50,8 @@ const SongItem = ({ song, user, audio, hideCreation, history }) => {
         <SongItemWaveform 
           audio={audio}
           song={song}
-          item={true} />
+          item={true}
+          songIds={songIds} />
         <div className='song-item-buttons'>
           <div className='like-button-border'>
             <LikeButton 
