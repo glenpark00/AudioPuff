@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { FaTrash, FaPencilAlt } from 'react-icons/fa'
 
 const SongItem = ({ song, user, audio, hideCreation, history }) => {
-  const currentUserUrl = useSelector(state => state.session.currentUser.profileUrl),
+  const currentUserUrl = useSelector(state => state.session.currentUser ? state.session.currentUser.profileUrl : null),
     dispatch = useDispatch(),
     openModal = type => dispatch(enableModalDisplay({ type, data: { song, user } }));
 

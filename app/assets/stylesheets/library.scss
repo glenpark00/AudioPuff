@@ -17,6 +17,7 @@
   background-color: white;
   flex: 1;
   padding: 30px 20px;
+  box-sizing: border-box;
 }
 
 .library-headings {
@@ -65,8 +66,8 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  padding-bottom: 20px;
-  min-height: 250px;
+  padding-bottom: 40px;
+  min-height: 100px;
 }
 
 .library-content > div {
@@ -86,8 +87,8 @@
 }
 
 .library-user-item-img {
-  width: 180px;
-  height: 180px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -106,4 +107,69 @@
 
 .library-user-follow-container {
   display: none;
+}
+
+
+
+.library-profile-header {
+  position: relative;
+}
+
+.library-profile-header > div {
+  position: absolute;
+}
+
+.phantom-library-profile-header {
+  height: 184px;
+}
+
+
+.library-profile-header-info {
+  display: flex;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.library-profile-header-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.library-profile-header-info > div {
+  color: #333;
+  cursor: pointer;
+  font-size: 32px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 400;
+}
+
+.library-profile-header-info > div:hover {
+  color: black;
+}
+
+.library-empty-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: inherit;
+  width: 100%;
+}
+
+.library-empty-content > div {
+  font-size: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
+  color: #999;
+  text-align: center;
+}
+
+.library-empty-content > div > a {
+  color: #38d;
+  font-size: 16px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 100;
 }

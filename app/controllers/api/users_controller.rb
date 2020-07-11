@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
   end
 
   def index
-    @users = User.with_attached_profile_image.all
+    @users = User.with_attached_profile_image.includes(:songs, :liked_songs, :followers, :followings).all
     render :index
   end
  
@@ -28,23 +28,21 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    @users = [User.find_by(id: params[:id])]
-    @songs = []
+    @user = User.includes(:songs).find_by(id: params[:id])
+    @songs = @user.songs.map { |song| song }
     if params[:user][:profile_image] == 'null'
-      params[:user][:profile_image] = @users[0].profile_image
+      params[:user][:profile_image] = @user.profile_image
     end
-    old_profile_url = @users[0].profile_url
-    if @users[0].update(update_user_params)
+    old_profile_url = @user.profile_url
+    if @user.update(update_user_params)
       new_profile_url = params[:user][:profile_url]
       if new_profile_url != old_profile_url
-        @old_songs = Song.where('user_url = ?', old_profile_url)
-        @old_songs.each do |song|
-          if song.update({ user_url: new_profile_url })
-            @songs.push(song)
-          end
+        @songs.each do |song|
+          song.update({ user_url: new_profile_url })
         end
       end
-      render 'api/songs/index'
+      @songs =  @user.songs.map { |song| song }
+      render 'api/songs/index'\
     else
       render json: @user.errors.full_messages, status: 422
     end
@@ -70,19 +68,23 @@ class Api::UsersController < ApplicationController
 
   def fetch_all_info
     @user = User.with_attached_profile_image.includes(:followings, :followers, :songs, :liked_songs).find_by(profile_url: params[:profile_url])
-    @follows = @user.followings.with_attached_profile_image.includes(:followers).includes(:songs).map { |user| user }
-    @user.followers.with_attached_profile_image.includes(:followers).includes(:songs).each do |user|
-      unless @follows.include?(user)
-        @follows.push(user)
+    if (@user) 
+      @follows = @user.followings.with_attached_profile_image.includes(:followers).includes(:songs).map { |user| user }
+      @user.followers.with_attached_profile_image.includes(:followers).includes(:songs).each do |user|
+        unless @follows.include?(user)
+          @follows.push(user)
+        end
       end
-    end
-    @songs = @user.liked_songs.map { |song| song }
-    @user.songs.with_attached_image_file.includes(:likers).each do |song| 
-      unless @songs.include?(song)
-        @songs.push(song)
+      @songs = @user.liked_songs.map { |song| song }
+      @user.songs.with_attached_image_file.includes(:likers).each do |song| 
+        unless @songs.include?(song)
+          @songs.push(song)
+        end
       end
+      render :fetch_all
+    else
+      render json: ['User not found'], status: 404
     end
-    render :fetch_all
   end
 
   protected

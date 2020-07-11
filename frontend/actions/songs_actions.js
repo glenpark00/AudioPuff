@@ -85,7 +85,7 @@ export const updateSong = (song, songUrl) => dispatch => (
 
 export const deleteSong = songId => dispatch => (
   SongsApiUtil.deleteSong(songId).then(
-    song => dispatch(clearDeletedSong(song))
+    data => dispatch(clearDeletedSong(data.song))
   )
 )
 
@@ -103,6 +103,12 @@ export const fetchCurrentSongFileUrl = songId => dispatch => (
  
 export const fetchNSongs = n => dispatch => (
   SongsApiUtil.fetchNSongs(n).then(
+    data => dispatch(receiveSongs(data))
+  )
+)
+
+export const fetchSongs = () => dispatch => (
+  SongsApiUtil.fetchSongs().then(
     data => dispatch(receiveSongs(data))
   )
 )

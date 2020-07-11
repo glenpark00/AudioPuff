@@ -21,7 +21,6 @@ function CarouselItem({ song, user, history }) {
         />
         { hovering ? 
           <div 
-            id={`song-carousel-overlay-${song.id}`} 
             className='song-carousel-overlay'
             onMouseEnter={() => setHovering(true)}
             onMouseLeave={() => setHovering(false)} 

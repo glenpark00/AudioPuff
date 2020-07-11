@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../footer';
 import Carousel from './carousel';
 import Playlist from './playlist';
 import SideBarMyInfo from '../sidebar/sidebar_my_info';
@@ -10,11 +9,9 @@ import SideBarSongItem from '../sidebar/sidebar_song_item';
 
 export default class Discover extends React.Component {
   componentDidMount() {
-    const { fetchNSongs, fetchAllUserInfo, currentUser } = this.props;
-    fetchNSongs(10);
-    if (currentUser) {
-      fetchAllUserInfo(currentUser.profileUrl);
-    }
+    const { fetchSongs, fetchUsers } = this.props;
+    fetchSongs();
+    fetchUsers();
   }
 
   render() {
@@ -22,22 +19,24 @@ export default class Discover extends React.Component {
     const whoToFollow = currentUser ? Object.values(users).filter(user => (
       user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
     )) : [];
-    for (let i = whoToFollow.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * i)
-      const temp = whoToFollow[i];
-      whoToFollow[i] = whoToFollow[j];
-      whoToFollow[j] = temp;
-    }
+
     const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
+
+    const songsArr = Object.values(songs);
+
+    const trending = songsArr.sort((a, b) => (a.likers.length > b.likers.length) ? -1 : 1).slice(0, 15);
     
-    let theUpload = Object.values(songs);
-    // for (let i = theUpload.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * i)
-    //   const temp = theUpload[i];
-    //   theUpload[i] = theUpload[j];
-    //   theUpload[j] = temp;
-    // }
-    theUpload = theUpload.slice(0, 15);
+    const theUpload = songsArr.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15);
+
+    const hipHop = songsArr.filter(song => song.genre === 'Hip Hop & Rap');
+
+    const electronic = songsArr.filter(song => song.genre === 'Electronic');
+
+    const rAndB = songsArr.filter(song => song.genre === 'R&B & Soul');
+
+    const pop = songsArr.filter(song => song.genre === 'Pop');
+
+    const rock = songsArr.filter(song => song.genre === 'Rock');
 
     return (
       <div className='discover-page-background'>
@@ -48,13 +47,42 @@ export default class Discover extends React.Component {
                 <h2 className='discover-header'>AudioPuff: Trending</h2>
                 <div className='discover-subheader'>Up-and-coming tracks on AudioPuff</div>
               </div>
-              <Carousel songs={Object.values(songs)} users={users}/>
+              <Carousel songs={trending} users={users} type='songs' />
               <div className='discover-heading-container'>
                 <h2 className='discover-header'>The Upload</h2>
                 <div className='discover-subheader'>Newly posted tracks. Just for you</div>
               </div>
               <Playlist songs={theUpload} users={users} />
-              <Footer></Footer>
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>Up Next</h2>
+                <div className='discover-subheader'>Emerging creators and artists to follow</div>
+              </div>
+              <Carousel users={whoToFollow} type='users' />
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>Hip Hop &#38; Rap</h2>
+                <div className='discover-subheader'>The latest and hottest hip hop &#38; rap</div>
+              </div>
+              <Carousel songs={hipHop} users={users} type='songs' />
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>Electronic</h2>
+                <div className='discover-subheader'>The latest and hottest electronic music</div>
+              </div>
+              <Carousel songs={electronic} users={users} type='songs' />
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>R&#38;B &#38; Soul</h2>
+                <div className='discover-subheader'>The latest and hottest R&#38;B &#38; Soul</div>
+              </div>
+              <Carousel songs={rAndB} users={users} type='songs' />
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>Pop</h2>
+                <div className='discover-subheader'>The latest and hottest pop music</div>
+              </div>
+              <Carousel songs={pop} users={users} type='songs' />
+              <div className='discover-heading-container'>
+                <h2 className='discover-header'>Rock</h2>
+                <div className='discover-subheader'>The latest and hottest rock</div>
+              </div>
+              <Carousel songs={rock} users={users} type='songs' />
             </div>
             <div className='side-bar'>
               <SideBarMyInfo />

@@ -4,12 +4,17 @@ import { enableModalDisplay } from '../../actions/ui_actions';
 import SongShow from './song_show';
 import { withRouter } from 'react-router-dom';
 
-const mapStateToProps = (state, ownProps) => ({
-  audio: state.audio.currentSong ? state.audio : { currentSong: {}, songIds: state.audio.songIds, playing: false },
-  currentUserUrl: state.session.currentUser.profileUrl,
-  song: state.entities.songs[`${ownProps.match.params.profileUrl}${ownProps.match.params.songUrl.split('').filter(c => c !== '_').join('')}`],
-  user: state.entities.users[ownProps.match.params.profileUrl]
-})
+const mapStateToProps = (state, ownProps) => {
+  const song = state.entities.songs[`${ownProps.profileUrl}${ownProps.match.params.songUrl.split('').filter(c => c !== '_').join('')}`];
+
+  return {
+    audio: state.audio.currentSong ? state.audio : { currentSong: {}, songIds: state.audio.songIds, playing: false },
+    currentUserUrl: state.session.currentUser.profileUrl,
+    song,
+    user: state.entities.users[ownProps.profileUrl],
+    likers: song ? song.likers.map(liker => state.entities.users[liker]) : []
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   fetchSongFromUrl: (songUrl, profileUrl) => dispatch(fetchSongFromUrl(songUrl, profileUrl)),

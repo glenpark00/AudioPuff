@@ -6,7 +6,7 @@ import { fetchSongFromUrl } from '../actions/songs_actions';
 import { FaHeart } from 'react-icons/fa';
 
 export default function LikeButton({ song, text }) {
-  const currentUser = useSelector(state => state.entities.users[state.session.currentUser.profileUrl]) || {}; 
+  const currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {}); 
   const [liked, setLiked] = useState(song.likers.includes(currentUser.profileUrl));
   const dispatch = useDispatch();
 

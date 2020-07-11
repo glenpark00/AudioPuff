@@ -26,39 +26,41 @@ const Playlist = ({ songs, users, history }) => {
 
   return (
     <div className='playlist-container'>
-      <div className='playlist-img-container'>
-        <img className='playlist-img' src={songs[0].imageUrl} alt=""/>
-        <PlayButton song={songs[0]} type='playlist'/> 
-      </div>
-      <div className='playlist-songs'>
-        { songs.map((song, i) => {
-          const user = users[song.userUrl];
-          if (user) {
-            return (
-              <div 
-                className='playlist-item' 
-                key={`playlist-item-${song.id}`}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                style={audio.currentSong.id === song.id ? { backgroundColor: 'rgba(255, 255, 255, 0.1)' } : {}}
-              > 
-                <div>
-                  <div>{`${user.displayName} - `}</div>
-                  <div>{song.title}</div>
+      <div className='playlist'>
+        <div className='playlist-img-container'>
+          <img className='playlist-img' src={songs[0].imageUrl} alt=""/>
+          <PlayButton song={songs[0]} type='playlist'/> 
+        </div>
+        <div className='playlist-songs'>
+          { songs.map((song, i) => {
+            const user = users[song.userUrl];
+            if (user) {
+              return (
+                <div 
+                  className='playlist-item' 
+                  key={`playlist-item-${song.id}`}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                  style={audio.currentSong.id === song.id ? { backgroundColor: 'rgba(255, 255, 255, 0.1)' } : {}}
+                > 
+                  <div>
+                    <div>{`${user.displayName} - `}</div>
+                    <div>{song.title}</div>
+                  </div>
+                  <div className='playlist-item-likes'>
+                    <div>{<FaHeart />}{' '}</div>
+                    <div>{song.likers.length}</div>
+                  </div>
+                  <div className='playlist-item-like-button' style={{ display: 'none' }}>
+                    <LikeButton song={song} />
+                  </div>
                 </div>
-                <div className='playlist-item-likes'>
-                  <div>{<FaHeart />}{' '}</div>
-                  <div>{song.likers.length}</div>
-                </div>
-                <div className='playlist-item-like-button' style={{ display: 'none' }}>
-                  <LikeButton song={song} />
-                </div>
-              </div>
-            )
-          } else {
-            return null;
-          }
-        }) }
+              )
+            } else {
+              return null;
+            }
+          }) }
+        </div>
       </div>
     </div>
   )

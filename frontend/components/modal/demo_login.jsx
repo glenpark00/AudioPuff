@@ -15,23 +15,20 @@ export default class DemoLogin extends React.Component {
     this.setState({ firstStep: false });
   }
   
-  content() {
-    const demoIdentifier = 'puffy2';
+  render() {
+    const { demoUser, login, handleCloseModal } = this.props;
+    const demoIdentifier = demoUser.profileUrl;
     const demoPassword = 'password';
     if (this.state.firstStep) {
-      return <DemoUserForm nextStep={ this.nextStep } 
-                           demoIdentifier={ demoIdentifier } />
+      return <DemoUserForm nextStep={this.nextStep}
+        demoIdentifier={demoIdentifier} />
     } else {
-      return <DemoLoginForm closeModal={ this.closeModal }
-                            demoIdentifier={ demoIdentifier }
-                            demoPassword={ demoPassword }
-                            login={this.props.login}
-                            handleCloseModal={ this.props.handleCloseModal } />
+      return <DemoLoginForm closeModal={this.closeModal}
+        demoIdentifier={demoIdentifier}
+        demoPassword={demoPassword}
+        login={login}
+        handleCloseModal={handleCloseModal} />
     }
-  }
-
-  render() {
-    return this.content();
   }
 }
   

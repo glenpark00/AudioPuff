@@ -1,4 +1,10 @@
 .playlist-container {
+  padding-bottom: 35px;
+  border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 30px;
+}
+
+.playlist {
   display: flex;
   align-items: center;
   // background: linear-gradient(135deg, rgb(134, 151, 149) 0%, rgb(67, 62, 55) 100%);

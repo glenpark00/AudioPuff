@@ -1,17 +1,19 @@
 import React from 'react';
 import CarouselItem from './carousel_item';
+import LibraryUserItem from '../library/library_user_item';
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 
 export default class Carousel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      position: 0,
+      position: 0
     }
+    this.id = Math.floor(Math.random() * 10000);
   }
 
   scrollCarousel(side) {
-    const carousel = document.querySelector('.songs-carousel');
+    const carousel = document.querySelector(`#songs-carousel-${this.id}`);
     const width = carousel.offsetWidth;
     const scrollWidth = carousel.scrollWidth;
     const { position } = this.state;
@@ -34,14 +36,14 @@ export default class Carousel extends React.Component {
   }
 
   scrollTo(position) {
-    const carousel = document.querySelector('.songs-carousel');
+    const carousel = document.querySelector(`#songs-carousel-${this.id}`);
     this.setState({ position }, () => {
       carousel.scrollLeft = position;
     })
   }
 
   scrollOnHover(side) {
-    const carousel = document.querySelector('.songs-carousel');
+    const carousel = document.querySelector(`#songs-carousel-${this.id}`);
     const { position } = this.state;
     if (side === 'left') {
       if (position > carousel.scrollWidth) {
@@ -71,20 +73,25 @@ export default class Carousel extends React.Component {
   }
 
   render() {
-    const { users, songs } = this.props;
-    const carousel = document.querySelector('.songs-carousel');
+    const { users, songs, type } = this.props;
+    const carousel = document.querySelector(`#songs-carousel-${this.id}`);
     const scrollWidth = (carousel ? carousel.scrollWidth : 9999);
 
     return (
-      <div className='songs-carousel-buttons'>
+      <div className='songs-carousel-buttons' key={this.id}>
         {this.state.position > 0 ? this.scrollButton('left') : null}
         <div className='songs-carousel-container'>
-          <div className='songs-carousel'>
-            {songs.map(song => {
-              const user = users[song.userUrl];
-              return <CarouselItem song={song} user={user} key={song.id} />
+          <div id={`songs-carousel-${this.id}`} className='songs-carousel'>
+            {type === 'songs' ? 
+              songs.map(song => {
+                const user = users[song.userUrl];
+                return <CarouselItem song={song} user={user} key={`${song.id}-${this.id}`} />
+              })
+              :
+              users.map(user => {
+                return <LibraryUserItem user={user} key={`${user.id}-${this.id}`} />
+              })
             }
-            )}
           </div>
         </div>
         {this.state.position < scrollWidth ? this.scrollButton('right') : null}

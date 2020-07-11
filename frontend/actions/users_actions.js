@@ -38,7 +38,11 @@ const receiveUserInfo = data => ({
 // Thunk Action Creators
 export const fetchUser = userId => dispatch => (
   UsersApiUtil.fetchUser(userId).then(
-    user => dispatch(receiveUser(user)))
+    user => {
+      dispatch(receiveUser(user));
+      return user;      
+    }
+  )
 );
 
 export const fetchUsers = () => dispatch => (
@@ -50,10 +54,9 @@ export const fetchUsers = () => dispatch => (
 export const updateUser = (user, userUrl, songs) => dispatch => (
   UsersApiUtil.updateUser(user).then(
     data => {
-      const updatedUser = Object.values(data.users)[0];
-      dispatch(receiveCurrentUser(updatedUser));
+      dispatch(receiveCurrentUser(Object.values(data.user)[0]));
       dispatch(receiveUserSongs(data));
-      if (updatedUser.profileUrl !== userUrl) {
+      if (Object.values(data.user)[0].profileUrl !== userUrl) {
         dispatch(clearUser(userUrl));
         dispatch(clearDeletedSongs({ userUrl, songs }));
       }

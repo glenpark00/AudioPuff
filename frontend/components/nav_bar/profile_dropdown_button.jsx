@@ -1,30 +1,37 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import ProfileDropdown from './profile_dropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../actions/session_actions';
+import { fetchUser } from '../../actions/users_actions';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
-class ProfileDropdownButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
+const ProfileDropdownButton = () => {
+  const [showDropdown, setShowDropdown] = useState(false),
+    currentUser = useSelector(state => state.entities.users[state.session.currentUser.profileUrl]),
+    dispatch = useDispatch();
 
-  componentDidMount() {
-    this.props.fetchUser(this.props.currentUser.id);
-  }
+  useEffect(() => {
+    dispatch(fetchUser(currentUser.id));
+  }, [])
 
-  handleClick() {
-    this.props.history.push(`/${this.props.currentUser.profileUrl}`);
-  }
-
-  render() {
-    const { currentUser } = this.props;
-
-    return (
-      <div className='profile-button' onClick={this.handleClick}>
+  return (
+      <div className={`profile-button ${showDropdown ? 'link-selected' : ''}`} onClick={() => setShowDropdown(true)}>
         <img src={currentUser.imageUrl}/> 
-        <div>{currentUser.displayName}</div>
+        <div stlye={showDropdown ? { color: 'white' } : {}}>
+        <div className='profile-button-text'>
+          <div>{currentUser.displayName}</div>
+          <div>{<MdKeyboardArrowDown fontSize='15px' />}</div>
+        </div>
+        </div>
+        {showDropdown ?
+          <ProfileDropdown
+            closeDropdown={() => setShowDropdown(false)}
+            currentUser={currentUser}
+            logout={() => dispatch(logout())} />
+          : null
+        }
       </div>
-    )
-  }
+  )
 }
 
-export default withRouter(ProfileDropdownButton);
+export default ProfileDropdownButton;

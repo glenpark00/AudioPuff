@@ -31,7 +31,7 @@ const Modal = () => {
   const createComponent = (type) =>{
     switch (type) {
       case 'session':
-        return <UserFormModalContainer handleCloseModal={handleCloseModal} />;
+        return <UserFormModalContainer handleCloseModal={handleCloseModal} text='Enter your profile URL to sign in or your email to sign up' />;
       case 'songEdit':
         return <SongShowEditModal song={modal.data.song} user={modal.data.user} handleCloseModal={handleCloseModal} />;
       case 'songDelete':

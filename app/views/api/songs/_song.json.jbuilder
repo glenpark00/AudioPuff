@@ -5,7 +5,8 @@ json.song do
 end
 
 json.user do
-  json.extract! song.user, :id, :profile_url, :display_name
+  json.partial! 'api/users/user', locals: { user: song.user }
+  json.songs song.user.songs.map { |song| "#{song.user_url}#{song.song_url.tr('_', '').downcase}" }
 end
 
 json.likers do

@@ -9,7 +9,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   top: 0;
   right: 0%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 46px;
@@ -18,7 +18,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 }
 
 .nav-bar-space {
-  width: 10%;
+  width: 12.5%;
   height: 100%;
   background-color: $black_theme;
 }
@@ -38,7 +38,6 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   display: block;
   width: 100%;
   height: 46px;
-  
 }
 
 .nav-left-links {
@@ -69,6 +68,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 
 .link-selected {
   background-color: #111111;
+  color: white;
 }
 
 .homepage-link {
@@ -111,13 +111,23 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   padding: 2px 4px 2px 4px;
 }
 
+.profile-button-container {
+  width: 140px;
+  height: 46px;
+  cursor: pointer;
+  max-width: 45%;
+  position: relative;
+}
+
 .profile-button {
   display: flex;
   align-items: center;
+  position: relative;
   width: 140px;
-  height: 100%;
+  height: 46px;
   cursor: pointer;
   max-width: 45%;
+  padding: 0 10px;
 }
 
 .profile-button > img {
@@ -126,7 +136,12 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   border-radius: 50%;
 }
 
-.profile-button > div {
+.profile-button-text {
+  display: flex;
+  align-items: center;
+}
+
+.profile-button-text > div:first-child {
   color: #c9c9c9;
   margin-left: 10px;
   font-size: 13px;
@@ -136,39 +151,79 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   white-space: nowrap;
 }
 
-.site-dropdown-button {
-  position: relative;
-  font-size: 30px;
-  font-weight: 600;
-  text-align: center;
-  width: 50px;
-  height: 46px;
+.profile-button-text > div:nth-child(2) {
+  height: 10px;
+  padding-left: 5px;
   color: #c9c9c9;
-  cursor: pointer;
-  outline-style: none;
 }
 
-.site-dropdown-button.dropdown-selected {
-  background-color: black;
+.profile-button:hover .profile-button-text > div{
+  color: white;
 }
 
-.site-dropdown-div {
+// .site-dropdown-button {
+//   position: relative;
+//   font-size: 30px;
+//   font-weight: 600;
+//   text-align: center;
+//   width: 50px;
+//   height: 46px;
+//   color: #c9c9c9;
+//   cursor: pointer;
+//   outline-style: none;
+// }
+
+// .site-dropdown-button.dropdown-selected {
+//   background-color: black;
+// }
+
+.profile-dropdown-div {
   position: absolute;
   top: 100%;
   right: 0%;
   display: flex;
   flex-direction: column;
-  background-color: black;
-  width: 110px;
+  background-color: #ffffff;
+  width: 100%;
   height: auto;
   border-radius: 0 0 3px 3px;
-  padding: 5px;
+  // padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
-.site-dropdown-button:hover {
+.profile-dropdown-button:hover > div {
   color: white;
+  background-color: #b4b4b4;
 }
 
-.site-dropdown-div > a {
+// .profile-dropdown-div > a {
+//   text-align: left;
+//   color: #333;
+//   padding: 8px 10px;
+//   font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+// }
+
+.profile-dropdown-div > div {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.profile-dropdown-div > div > div:nth-child(2) {
+  font-size: 12px;
   text-align: left;
+  color: #333;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  padding-left: 10px;
+}
+
+.profile-dropdown-div > div:hover > div:nth-child(2) {
+  color: #999;
+}
+
+.profile-dropdown-div > div:hover  {
+  background-color: #f1f1f1;
 }

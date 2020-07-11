@@ -27,7 +27,8 @@ class LoginForm extends React.Component {
                type="password"
                value={this.state.password}
                placeholder='Your Password'
-               onChange={e => this.setState({ password: e.target.value })} />
+               onChange={e => this.setState({ password: e.target.value })}
+               onKeyPress={e => e.key === 'Enter' ? this.handleLogin() : null} />
         { this.props.errors.length > 0 ? <div className='form-error-text'>{this.props.errors[0]}</div> : '' }
         <button className='form-submit-button' onClick={this.handleLogin}>Sign In</button>
         <a href="">Don't know your password?</a>

@@ -3,7 +3,7 @@ import UserEditImageUpload from './user_edit_image_upload';
 import UserEditProfileUrl from './user_edit_profile_url';
 import { updateUser } from '../../actions/users_actions';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UserEditFormModal = ({ user, songs, handleCloseModal, history }) => {
   const [imageFile, setImageFile] = useState(null),
@@ -15,32 +15,39 @@ const UserEditFormModal = ({ user, songs, handleCloseModal, history }) => {
     [city, setCity] = useState(user.city),
     [country, setCountry] = useState(user.country),
     [bio, setBio] = useState(user.bio),
-    [nameError, setNameError] = useState(false),
-    [urlError, setUrlError] = useState(false),
+    errors = useSelector(state => state.errors.users),
     originalProfileUrl = user.profileUrl,
     dispatch = useDispatch();
 
-  const checkFields = () => {
-    if (displayName === '') {
-      setNameError(true);
-    } else {
-      setNameError(false);
+  const forbiddenUrls = ['followers', 'following', 'tracks', 'likes', 'library']
+
+  const checkErrors = () => {
+    const res = {};
+    if (forbiddenUrls.includes(profileUrl)) {
+      res.url = 'Profile url invalid'
     }
-    if (profileUrl === '') {
-      setUrlError(true);
-    } else {
-      setUrlError(false);
-    }
+
+    if (!errors || errors === []) return res;
+
+    errors.map(err => {
+      if (err.includes('Display')) {
+        res.name = err;
+      } else if (err.includes('Profile url')) {
+        res.url = err;
+      }
+    })
+    return res;
   }
 
   const handleUpdateUser = () => {
-    checkFields();
-    if (displayName != '' && profileUrl != '') {
-      const formData = prepareForm();
-      dispatch(updateUser(formData, originalProfileUrl, songs))
-        .then(() => history.push(`/${profileUrl}`))
-        .then(() => handleCloseModal())
-    }
+    const formData = prepareForm();
+    dispatch(updateUser(formData, originalProfileUrl, songs))
+      .then(() => {
+        handleCloseModal();
+        if (originalProfileUrl !== profileUrl) {
+          history.push(`/${profileUrl}`);
+        } 
+      })
   }
 
   const prepareForm = () => {
@@ -61,6 +68,8 @@ const UserEditFormModal = ({ user, songs, handleCloseModal, history }) => {
     handleCloseModal();
   }
 
+  const errs = checkErrors();
+
   return (
     <div className='user-edit-background'>
       <div className='user-edit-form-content'>
@@ -70,12 +79,13 @@ const UserEditFormModal = ({ user, songs, handleCloseModal, history }) => {
           <div className='user-edit-info-form'>
             <div className='user-edit-text'>Display name</div>
             <input className='user-edit-input' type="text" value={displayName} onChange={e => setDisplayName(e.target.value)} />
-            {nameError ? <div>You must provide a display name.</div> : ''}
+            <div className='song-upload-error'>{errs.name}</div>
             <div className='user-edit-text'>Profile URL</div>
             <div className='profile-url-field'>
               <span className='profile-url-static'>audiopuff.herokuapp.com/</span>
               <UserEditProfileUrl profileUrl={profileUrl} handleInput={val => setProfileUrl(val)} />
             </div>
+            <div className='song-upload-error'>{errs.url}</div>
             <div className='user-edit-real-name'>
               <div className='user-edit-first-name'>
                 <div className='user-edit-text'>First name</div>

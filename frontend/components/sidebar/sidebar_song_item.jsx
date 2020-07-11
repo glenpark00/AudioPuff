@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import LikeButton from '../like_button';
 import PlayButton from '../play_button';
 import { FaHeart } from 'react-icons/fa';
+import { withRouter } from 'react-router-dom';
 
-export default function SideBarSongItem({ item }) {
+const SideBarSongItem = ({ item, history }) => {
   const user = useSelector(state => state.entities.users[item.userUrl]);
   const audio = useSelector(state => state.audio);
   const [hovering, setHovering] = useState(false);
@@ -26,9 +27,18 @@ export default function SideBarSongItem({ item }) {
         }
       </div>
       <div className='side-bar-song-content'>
-        <div className='side-bar-song-text'>{user.displayName}</div>
+        <div 
+          className='side-bar-song-text' 
+          onClick={() => history.push(`/${user.profileUrl}`)}>{user.displayName}</div
+        >
         <div className='side-bar-song-middle'>
-          <div className='side-bar-song-text' style={playing ? { color: '#CE1141' } : {}}>{item.title}</div>
+          <div 
+            className='side-bar-song-text' 
+            style={playing ? { color: '#CE1141' } : {}}
+            onClick={() => history.push(`/${user.profileUrl}/${item.songUrl}`)}
+          >
+            {item.title}
+          </div>
           { hovering || playing ?
             <div className='like-button-border'>
               <LikeButton song={item} />
@@ -44,3 +54,5 @@ export default function SideBarSongItem({ item }) {
     </div>
   )
 }
+
+export default withRouter(SideBarSongItem);

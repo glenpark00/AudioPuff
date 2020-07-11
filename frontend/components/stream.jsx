@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import SignedOutFormPage from './signed_out_form_page';
 import SongItem from './song_item/song_item';
 import SideBarMyInfo from './sidebar/sidebar_my_info';
 import SideBarSection from './sidebar/sidebar_section';
@@ -14,11 +15,13 @@ import { withRouter, Link } from 'react-router-dom';
 const Stream = ({ history }) => {
   const songs = useSelector(state => state.entities.songs),
     users = useSelector(state => state.entities.users),
-    currentUser = useSelector(state => state.entities.users[state.session.currentUser.profileUrl]),
+    currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {}),
     dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser(currentUser.id))
+    if (currentUser.id) {
+      dispatch(fetchUser(currentUser.id));
+    }
   }, [])
 
   useEffect(() => {
@@ -26,6 +29,10 @@ const Stream = ({ history }) => {
       currentUser.followings.forEach(userUrl => dispatch(fetchUserSongs(userUrl)));
     }
   }, [currentUser])
+
+  if (!currentUser.id) {
+    return <SignedOutFormPage text='Join AudioPuff to hear the latest from people you follow' />;
+  }
 
   let followedUsersSongs = [];
 
@@ -51,7 +58,6 @@ const Stream = ({ history }) => {
 
   const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
   
-
   return (
     <div className='discover-page-background'>
       <div className='discover-page'>

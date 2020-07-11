@@ -3,8 +3,9 @@ import SongItemWaveform from '../song_item/song_item_waveform';
 import { timeElapsed } from '../../util/general_util'; 
 import PlayButton from '../play_button';
 import LikeButton from '../like_button';
-import { FaTrash, FaPencilAlt } from 'react-icons/fa';
-import Footer from '../footer';
+import { FaTrash, FaPencilAlt, FaUserFriends, FaHeart } from 'react-icons/fa';
+import { GiSoundWaves } from 'react-icons/gi';
+import FollowButton from '../follow_button';
 
 export default class SongShow extends React.Component {
   constructor(props) {
@@ -14,8 +15,8 @@ export default class SongShow extends React.Component {
   }
 
   componentDidMount() {
-    const { fetchSongFromUrl, match } = this.props;
-    fetchSongFromUrl(match.params.songUrl, match.params.profileUrl);
+    const { fetchSongFromUrl, match, profileUrl } = this.props;
+    fetchSongFromUrl(match.params.songUrl, profileUrl);
   }
 
   linkToProfile() {
@@ -28,7 +29,7 @@ export default class SongShow extends React.Component {
   }
 
   render() {
-    const { song, user } = this.props;
+    const { song, user, likers } = this.props;
     if (!song || !user) return null; 
     return (
       <div className='song-show-page-background'>
@@ -66,8 +67,51 @@ export default class SongShow extends React.Component {
               : null
             }
           </div>
+          <div className='page-full-content'>
+            <div className='page-main-content'>
+
+            </div>
+            <div className='side-bar'>
+              <div className='side-bar-song-user'>
+                <img className='side-bar-song-user-img' src={user.imageUrl} alt="song-show-user" onClick={this.linkToProfile}/>
+                <div className='side-bar-song-user-name'>
+                  <div onClick={this.linkToProfile}>{user.displayName}</div>
+                  <div className='side-bar-song-user-stats'>
+                    <div>
+                      <FaUserFriends color='#999' />
+                      <div>{user.follower ? user.followers.length : ''}</div>
+                    </div>
+                    <div>
+                      <GiSoundWaves color='#999' fontSize='25px' />
+                      <div>{user.songs ? user.songs.length : ''}</div>
+                    </div>
+                  </div>
+                  <FollowButton user={user} />
+                </div>
+              </div>
+              <div className='side-bar-section'>
+                <div className='side-bar-section-top'>
+                  <div>
+                    {<FaHeart />}
+                    <div>{likers.length} likes</div>
+                  </div>
+                </div>
+                <div className='side-bar-song-show-likers'>
+                  {likers.filter(liker => liker).slice(0, 10).map((liker, i) => (
+                    <img 
+                      className='side-bar-song-show-liker-img' 
+                      src={liker.imageUrl} alt="song-show-liker" 
+                      key={`side-bar-song-show-liker-${liker.id}`}
+                      style={{ left: `${i * (30 - i)}px` }}/>
+                  ))}
+                </div>
+              </div>
+              <div className='page-border-container'>
+                <div className='page-top-border'></div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Footer></Footer>
       </div>
     )
   }

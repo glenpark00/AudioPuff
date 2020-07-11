@@ -6,7 +6,7 @@ import SongUploadGenre from '../song_upload/song_upload_genre';
 import { updateSong } from '../../actions/songs_actions';
 import { withRouter } from 'react-router-dom';
 
-const SongShowEditModal = ({ song, user, history, match, handleCloseModal }) => {
+const SongShowEditModal = ({ song, user, history, handleCloseModal }) => {
   const [imageFile, setImageFile] = useState(null),
     [title, setTitle] = useState(song.title),
     [songUrl, setSongUrl] = useState(song.songUrl),
@@ -16,9 +16,16 @@ const SongShowEditModal = ({ song, user, history, match, handleCloseModal }) => 
     originalSongUrl = song.songUrl,
     dispatch = useDispatch();
 
+  const forbiddenUrls = ['likes', 'reposts', 'related'];
+
   const checkErrors = () => {
-    if (!errors || errors === []) return {};
     const res = {};
+    if (forbiddenUrls.includes(songUrl)) {
+      res.url = 'Song url invalid'
+    }
+
+    if (!errors || errors === []) return res;
+    
     errors.map(err => {
       if (err.includes('Title')) {
         res.title = err;
@@ -34,7 +41,7 @@ const SongShowEditModal = ({ song, user, history, match, handleCloseModal }) => 
     dispatch(updateSong(formData, originalSongUrl))
       .then(() => {
         handleCloseModal();
-        if (match.params.songUrl && match.params.songUrl !== songUrl) {
+        if (originalSongUrl !== songUrl) {
           history.push(`/${user.profileUrl}/${songUrl}`);
         }
       })

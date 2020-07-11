@@ -3,7 +3,7 @@ import { RECEIVE_USER, RECEIVE_MANY_USERS, RECEIVE_USER_SONGS, CLEAR_USER, RECEI
 import { RECEIVE_SONG, RECEIVE_SONGS, RECEIVE_SEARCH_RESULTS } from '../../actions/songs_actions';
 
 const usersReducer = (state = {}, action) => {
-  Object.freeze(state);
+  Object.freeze(state); 
   const newState = Object.assign({}, state);
   switch (action.type) {
     case RECEIVE_CURRENT_USER:
@@ -22,7 +22,7 @@ const usersReducer = (state = {}, action) => {
     case RECEIVE_USER_INFO:
       return Object.assign(newState, action.data.users);
     case RECEIVE_SONG:
-      return Object.assign(newState, action.data.likers)
+      return Object.assign(newState, action.data.likers, { [action.data.user.profileUrl]: action.data.user })
     case RECEIVE_SONGS:
       return Object.assign(newState, action.data.users);
     case RECEIVE_SEARCH_RESULTS:

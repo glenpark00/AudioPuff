@@ -10,11 +10,17 @@ export default class UserFormModal extends React.Component {
     this.state = {
       firstStep: true,
       formType: null,
-      identifier: ''
+      identifier: '',
+      demoUser: null
     }
     this.setForm = this.setForm.bind(this);
     this.prevStep = this.prevStep.bind(this);
     this.triggerDemoLogin = this.triggerDemoLogin.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.fetchUser(1)
+      .then(user => this.setState({ demoUser: user }))
   }
 
   setForm(exists, identifier) {
@@ -34,26 +40,27 @@ export default class UserFormModal extends React.Component {
   }
 
   render() {
-    const formType = this.state.formType;
-    const { handleCloseModal } = this.props;
-    if (this.state.firstStep) {
+    const { handleCloseModal, text, login, signup, updateUser, errors } = this.props;
+    const { formType, firstStep, identifier, demoUser } = this.state;
+    if (firstStep) {
       return <UserForm setForm={this.setForm}
-        triggerDemoLogin={this.triggerDemoLogin} />
-    } else if (!this.state.firstStep) {
+        triggerDemoLogin={this.triggerDemoLogin} text={text} />
+    } else if (!firstStep) {
       if (formType === 'login') {
-        return <LoginForm identifier={this.state.identifier}
-          login={this.props.login}
+        return <LoginForm identifier={identifier}
+          login={login}
           prevStep={this.prevStep}
           handleCloseModal={handleCloseModal}
-          errors={this.props.errors} />
+          errors={errors} />
       } else if (formType === 'signup') {
-        return <SignupForm email={this.state.identifier}
-          signup={this.props.signup}
+        return <SignupForm email={identifier}
+          signup={signup}
+          updateUser={updateUser}
           prevStep={this.prevStep}
           handleCloseModal={handleCloseModal} />
       } else if (formType === 'demo') {
         return <DemoLogin handleCloseModal={handleCloseModal}
-          login={this.props.login} />
+          login={login} demoUser={demoUser} />
       }
     }
   }

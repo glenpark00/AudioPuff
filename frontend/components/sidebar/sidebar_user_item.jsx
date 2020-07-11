@@ -2,8 +2,9 @@ import React from 'react';
 import FollowButton from '../follow_button';
 import { FaUserFriends } from 'react-icons/fa';
 import { GiSoundWaves } from 'react-icons/gi';
+import { withRouter } from 'react-router-dom';
 
-const SideBarUserItem = ({ item }) => {
+const SideBarUserItem = ({ item, history }) => {
   if (!item || !item.followers || !item.songs) return null;
 
   return (
@@ -11,7 +12,12 @@ const SideBarUserItem = ({ item }) => {
       <div>
         <img className='side-bar-user-img' src={item.imageUrl} alt=""/>
         <div className='side-bar-user-content'>
-          <div className='side-bar-user-text'>{item.displayName}</div>
+          <div 
+            className='side-bar-user-text'
+            onClick={() => history.push(`/${item.profileUrl}`)}
+          >
+            {item.displayName}
+          </div>
           <div className='side-bar-user-stats'>
             <div>
               <FaUserFriends color='#999' />
@@ -24,9 +30,9 @@ const SideBarUserItem = ({ item }) => {
           </div>
         </div>
       </div>
-      <FollowButton user={item} />
+      <FollowButton user={item} type='side-bar' />
     </div>
   )
 }
 
-export default SideBarUserItem;
+export default withRouter(SideBarUserItem);

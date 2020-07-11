@@ -32,6 +32,13 @@ export const fetchSong = songId => (
   })
 )
 
+export const fetchSongs = () => (
+  $.ajax({
+    url: `api/songs`,
+    method: 'GET'
+  })
+)
+
 export const fetchSongFromUrl = (songUrl, profileUrl) => (
   $.ajax({
     url: `api/${profileUrl}/${songUrl}`,

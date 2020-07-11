@@ -1,6 +1,7 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-export default class SignupFormStep2 extends React.Component {
+class SignupFormStep2 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -41,11 +42,13 @@ export default class SignupFormStep2 extends React.Component {
   handleSignup() {
     this.checkFields();
     if (this.state.age >= 15 && this.state.gender != '') {
+      const { setUser, history } = this.props;
       const { email, password, gender, age } = this.state;
       this.props.signup({ email, password, gender, age })
-        .then(() => {
-          this.setState({ gender: '', age: 0, });
-          this.props.handleCloseModal();
+        .then(user => {
+          setUser(user, () => {
+            history.push('/discover');
+          })
         });
     }
   }
@@ -92,3 +95,5 @@ export default class SignupFormStep2 extends React.Component {
     )
   }
 }
+
+export default withRouter(SignupFormStep2);

@@ -19,3 +19,23 @@
   height: fit-content;
   padding: 3px 6px;
 }
+
+.follow-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 25px;
+  font-family: Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-size: 12px;
+  padding: 2px 9px 2px 8px;
+  height: 22px;
+  border: 1px solid #e5e5e5;
+  border-radius: 3px;
+  color: #333;
+  font-weight: 100;
+  cursor: pointer;
+}
+
+.follow-button-text {
+  margin-left: 5px;
+}

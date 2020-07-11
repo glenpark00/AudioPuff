@@ -28,7 +28,10 @@ export const clearSessionErrors = () => ({
 // Thunk Action Creators
 export const signup = user => dispatch => (
   SessionApiUtil.signup(user).then(
-    user => (dispatch(receiveCurrentUser(user))),
+    user => {
+      dispatch(receiveCurrentUser(user));
+      return user;
+    },
     errors => (dispatch(receiveSessionErrors(errors.responseJSON)))
   )
 );

@@ -24,7 +24,7 @@ class Api::SongsController < ApplicationController
   end
 
   def update
-    @song = Song.includes(:likers).find_by(id: params[:id])
+    @song = Song.includes(:likers, :user).find_by(id: params[:id])
     @likers = @song.likers.with_attached_profile_image
     if params[:song][:image_file] == 'null'
       params[:song][:image_file] = @song.image_file
@@ -39,6 +39,7 @@ class Api::SongsController < ApplicationController
   def destroy
     @song = Song.find_by(id: params[:id])
     @song.destroy
+    @likers = []
     render :show
   end
 
@@ -59,6 +60,11 @@ class Api::SongsController < ApplicationController
     userUrls = @songs.map { |song| song.user_url }.uniq
     @users = User.with_attached_profile_image.includes(:songs).where(profile_url: userUrls)
     render :songs_users
+  end
+
+  def all_songs
+    @songs = Song.with_attached_image_file.includes(:likers)
+    render :all_songs
   end
 
   def search

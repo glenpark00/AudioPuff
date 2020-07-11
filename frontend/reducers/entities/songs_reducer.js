@@ -17,9 +17,11 @@ const songsReducer = (state = {}, action) => {
       delete newState[action.song.userUrl + action.song.songUrl.split('').filter(c => c !== '_').join('').toLowerCase()];
       return newState;
     case CLEAR_DELETED_SONGS:
-      action.data.songs.forEach(song => {
-        delete newState[action.data.userUrl + song.split('').filter(c => c !== '_').join('').toLowerCase()];
-      })
+      if (action.data.songs) {
+        action.data.songs.forEach(song => {
+          delete newState[action.data.userUrl + song.split('').filter(c => c !== '_').join('').toLowerCase()];
+        })
+      }
       return newState;
     case RECEIVE_USER_SONGS:
       const userSongs = (action.data.songs ? action.data.songs : {})

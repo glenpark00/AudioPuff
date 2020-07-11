@@ -153,3 +153,28 @@
   font-family: Lucida Grande,Helvetica,Arial,sans-serif;
   text-align: center;
 }
+
+
+.signed-out-form-page-background {
+  background-color: #e5e5e5;
+  width: 100%;
+  height: calc(100% - 60px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.signed-out-form-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 75%;
+  flex-grow: 1;
+  background-color: white;
+}
+
+.signed-out-form-page > div {
+
+}
