@@ -17,7 +17,7 @@ export class SearchDropdown extends React.Component {
     return (
       <div className='search-dropdown-container'>
         <ul className='search-dropdown'>
-          <li className='search-dropdown-query'>
+          <li className='search-dropdown-query' onClick={() => history.push(`/search/${fragment}`)}>
             Search for "{fragment}"
           </li>
           {users.map((user, i) => {

@@ -115,11 +115,13 @@ export const fetchSongs = () => dispatch => (
 
 export const search = fragment => dispatch => {
   if (fragment === '') {
-    dispatch(receiveSearchResults({ songs: {}, users: {} }))
+    return dispatch(receiveSearchResults({ songs: {}, users: {} }))
   } else {
-    SongsApiUtil.search(fragment).then(
-      data => dispatch(receiveSearchResults(data))
-    )
+    return SongsApiUtil.search(fragment)
+      .then(data => {
+        dispatch(receiveSearchResults(data));
+        return data;
+      })
   }
 
 }

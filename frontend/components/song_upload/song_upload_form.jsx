@@ -24,6 +24,7 @@ export default class SongUploadForm extends React.Component {
   }
 
   componentDidMount() {
+    // console.log(Aud)
     this.createSongWaveform(this.state.audioFile)
   }
 
@@ -50,7 +51,6 @@ export default class SongUploadForm extends React.Component {
       .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
       .then(audioBuffer => this.setState({ waveform: this.drawWaveform(this.normalizeData(this.filterData(audioBuffer))) }))
   }
-
 
   filterData(audioBuffer) {
     const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data

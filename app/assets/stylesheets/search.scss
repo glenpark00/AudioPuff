@@ -29,7 +29,7 @@
 .search-dropdown-container {
   background-color: rgb(31, 31, 31);
   position: absolute;
-  top: 120%;
+  top: 130%;
   left: -1%;
   width: 105%;
   height: auto;
@@ -95,4 +95,97 @@
 
 .search-dropdown-result > div {
   font-size: 25px;
+}
+
+
+.search-results-page-background {
+  background-color: #e5e5e5;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.search-results-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 75%;
+  min-height: calc(100vh - 46px);
+  height: 100%;
+  background-color: white;
+  padding: 40px 30px;
+}
+
+.search-results-page > h1 {
+  position: fixed;
+  top: 46px;
+  width: 75%;
+  font-size: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 40;
+  color: #333;
+  background-color: white;
+  padding: 30px 0 5px 0;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.search-results-content {
+  display: flex;
+  padding: 25px 0;
+}
+
+.search-results-side-bar {
+  width: 220px;
+  position: fixed;
+  top: 140px;
+}
+
+.phantom-search-side-bar {
+  width: 220px;
+}
+
+.search-results-side-bar > div {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  cursor: pointer;
+  width: 90%;
+}
+
+.search-results-side-bar > div > div:first-child {
+  height: 16px;
+  font-size: 20px;
+}
+
+.search-results-side-bar > div > div:nth-child(2) {
+  color: #333;
+  display: block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  padding-left: 10px;
+}
+
+.search-results-items {
+  padding-top: 10px;
+}
+
+.search-results-items > h2 {
+  font-weight: 100;
+  color: #999;
+  font-size: 14px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.search-results-items > div:nth-child(2) {
+  padding-top: 20px;
+}
+
+.search-results-items > div:nth-child(2) > div {
+  padding: 25px 0;
 }

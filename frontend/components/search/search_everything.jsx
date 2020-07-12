@@ -5,32 +5,21 @@ import SearchUserItem from './search_user_item';
 export default class SearchEverything extends React.Component {
 
   render() {
-    const { users, songs, songUsers } = this.props;
-    // const everything = users.concat(songs);
-    // for (let i = everything.length - 1; i > 0; i--) {
-    //   const j = Math.floor(Math.random() * i)
-    //   const temp = everything[i]
-    //   everything[i] = everything[j]
-    //   everything[j] = temp
-    // }
-    // const everything = [];
-    // for (let i = 0; i < users.length + songs.length - 1; i++) {
-    //   if ()
-    //   if ((i + 1) % 3 === 0) {
-    //     everything
-    //   }
-    // }
+    const { songs, users, shuffledIndices, songUsers } = this.props;
+
+    const everything = songs.concat(users);
 
     return (
-      <div>
-        <div>Found {songs.length} tracks, {users.length} people</div>
+      <div className='search-results-items'>
+        <h2>Found {songs.length} tracks, {users.length} people</h2>
         <div>
-          {everything.map(el => {
+          {shuffledIndices.map(i => {
+            const el = everything[i];
             if (el.displayName) {
-              return <SearchUserItem user={el} />
+              return <SearchUserItem user={el} key={`search-result-${Math.floor(Math.random() * 10000)}`} />
             } else {
               const user = songUsers[el.userUrl]
-              return <SongItem song={el} user={user} />
+              return <SongItem song={el} songs={songs.map(song => song.id)} user={user} key={`search-result-${Math.floor(Math.random() * 10000)}`} />
             }
           })}
         </div>

@@ -9,7 +9,7 @@ import Stream from './stream';
 import CurrentLibrary from './library/current_library';
 import SongUpload from './song_upload/song_upload';
 import UserUrlShow from './user_url_show';
-import SearchResultsContainer from './search/search_results_container';
+import SearchResults from './search/search_results';
 
 // Placeholder
 import LogoutPage from './logout_page';
@@ -25,7 +25,7 @@ const App = () => (
 				<Route exact path='/stream' component={Stream} />
 				<Route path='/you' component={CurrentLibrary} />
 				<ProtectedRoute exact path='/upload' component={SongUpload} />
-				<Route path='/search/:fragment' component={SearchResultsContainer} />
+				<Route path='/search/:fragment' component={SearchResults} />
 				<Route path='/:profileUrl' component={UserUrlShow} />
 			</Switch>
 		</div>
