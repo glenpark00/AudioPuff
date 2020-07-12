@@ -22,6 +22,10 @@ const ProfilePage = ({ profileUrl }) => {
     fetchUserInfo = () => dispatch(fetchAllUserInfo(profileUrl))
    
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
     fetchUserInfo()
   }, [profileUrl])
   

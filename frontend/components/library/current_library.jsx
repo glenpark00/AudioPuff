@@ -13,6 +13,7 @@ const CurrentLibrary = ({ history }) => {
     dispatch = useDispatch();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (currentUser.id) {
       dispatch(fetchAllUserInfo(currentUser.profileUrl));
     }

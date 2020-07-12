@@ -19,6 +19,10 @@ const SearchResults = ({ match, history }) => {
     fragment = match.params.fragment;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
     dispatch(search(fragment))
       .then(data => {
         setSongUsers(data.songUsers);

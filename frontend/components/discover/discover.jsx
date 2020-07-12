@@ -9,6 +9,7 @@ import SideBarSongItem from '../sidebar/sidebar_song_item';
 
 export default class Discover extends React.Component {
   componentDidMount() {
+    window.scrollTo(0, 0);
     const { fetchSongs, fetchUsers } = this.props;
     fetchSongs();
     fetchUsers();

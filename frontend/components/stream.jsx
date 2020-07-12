@@ -33,6 +33,7 @@ const Stream = ({ history }) => {
   // }, [currentUser.followings])
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     dispatch(fetchSongs());
     dispatch(fetchUsers());
   }, [])

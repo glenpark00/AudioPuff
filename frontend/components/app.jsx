@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBarContainer from './nav_bar/nav_bar_container';
 import Modal from './modal/modal';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { AuthRoute, ProtectedRoute } from '../util/route_utils';
 import GlobalAudioPlayerContainer from './global_audio_player/global_audio_player_container';
 import DiscoverContainer from './discover/discover_container';
@@ -20,6 +20,9 @@ const App = () => (
 		<NavBarContainer />
 		<div id='app-body'>
 			<Switch>
+				<Route exact path='/'>
+					<Redirect to='/discover' />
+				</Route>
 				<AuthRoute exact path='/logout' component={LogoutPage} />
 				<Route exact path='/discover' component={DiscoverContainer} />
 				<Route exact path='/stream' component={Stream} />
