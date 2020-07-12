@@ -4,15 +4,15 @@ import { follow, unfollow } from '../util/follows_api_util';
 import { fetchUser, fetchUserSongs } from '../actions/users_actions';
 import { FaUserPlus, FaUserCheck } from 'react-icons/fa';
 
-export default function FollowButton({ user }) {
-  const currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {})
+const FollowButton = ({ user }) => {
+  const currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {});
   const [followed, setFollowed] = useState(user.followers.includes(currentUser.profileUrl));
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     setFollowed(user.followers.includes(currentUser.profileUrl))
-  })
+  }, [currentUser])
 
   if (user.id === currentUser.id) return null;
 
@@ -24,12 +24,20 @@ export default function FollowButton({ user }) {
         if (currentUser.id) {
           if (followed) {
             unfollow({ userId: user.id, followerId: currentUser.id })
-              .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
-              .then(() => dispatch(fetchUserSongs(user.profileUrl)))
+              .then(() => {
+                dispatch(fetchUser(user.id))
+                dispatch(fetchUser(currentUser.id))
+                // dispatch(fetchUserSongs(user.profileUrl))
+                // dispatch(fetchUserSongs(currentUser.profileUrl))
+              })
           } else {
             follow({ userId: user.id, followerId: currentUser.id })
-              .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
-              .then(() => dispatch(fetchUserSongs(user.profileUrl)))
+              .then(() => {
+                dispatch(fetchUser(user.id))
+                dispatch(fetchUser(currentUser.id))
+                // dispatch(fetchUserSongs(user.profileUrl))
+                // dispatch(fetchUserSongs(currentUser.profileUrl))
+              })
             }
         }
       }}>
@@ -40,3 +48,5 @@ export default function FollowButton({ user }) {
     </div>
   );
 }
+
+export default FollowButton;

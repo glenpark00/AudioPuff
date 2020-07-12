@@ -8,6 +8,7 @@ import SideBarUserItem from './sidebar/sidebar_user_item';
 import SideBarSongItem from './sidebar/sidebar_song_item';
 import Footer from './footer';
 import { fetchUserSongs, fetchUser, fetchUsers } from '../actions/users_actions';
+import { fetchSongs } from '../actions/songs_actions';
 import { FaUserFriends, FaHeart } from 'react-icons/fa';
 import { timeElapsed } from '../util/general_util';
 import { withRouter, Link } from 'react-router-dom';
@@ -18,18 +19,23 @@ const Stream = ({ history }) => {
     currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {}),
     dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-    if (currentUser.id) {
-      dispatch(fetchUser(currentUser.id));
-    }
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchUsers());
+  //   if (currentUser.id) {
+  //     dispatch(fetchUser(currentUser.id));
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   if (currentUser.followings) {
+  //     currentUser.followings.forEach(userUrl => dispatch(fetchUserSongs(userUrl)));
+  //   }
+  // }, [currentUser.followings])
 
   useEffect(() => {
-    if (currentUser.followings) {
-      currentUser.followings.forEach(userUrl => dispatch(fetchUserSongs(userUrl)));
-    }
-  }, [currentUser.followings])
+    dispatch(fetchSongs());
+    dispatch(fetchUsers());
+  }, [])
 
   if (!currentUser.id) {
     return <SignedOutFormPage text='Join AudioPuff to hear the latest from people you follow' />;
@@ -44,7 +50,7 @@ const Stream = ({ history }) => {
         user.songs.forEach(songKey => followedUsersSongs.push(songs[songKey]))
       }
     })
-    followedUsersSongs = followedUsersSongs.filter(song => song)
+    followedUsersSongs = followedUsersSongs.filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15)
   }
 
   const whoToFollow = currentUser ? Object.values(users).filter(user => (

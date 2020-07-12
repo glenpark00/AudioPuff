@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { like, unlike } from '../util/likes_api_util';
-import { fetchUserSongs } from '../actions/users_actions';
+import { fetchUserSongs, fetchUser } from '../actions/users_actions';
 import { fetchSongFromUrl } from '../actions/songs_actions';
 import { FaHeart } from 'react-icons/fa';
 
@@ -23,11 +23,13 @@ export default function LikeButton({ song, text }) {
           if (liked) {
             unlike({ userId: currentUser.id, songId: song.id })
               .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
-              .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
+              // .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
+              .then(() => dispatch(fetchUser(currentUser.id)))
           } else {
             like({ userId: currentUser.id, songId: song.id })
-              .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
-              .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
+            .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
+            .then(() => dispatch(fetchUser(currentUser.id)))
+              // .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
           }
         }
       }}>

@@ -37,7 +37,7 @@ const ProfilePage = ({ profileUrl }) => {
     }
   }
     
-  let userSongs = user.songs ? user.songs.map(songId => songs[songId]).filter(song => song) : []
+  let userSongs = user.songs ? user.songs.map(songId => songs[songId]).filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1) : []
   const likedSongs = user.likedSongs ? user.likedSongs.map(songId => songs[songId]).filter(song => song) : [];
   const followings = user.followings && users ? user.followings.map(userUrl => users[userUrl]).filter(song => song) : [];
   const followers = user.followers && users ? user.followers.map(userUrl => users[userUrl]).filter(song => song) : [];

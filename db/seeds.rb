@@ -21,7 +21,7 @@ user_photos = ['https://audiopuff-seeds.s3-us-west-1.amazonaws.com/user_images/u
 
 users = [demo, user1, user2]
 
-genres = ['Electronic', 'Hip-hop & Rap', 'House', 'Pop','R&B & Soul', 'Rock'];
+genres = ['Electronic', 'Hip hop & Rap', 'House', 'Pop','R&B & Soul', 'Rock'];
 
 def alphabet_only(str) 
   alphabet = ('a'..'z').to_a
@@ -90,7 +90,7 @@ while i <= 60
   u_id += 1 if i % 4 == 1
 end
 
-user_like_id = 0
+user_like_id = 1
 15.times do
   num = Faker::Number.within(range: 4..8)
   likes = []
@@ -105,7 +105,7 @@ user_like_id = 0
   user_like_id += 1
 end
 
-user_follower_id = 0
+user_follower_id = 1
 15.times do
   num = Faker::Number.within(range: 5..12)
   follows = []

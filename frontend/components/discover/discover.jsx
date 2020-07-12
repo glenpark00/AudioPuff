@@ -16,9 +16,13 @@ export default class Discover extends React.Component {
 
   render() {
     const { users, songs, currentUser } = this.props;
+
+    
     const whoToFollow = currentUser ? Object.values(users).filter(user => (
       user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
-    )) : [];
+      )) : [];
+      
+    const allUsers = currentUser ? Object.values(users).filter(user => user.id !== currentUser.id) : Object.values(users);
 
     const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
 
@@ -28,7 +32,7 @@ export default class Discover extends React.Component {
     
     const theUpload = songsArr.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15);
 
-    const hipHop = songsArr.filter(song => song.genre === 'Hip Hop & Rap');
+    const hipHop = songsArr.filter(song => song.genre === 'Hip-hop & Rap');
 
     const electronic = songsArr.filter(song => song.genre === 'Electronic');
 
@@ -37,7 +41,7 @@ export default class Discover extends React.Component {
     const pop = songsArr.filter(song => song.genre === 'Pop');
 
     const rock = songsArr.filter(song => song.genre === 'Rock');
-
+    
     return (
       <div className='discover-page-background'>
         <div className='discover-page'>
@@ -57,10 +61,10 @@ export default class Discover extends React.Component {
                 <h2 className='discover-header'>Up Next</h2>
                 <div className='discover-subheader'>Emerging creators and artists to follow</div>
               </div>
-              <Carousel users={whoToFollow} type='users' />
+              <Carousel users={allUsers} type='users' />
               <div className='discover-heading-container'>
                 <h2 className='discover-header'>Hip Hop &#38; Rap</h2>
-                <div className='discover-subheader'>The latest and hottest hip hop &#38; rap</div>
+                <div className='discover-subheader'>The latest and hottest hip-hop &#38; rap</div>
               </div>
               <Carousel songs={hipHop} users={users} type='songs' />
               <div className='discover-heading-container'>
