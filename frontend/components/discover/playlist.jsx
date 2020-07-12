@@ -1,13 +1,16 @@
 import React from 'react';
-import PlayButton from '../play_button';
 import LikeButton from '../like_button';
+import { displayGlobalAudioPlayer } from '../../actions/ui_actions';
+import { fetchCurrentSongFileUrl, playAudio, pauseAudio } from '../../actions/songs_actions';
 import { FaHeart } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaPlay, FaPause } from 'react-icons/fa';
 
 const Playlist = ({ songs, users }) => {
   if (!songs[0]) return null;
 
-  const audio = useSelector(state => state.audio);
+  const audio = useSelector(state => state.audio),
+    dispatch = useDispatch();
   
   const handleMouseEnter = e => {
     e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
@@ -15,10 +18,40 @@ const Playlist = ({ songs, users }) => {
     e.currentTarget.querySelector('.playlist-item-likes').style.display = 'none';
   }
 
-  const handleMouseLeave = e => {
-    e.currentTarget.style.backgroundColor = 'transparent';
-    e.currentTarget.querySelector('.playlist-item-like-button').style.display = 'none';
-    e.currentTarget.querySelector('.playlist-item-likes').style.display = 'flex';
+  const handleMouseLeave = (e, song) => {
+    if (audio.currentSong.id !== song.id) {
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.querySelector('.playlist-item-like-button').style.display = 'none';
+      e.currentTarget.querySelector('.playlist-item-likes').style.display = 'flex';
+    }
+  }
+  
+  const songIds = songs.map(song => song.id);
+
+  const handlePlay = (song) => {
+    if (audio.playing) {
+      dispatch(fetchCurrentSongFileUrl(song.id, songIds));
+    } else {
+      dispatch(displayGlobalAudioPlayer());
+      dispatch(fetchCurrentSongFileUrl(song.id, songIds));
+    }
+  }
+
+  const handlePlayButton = () => {
+    const currSongI = songIds.indexOf(audio.currentSong.id);
+    const globalAudio = document.querySelector('.global-audio-player');
+    if (currSongI >= 0) {
+      if (audio.playing) {
+        globalAudio.pause();
+        dispatch(pauseAudio());
+      } else {
+        globalAudio.play();
+        dispatch(playAudio());
+      }
+    } else {
+      dispatch(displayGlobalAudioPlayer());
+      dispatch(fetchCurrentSongFileUrl(songIds[0], songIds));
+    }
   }
 
   return (
@@ -26,7 +59,14 @@ const Playlist = ({ songs, users }) => {
       <div className='playlist'>
         <div className='playlist-img-container'>
           <img className='playlist-img' src={songs[0].imageUrl} alt=""/>
-          <PlayButton song={songs[0]} songIds={songs.map(song => song.id)} type='playlist'/> 
+          <div
+            className='song-playlist-play'
+            onClick={handlePlayButton}
+          >
+            {audio.playing && songIds.includes(audio.currentSong.id) ?
+              <FaPause className='playlist-play-button-icon' /> : <FaPlay className='playlist-play-button-icon' />
+            }
+          </div>
         </div>
         <div className='playlist-songs'>
           { songs.map((song, i) => {
@@ -36,8 +76,9 @@ const Playlist = ({ songs, users }) => {
                 <div 
                   className='playlist-item' 
                   key={`playlist-item-${song.id}`}
+                  onClick={() => handlePlay(song)}
                   onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
+                  onMouseLeave={e => handleMouseLeave(e, song)}
                   style={audio.currentSong.id === song.id ? { backgroundColor: 'rgba(255, 255, 255, 0.1)' } : {}}
                 > 
                   <div>
