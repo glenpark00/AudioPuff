@@ -32,7 +32,7 @@ export default class Discover extends React.Component {
     
     const theUpload = songsArr.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15);
 
-    const hipHop = songsArr.filter(song => song.genre === 'Hip-hop & Rap');
+    const hipHop = songsArr.filter(song => song.genre === 'Hip hop & Rap');
 
     const electronic = songsArr.filter(song => song.genre === 'Electronic');
 
