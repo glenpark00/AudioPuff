@@ -50,18 +50,6 @@ const Stream = ({ history }) => {
 
   followedUsersSongs = [...new Set(followedUsersSongs)].slice(0, 15)
 
-  console.log(followedUsersSongs)
-
-  // if (currentUser.followings) {
-  //   currentUser.followings.forEach(userUrl => {
-  //     const user = users[userUrl];
-  //     if (user && user.songs) {
-  //       user.songs.forEach(songKey => followedUsersSongs.push(songs[songKey]))
-  //     }
-  //   })
-  //   followedUsersSongs = followedUsersSongs.filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15)
-  // }
-
   const whoToFollow = currentUser ? Object.values(users).filter(user => (
     user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
   )) : [];
