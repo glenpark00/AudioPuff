@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import SearchEverything from './search_everything';
 import SearchSongs from './search_songs';
 import SearchUsers from './search_users';
-import { withRouter } from 'react-router-dom';
 import { search } from '../../actions/songs_actions';
 import { useDispatch } from 'react-redux';
 import { FaSearch } from 'react-icons/fa';
 import { GiSoundWaves } from 'react-icons/gi';
 import { IoIosPerson } from 'react-icons/io';
 
-const SearchResults = ({ match, history }) => { 
+const SearchResults = ({ match }) => { 
   const [searchSongs, setSearchSongs] = useState([]),
     [songUsers, setSongUsers] = useState({}),
     [searchUsers, setSearchUsers] = useState([]),
@@ -27,7 +26,7 @@ const SearchResults = ({ match, history }) => {
       .then(data => {
         setSongUsers(data.songUsers);
         const size = Object.values(data.songs).length + Object.values(data.users).length;
-        const shuffled = [...Array(size).keys()];;
+        const shuffled = [...Array(size).keys()];
         for (let i = shuffled.length - 1; i > 0; i--) {
           const j = Math.floor(Math.random() * i)
           const temp = shuffled[i]
@@ -77,4 +76,4 @@ const SearchResults = ({ match, history }) => {
   )
 }
 
-export default withRouter(SearchResults);
+export default SearchResults;

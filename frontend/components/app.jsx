@@ -11,9 +11,6 @@ import SongUpload from './song_upload/song_upload';
 import UserUrlShow from './user_url_show';
 import SearchResults from './search/search_results';
 
-// Placeholder
-import LogoutPage from './logout_page';
-
 const App = () => (
 	<div id='app'>
 		<Modal />
@@ -23,7 +20,6 @@ const App = () => (
 				<Route exact path='/'>
 					<Redirect to='/discover' />
 				</Route>
-				<AuthRoute exact path='/logout' component={LogoutPage} />
 				<Route exact path='/discover' component={DiscoverContainer} />
 				<Route exact path='/stream' component={Stream} />
 				<Route path='/you' component={CurrentLibrary} />

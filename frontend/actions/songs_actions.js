@@ -120,7 +120,10 @@ export const search = fragment => dispatch => {
     return SongsApiUtil.search(fragment)
       .then(data => {
         dispatch(receiveSearchResults(data));
-        return data;
+        const songs = data.songs ? data.songs : {};
+        const users = data.users ? data.users : {};
+        const songUsers = data.songUsers ? data.songUsers : {};
+        return { songs, users, songUsers };
       })
   }
 
