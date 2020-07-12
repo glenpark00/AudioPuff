@@ -6,13 +6,15 @@ import { FaUserPlus, FaUserCheck } from 'react-icons/fa';
 
 const FollowButton = ({ user }) => {
   const currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {});
-  const [followed, setFollowed] = useState(user.followers.includes(currentUser.profileUrl));
+  const [followed, setFollowed] = useState(user.followers ? user.followers.includes(currentUser.profileUrl) : false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setFollowed(user.followers.includes(currentUser.profileUrl))
-  }, [currentUser])
+    if (user.followers) {
+      setFollowed(user.followers.includes(currentUser.profileUrl))
+    }
+  }, [currentUser, user.followers])
 
   if (user.id === currentUser.id) return null;
 
