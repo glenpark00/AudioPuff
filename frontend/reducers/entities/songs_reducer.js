@@ -8,9 +8,7 @@ const songsReducer = (state = {}, action) => {
     case RECEIVE_SONG:
       let songUrl = action.data.song.songUrl.split('').filter(c => c !== '_').join('').toLowerCase()
       let userSongUrl = action.data.song.userUrl + songUrl;
-      let likes = [];
-      if (action.data.likers) likes = Object.values(action.data.likers).map(liker => liker.profileUrl);
-      return Object.assign({}, state, { [userSongUrl]: { ...action.data.song, likes } });
+      return Object.assign({}, state, { [userSongUrl]: action.data.song });
     case RECEIVE_SONGS:
       return Object.assign({}, state, action.data.songs);
     case CLEAR_DELETED_SONG:

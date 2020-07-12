@@ -15,7 +15,7 @@ class Api::SongsController < ApplicationController
 
   def show
     @song = Song.includes(:likers).find_by(user_url: params[:profile_url], song_url: params[:song_url])
-    @likers = @song.likers.with_attached_profile_image
+    @likers = @song.likers.includes(:songs, :liked_songs, :followers, :followings).with_attached_profile_image
     if @song
       render :show
     else

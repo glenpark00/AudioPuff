@@ -13,8 +13,8 @@ json.likers do
   @likers.each do |user|
     unless user == song.user
       json.set! user.profile_url do
-        json.extract! user, :id, :profile_url, :display_name
-        json.image_url url_for(user.profile_image)
+        json.partial! 'api/users/user', locals: { user: user }
+        json.songs user.songs.map { |song| "#{song.user_url}#{song.song_url.tr('_', '').downcase}" }
       end
     end
   end

@@ -41,27 +41,30 @@ const Stream = ({ history }) => {
     return <SignedOutFormPage text='Join AudioPuff to hear the latest from people you follow' />;
   }
 
-  let followedUsersSongs = [];
+  let followedUsersSongs = currentUser.followings ? currentUser.followings.map(userUrl => {
+    const user = users[userUrl];
+    if (user && user.songs) {
+      return user.songs
+    }
+  }).flat().filter(song => song).map(songKey => songs[songKey]).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1) : [];
 
-  if (currentUser.followings) {
-    currentUser.followings.forEach(userUrl => {
-      const user = users[userUrl];
-      if (user && user.songs) {
-        user.songs.forEach(songKey => followedUsersSongs.push(songs[songKey]))
-      }
-    })
-    followedUsersSongs = followedUsersSongs.filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15)
-  }
+  followedUsersSongs = [...new Set(followedUsersSongs)].slice(0, 15)
+
+  console.log(followedUsersSongs)
+
+  // if (currentUser.followings) {
+  //   currentUser.followings.forEach(userUrl => {
+  //     const user = users[userUrl];
+  //     if (user && user.songs) {
+  //       user.songs.forEach(songKey => followedUsersSongs.push(songs[songKey]))
+  //     }
+  //   })
+  //   followedUsersSongs = followedUsersSongs.filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15)
+  // }
 
   const whoToFollow = currentUser ? Object.values(users).filter(user => (
     user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
   )) : [];
-  for (let i = whoToFollow.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * i)
-    const temp = whoToFollow[i];
-    whoToFollow[i] = whoToFollow[j];
-    whoToFollow[j] = temp;
-  }
 
   const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
   
@@ -88,7 +91,7 @@ const Stream = ({ history }) => {
                           <div> posted a track </div>
                           <div>{timeElapsed(song.createdAt)}</div>
                         </div>
-                        <SongItem song={song} songIds={Object.values(songs).map(song => song.id)} user={user} hideCreation={true} />
+                        <SongItem song={song} songIds={followedUsersSongs.map(song => song.id)} user={user} hideCreation={true} />
                       </div>
                     </div>
                   )
