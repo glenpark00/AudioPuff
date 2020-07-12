@@ -46,7 +46,7 @@ const Stream = ({ history }) => {
     if (user && user.songs) {
       return user.songs
     }
-  }).flat().filter(song => song).map(songKey => songs[songKey]).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1) : [];
+  }).flat().filter(song => song).map(songKey => songs[songKey]).filter(song => song).sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1) : [];
 
   followedUsersSongs = [...new Set(followedUsersSongs)].slice(0, 15)
 
