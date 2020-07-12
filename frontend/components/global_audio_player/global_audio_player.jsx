@@ -279,7 +279,7 @@ export default class GlobalAudioPlayer extends React.Component {
             { song ? <LikeButton song={song} /> : null }
           </div>
           <audio 
-            hidden muted
+            hidden
             className='global-audio-player' 
             onTimeUpdate={e => this.handleTimeUpdate(e)} 
             onEnded={this.playNextSong}

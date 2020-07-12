@@ -26,7 +26,7 @@ const audioReducer = (state = defaultState, action) => {
         nextSong = state.songIds[nextSongIdx];
         prevSong = state.songIds[prevSongIdx];
         return Object.assign(newState, { currentSong, nextSong, prevSong, playing: true });
-      } else if (state.songIds.length === 0) {
+      } else if (state.songIds.length === 0 && songIds.length <= 1) {
         return Object.assign(newState, { currentSong, nextSong: song.id, prevSong: song.id, songIds: [song.id], playing: true })
       } else {
         nextSongIdx = songIds.indexOf(song.id) + 1;
