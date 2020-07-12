@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SearchEverything from './search_everything';
 import SearchSongs from './search_songs';
 import SearchUsers from './search_users';
-import SongItem from '../song_item/song_item';
-import SearchUserItem from './search_user_item';
 import { withRouter } from 'react-router-dom';
 import { search } from '../../actions/songs_actions';
 import { useDispatch } from 'react-redux';
@@ -23,9 +21,7 @@ const SearchResults = ({ match, history }) => {
   useEffect(() => {
     dispatch(search(fragment))
       .then(data => {
-        const res = {};
-        Object.values(data.songs).forEach(song => res[song.userUrl] = data.users[song.userUrl]);
-        setSongUsers(res);
+        setSongUsers(data.songUsers);
         const size = Object.values(data.songs).length + Object.values(data.users).length;
         const shuffled = [...Array(size).keys()];;
         for (let i = shuffled.length - 1; i > 0; i--) {

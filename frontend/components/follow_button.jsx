@@ -10,11 +10,11 @@ const FollowButton = ({ user }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (user.followers) {
-      setFollowed(user.followers.includes(currentUser.profileUrl))
-    }
-  }, [currentUser, user.followers])
+  // useEffect(() => {
+  //   if (user.followers) {
+  //     setFollowed(user.followers.includes(currentUser.profileUrl))
+  //   }
+  // }, [currentUser, user.followers])
 
   if (user.id === currentUser.id) return null;
 
@@ -27,19 +27,21 @@ const FollowButton = ({ user }) => {
           if (followed) {
             unfollow({ userId: user.id, followerId: currentUser.id })
               .then(() => {
-                dispatch(fetchUser(user.id))
-                dispatch(fetchUser(currentUser.id))
-                // dispatch(fetchUserSongs(user.profileUrl))
-                // dispatch(fetchUserSongs(currentUser.profileUrl))
+                // dispatch(fetchUser(user.id))
+                // dispatch(fetchUser(currentUser.id))
+                dispatch(fetchUserSongs(user.profileUrl))
+                dispatch(fetchUserSongs(currentUser.profileUrl))
               })
+              .then(() => setFollowed(false))
           } else {
             follow({ userId: user.id, followerId: currentUser.id })
               .then(() => {
-                dispatch(fetchUser(user.id))
-                dispatch(fetchUser(currentUser.id))
-                // dispatch(fetchUserSongs(user.profileUrl))
-                // dispatch(fetchUserSongs(currentUser.profileUrl))
+                // dispatch(fetchUser(user.id))
+                // dispatch(fetchUser(currentUser.id))
+                dispatch(fetchUserSongs(user.profileUrl))
+                dispatch(fetchUserSongs(currentUser.profileUrl))
               })
+              .then(() => setFollowed(true))
             }
         }
       }}>

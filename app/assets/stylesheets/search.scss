@@ -146,7 +146,7 @@
 }
 
 .phantom-search-side-bar {
-  width: 220px;
+  width: 250px;
 }
 
 .search-results-side-bar > div {
@@ -198,8 +198,34 @@
   width: 160px;
   height: 160px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .user-display-info {
-  
+  padding: 20px 10px;
+  width: 400px;
+}
+
+.user-display-info > div:first-child {
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.user-display-info > div:nth-child(2) {
+  font-weight: 100;
+  color: #999;
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;
+}
+
+.search-user-follow-container {
+  width: 100px;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 15px;
 }

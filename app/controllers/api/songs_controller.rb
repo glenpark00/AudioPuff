@@ -68,15 +68,13 @@ class Api::SongsController < ApplicationController
   end
 
   def search
-    @songs = Song.with_attached_image_file.includes(:user).where('LOWER(title) LIKE ?', "%#{params[:fragment].downcase}%")
+    @songs = Song.with_attached_image_file.includes(:user).where('LOWER(title) LIKE ?', "#{params[:fragment].downcase}%")
     @users = []
-    users = User.with_attached_profile_image.includes(:songs).where('LOWER(display_name) LIKE ?', "#{params[:fragment].downcase}%")
+    @song_users = []
     @songs.each do |song|
-      @users.push(song.user)
+      @song_users.push(song.user)
     end
-    users.each do |user|
-      @users.push(user)
-    end
+    @users = User.with_attached_profile_image.includes(:songs, :liked_songs, :followers, :followings).where('LOWER(display_name) LIKE ?', "#{params[:fragment].downcase}%")
     render :songs_users
   end
 

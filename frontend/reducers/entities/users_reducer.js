@@ -26,7 +26,8 @@ const usersReducer = (state = {}, action) => {
     case RECEIVE_SONGS:
       return Object.assign(newState, action.data.users);
     case RECEIVE_SEARCH_RESULTS:
-      return Object.assign(newState, action.data.users);
+      const songUsers = action.data.songUsers || {}
+      return Object.assign(newState, action.data.users, songUsers);
     default:
       return state;
   }

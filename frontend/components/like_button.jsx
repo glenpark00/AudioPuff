@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { like, unlike } from '../util/likes_api_util';
-import { fetchUserSongs, fetchUser } from '../actions/users_actions';
+import { fetchUserSongs } from '../actions/users_actions';
 import { fetchSongFromUrl } from '../actions/songs_actions';
 import { FaHeart } from 'react-icons/fa';
 
@@ -10,9 +10,9 @@ export default function LikeButton({ song, text }) {
   const [liked, setLiked] = useState(song.likers.includes(currentUser.profileUrl));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setLiked(song.likers.includes(currentUser.profileUrl))
-  }, [currentUser])
+  // useEffect(() => {
+  //   setLiked(song.likers.includes(currentUser.profileUrl))
+  // }, [currentUser])
 
   return (
     <div
@@ -22,14 +22,18 @@ export default function LikeButton({ song, text }) {
         if (currentUser.id) {
           if (liked) {
             unlike({ userId: currentUser.id, songId: song.id })
-              .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
-              // .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
-              .then(() => dispatch(fetchUser(currentUser.id)))
+              .then(() => {
+                dispatch(fetchSongFromUrl(song.songUrl, song.userUrl))
+                dispatch(fetchUserSongs(currentUser.profileUrl))
+              })
+              .then(() => setLiked(false))
           } else {
             like({ userId: currentUser.id, songId: song.id })
-            .then(() => dispatch(fetchSongFromUrl(song.songUrl, song.userUrl)))
-            .then(() => dispatch(fetchUser(currentUser.id)))
-              // .then(() => dispatch(fetchUserSongs(currentUser.profileUrl)))
+              .then(() => {
+                dispatch(fetchSongFromUrl(song.songUrl, song.userUrl))
+                dispatch(fetchUserSongs(currentUser.profileUrl))
+              })
+              .then(() => setLiked(true))
           }
         }
       }}>
