@@ -2,6 +2,13 @@
 <html>
   <head>
     <title>AudioPuff</title>
+    <meta property='og:title' content='AudioPuff'/>
+    <meta property='og:image' content='https://audiopuff-seeds.s3-us-west-1.amazonaws.com/homepage.png'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:type" content="website" />
+    <meta property='og:description' content='A fullstack music sharing and streaming app inspired by SoundCloud'/>
+    <meta property='og:url' content='https://audiopuff.herokuapp.com'/>
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%# Allows for google fonts: Josefin Sans %>
@@ -9,12 +16,6 @@
           href="https://fonts.googleapis.com/css?family=Josefin+Sans">
     <%= favicon_link_tag asset_path('favicon.svg') %>
 
-    <meta property='og:title' content='AudioPuff'/>
-    <meta property='og:image' content='https://audiopuff-seeds.s3-us-west-1.amazonaws.com/homepage.png'>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="og:type" content="website" />
-    <meta property='og:description' content='A fullstack music sharing and streaming app inspired by SoundCloud'/>
-    <meta property='og:url' content='https://audiopuff.herokuapp.com'/>
     
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
