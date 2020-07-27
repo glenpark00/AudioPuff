@@ -26,9 +26,6 @@ export default class Discover extends React.Component {
       const allUsers = currentUser ? Object.values(users).filter(user => user.id !== currentUser.id) : Object.values(users);
       
       const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
-      
-      console.log(`currentUser: ${currentUser}, whoToFollow: ${whoToFollow}, likedSongs: ${likedSongs}`)
-      console.log('------------------------------------------------------');
 
       const songsArr = Object.values(songs);
       
