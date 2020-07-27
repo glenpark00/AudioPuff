@@ -21,11 +21,13 @@ const Modal = () => {
       dispatch(disableModalDisplay());
     }, 710)
     const modal = document.querySelector('.modal-child');
-    modal.style.top = '-100%';
-    modal.animate([
-      { top: '45%' },
-      { top: '-100%' }
-    ], 700)
+    if (modal) {
+      modal.style.top = '-100%';
+      modal.animate([
+        { top: '45%' },
+        { top: '-100%' }
+      ], 700)
+    }
   }
 
   const createComponent = (type) =>{
