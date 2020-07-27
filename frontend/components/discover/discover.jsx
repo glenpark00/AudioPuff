@@ -18,6 +18,7 @@ export default class Discover extends React.Component {
   render() {
     const { users, songs, currentUser } = this.props;
 
+    debugger
     
     const whoToFollow = currentUser ? Object.values(users).filter(user => (
       user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
