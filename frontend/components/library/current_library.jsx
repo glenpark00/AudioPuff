@@ -19,13 +19,17 @@ const CurrentLibrary = ({ history }) => {
     }
   }, [])
 
+  useEffect(() => {
+    dispatch(fetchAllUserInfo(currentUser.profileUrl));
+  }, [currentUser.id])
+
   if (!currentUser.id) {
     return <SignedOutFormPage text='Join AudioPuff to save your favorite music' />;
   }
 
-  const userSongs = currentUser.songs ? currentUser.songs.map(songKey => songs[songKey]).filter(song => song ) : [];
+  const userSongs = currentUser.songs ? currentUser.songs.map(songKey => songs[songKey]).filter(song => song) : [];
 
-  const likedSongs = currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song ) : [];
+  const likedSongs = currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
     
   const followings = currentUser.followings ? currentUser.followings.map(userUrl => users[userUrl]).filter(user => user) : [];
 

@@ -60,7 +60,7 @@ export default class UserFormModal extends React.Component {
           handleCloseModal={handleCloseModal} />
       } else if (formType === 'demo') {
         return <DemoLogin handleCloseModal={handleCloseModal}
-          login={login} demoUser={demoUser} />
+          login={login} demoUser={demoUser} text={text} />
       }
     }
   }

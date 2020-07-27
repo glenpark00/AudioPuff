@@ -36,7 +36,7 @@ export default class DemoUserForm extends React.Component {
   render() {
     return (
       <div className='form-modal'>
-        <div className='form-header'>Sign in or create an account</div>
+        <div className='form-header'>{this.props.text}</div>
         <input className='form-modal-input'
           type="text"
           value={ this.state.currentIdentifier }

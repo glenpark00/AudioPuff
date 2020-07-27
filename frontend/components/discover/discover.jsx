@@ -11,27 +11,26 @@ export default class Discover extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     const { fetchSongs, fetchUsers } = this.props;
-    fetchSongs();
     fetchUsers();
+    fetchSongs();
   }
 
   render() {
     const { users, songs, currentUser } = this.props;
 
-    
     const whoToFollow = currentUser ? Object.values(users).filter(user => (
       user.id !== currentUser.id && currentUser.followings && !currentUser.followings.includes(user.profileUrl)
       )) : [];
       
-      const allUsers = currentUser ? Object.values(users).filter(user => user.id !== currentUser.id) : Object.values(users);
-      
-      const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
+    const allUsers = currentUser ? Object.values(users).filter(user => user.id !== currentUser.id) : Object.values(users);
+    
+    const likedSongs = currentUser && currentUser.likedSongs ? currentUser.likedSongs.map(songKey => songs[songKey]).filter(song => song) : [];
 
-      const songsArr = Object.values(songs);
-      
-      const trending = songsArr.sort((a, b) => (a.likers.length > b.likers.length) ? -1 : 1).slice(0, 15);
-      
-      const theUpload = songsArr.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15);
+    const songsArr = Object.values(songs);
+    
+    const trending = songsArr.sort((a, b) => (a.likers.length > b.likers.length) ? -1 : 1).slice(0, 15);
+    
+    const theUpload = songsArr.sort((a, b) => (a.createdAt > b.createdAt) ? -1 : 1).slice(0, 15);
       
     const hipHop = songsArr.filter(song => song.genre === 'Hip hop & Rap');
 

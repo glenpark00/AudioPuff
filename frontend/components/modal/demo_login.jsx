@@ -16,12 +16,12 @@ export default class DemoLogin extends React.Component {
   }
   
   render() {
-    const { demoUser, login, handleCloseModal } = this.props;
+    const { demoUser, login, handleCloseModal, text } = this.props;
     const demoIdentifier = demoUser.profileUrl;
     const demoPassword = 'password';
     if (this.state.firstStep) {
       return <DemoUserForm nextStep={this.nextStep}
-        demoIdentifier={demoIdentifier} />
+        demoIdentifier={demoIdentifier} text={text} />
     } else {
       return <DemoLoginForm closeModal={this.closeModal}
         demoIdentifier={demoIdentifier}
