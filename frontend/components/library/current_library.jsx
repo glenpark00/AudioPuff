@@ -78,10 +78,10 @@ const CurrentLibrary = ({ history }) => {
               <LibraryFollow users={followers} overview={true} text='Followers' />
             </div>
           )} />
-          <Route exact path='/you/tracks' component={() => <LibraryLikes songs={userSongs} users={{ [currentUser.profileUrl]: currentUser }} />} />
+          <Route exact path='/you/tracks' component={() => <LibraryLikes songs={userSongs} users={{ [currentUser.profileUrl]: currentUser }} overview={true} text='Your tracks' />} />
           <Route exact path='/you/likes' component={() => <LibraryLikes songs={likedSongs} users={users} />} />
           <Route exact path='/you/following' component={() => <LibraryFollow users={followings} />} />
-          <Route exact path='/you/followers' component={() => <LibraryFollow users={followers} />} />
+          <Route exact path='/you/followers' component={() => <LibraryFollow users={followers} overview={true} text='Hear what your followers have posted' />} />
         </Switch>
       </div>
     </div>
