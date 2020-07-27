@@ -26,6 +26,8 @@ export default class SongFileUpload extends React.Component {
   async drop(e) {
     e.persist();
     e.preventDefault();
+    document.querySelector('.file-upload-overlay').style.display = 'none';
+
     const files = e.dataTransfer.files;
     let wavArr = [];
     let durArr= [];
@@ -70,7 +72,7 @@ export default class SongFileUpload extends React.Component {
     let durStr = durArr.join(', ');
     durStr = '[' + durStr + ']';
     // console.log(wavStr)
-    console.log(durStr)
+    // console.log(durStr)
   }
 
   filterData(audioBuffer) {
@@ -140,8 +142,8 @@ export default class SongFileUpload extends React.Component {
   }
 
   handleButtonUpload(e) {
-   const files = e.target.files
-    if (files && files[0] && files[0].size < 1500000) {
+    const files = e.target.files
+    if (files && files[0] && files[0].size < 3000000 && files[0].type === 'audio/mpeg') {
       this.handleAudioFile(files[0]);
     } else {
       alert('Invalid file type or file size too large')
