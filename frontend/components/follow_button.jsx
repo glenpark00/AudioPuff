@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { follow, unfollow } from '../util/follows_api_util';
 import { fetchUser, fetchUserSongs } from '../actions/users_actions';
+import { enableModalDisplay } from '../actions/ui_actions';
 import { FaUserPlus, FaUserCheck } from 'react-icons/fa';
 
 const FollowButton = ({ user }) => {
@@ -18,6 +19,8 @@ const FollowButton = ({ user }) => {
 
   if (user.id === currentUser.id) return null;
 
+  const openModal = () => dispatch((enableModalDisplay({ type: 'session' })));
+  
   return (
     <div
       className='follow-button'
@@ -43,6 +46,8 @@ const FollowButton = ({ user }) => {
               })
               .then(() => setFollowed(true))
             }
+        } else {
+          openModal()
         }
       }}>
       {followed ? <FaUserCheck/> : <FaUserPlus />}

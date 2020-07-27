@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     audio: state.audio.currentSong ? state.audio : { currentSong: {}, songIds: state.audio.songIds, playing: false },
-    currentUserUrl: state.session.currentUser.profileUrl,
+    currentUserUrl: state.session.currentUser ? state.session.currentUser.profileUrl : '',
     song,
     user: state.entities.users[ownProps.profileUrl],
     likers: song ? song.likers.map(liker => state.entities.users[liker]) : []

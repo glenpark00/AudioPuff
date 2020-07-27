@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { like, unlike } from '../util/likes_api_util';
 import { fetchUserSongs, fetchUser } from '../actions/users_actions';
 import { fetchSongFromUrl } from '../actions/songs_actions';
+import { enableModalDisplay } from '../actions/ui_actions';
 import { FaHeart } from 'react-icons/fa';
 
 export default function LikeButton({ song, text }) {
@@ -13,6 +14,8 @@ export default function LikeButton({ song, text }) {
   // useEffect(() => {
   //   setLiked(song.likers.includes(currentUser.profileUrl))
   // }, [currentUser])
+
+  const openModal = () => dispatch((enableModalDisplay({ type: 'session' })));
 
   return (
     <div
@@ -37,6 +40,8 @@ export default function LikeButton({ song, text }) {
               })
               .then(() => setLiked(true))
           }
+        } else {
+          openModal();
         }
       }}>
       <FaHeart /> 
