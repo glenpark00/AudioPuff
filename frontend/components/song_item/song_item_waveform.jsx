@@ -105,7 +105,6 @@ const SongItemWaveform = ({ song, songIds, item }) => {
             audio={audio}
             hovering={hovering}
             waveformWidth={waveformWidth}
-            convertSecsToMins={convertSecsToMins}
             item={item}
           /> : null
         }

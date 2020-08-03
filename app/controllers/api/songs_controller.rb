@@ -68,7 +68,7 @@ class Api::SongsController < ApplicationController
   end
 
   def search
-    @songs = Song.with_attached_image_file.includes(:user).where('LOWER(title) LIKE ?', "#{params[:fragment].downcase}%")
+    @songs = Song.with_attached_image_file.includes(:user).where('LOWER(title) LIKE ?', "%#{params[:fragment].downcase}%")
     @users = []
     @song_users = []
     @songs.each do |song|

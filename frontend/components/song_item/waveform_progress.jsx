@@ -1,4 +1,5 @@
 import React from 'react';
+import { convertSecsToMins } from '../../util/general_util';
 
 export default class WaveformProgress extends React.Component {
   constructor(props) {
@@ -23,8 +24,8 @@ export default class WaveformProgress extends React.Component {
     const progressWidth = progressDiv.offsetWidth;
     const playingProgressDiv = document.querySelector(`#waveform-progress-playing-${song.id}`);
     const playingWidth = playingProgressDiv.offsetWidth;
+    const currentTimeWidth = (audio.currentSong.currentTime / song.duration) * waveformWidth;
     if (hovering) {
-      const currentTimeWidth = (audio.currentSong.currentTime / song.duration) * waveformWidth;
       if (progressWidth + playingWidth <= currentTimeWidth) {
         playingProgressDiv.style.width = `${currentTimeWidth - progressDiv.offsetWidth}px`;
       } else {
@@ -33,7 +34,7 @@ export default class WaveformProgress extends React.Component {
         playingProgressDiv.scrollLeft = progressDiv.offsetWidth;
       }
     } else {
-      progressDiv.style.width = `${(audio.currentSong.currentTime / song.duration) * 100}%`;
+      progressDiv.style.width = `${currentTimeWidth}px`;
       playingProgressDiv.style.width = '0';
     }
   }
@@ -47,7 +48,7 @@ export default class WaveformProgress extends React.Component {
     const mousePosition = e.nativeEvent.offsetX;
     const songPosition = (audio.currentSong.currentTime / song.duration) * waveformWidth;
     const time = Math.floor((mousePosition / e.target.offsetWidth) * song.duration);
-    currentTime.innerHTML = this.props.convertSecsToMins(time);
+    currentTime.innerHTML = convertSecsToMins(time);
     const widthDiff = mousePosition - songPosition;
     if (widthDiff > 0) {
       progressDiv.style.width = `${songPosition}px`;
