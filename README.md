@@ -204,7 +204,7 @@ scrollCarousel(side) {
   }
 ```
 
-It makes use of the scroll
+It makes use of the HTML scrollLeft property to scroll the container on button press, as well as have a little "peek-out" animation on button hover.
 
 ## Full User Experience
 
