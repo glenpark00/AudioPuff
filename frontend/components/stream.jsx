@@ -92,7 +92,7 @@ const Stream = ({ history }) => {
           <div className='side-bar'>
             <SideBarMyInfo />
             <SideBarSection icon={<FaUserFriends />} items={whoToFollow} component={<SideBarUserItem />} text='Who to follow' />
-            <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} />
+            <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url='/you/likes' />
             <div className='page-border-container'>
               <div className='page-top-border'></div>
             </div>
