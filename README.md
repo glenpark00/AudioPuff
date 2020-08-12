@@ -20,7 +20,7 @@ A audio streaming platform and music sharing social media website inspired by So
 
 Because SoundCloud seems to have taken down the only article about how their waveforms work, I decided to get creative and see if I could implement a interactive and responsive waveform visualizer purely in vanilla JavaScript. First, I made use of the built-in browser [AudioContext](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) API to decode and convert a music file into sampled normalized sound data. This data is used to draw a set of bars on a canvas element, which is converted into a URL and stored in the database at the time of a song's creation. This was done to optimize the waveform visualizer in practice, as other methods would have required parsing an audio file on demand and then creating the canvas, which would lead to absymal performance. 
 
-![waveform](https://github.com/glenpark00/AudioPuff/blob/master/app/assets/images/waveform.png)
+![waveform](https://github.com/glenpark00/AudioPuff/blob/master/app/assets/images/waveform.gif)
 
 The visualizer is constructed of three versions of the canvas image, each colored with a different filter. The three versions are used for displaying progress, time left, and a hover effect. As a song plays, all three images adjust their widths accordingly, and users can click on any part of the waveform to go to the corresponding timestamp.
 
@@ -113,6 +113,8 @@ AudioPuff has five different types of audio players of varying complexity, and i
 ![homepage](https://github.com/glenpark00/AudioPuff/blob/master/app/assets/images/homepage.png)
 
 This was possible due to the way my Redux state was set up to handle streaming. The state would only keep record of the current song, and would fetch next song information only when needed. The streaming is fully capable of sophisticated continous listening, as song containers are smartly set up to determine the next song. The most complicated of those song containers is the carousel I made for songs that I also expanded to artists: 
+
+![carousel](https://github.com/glenpark00/AudioPuff/blob/master/app/assets/images/carousel.gif)
 
 ```
 scrollCarousel(side) {
