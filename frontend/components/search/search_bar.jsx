@@ -10,6 +10,7 @@ export default class SearchBar extends React.Component {
       fragment: '',
       showDropdown: false
     }
+    this.debouncedSearch = debounce(200, this.props.search);
     this.handleSearch = this.handleSearch.bind(this);
     this.closeDropdown = this.closeDropdown.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
@@ -33,7 +34,7 @@ export default class SearchBar extends React.Component {
     } else {
       this.setState({ showDropdown: true })
     }
-    this.setState({ fragment }, () => debounce(200, this.props.search)(fragment));
+    this.setState({ fragment }, () => this.debouncedSearch(fragment));
   }
 
   handleFocus(e) {
