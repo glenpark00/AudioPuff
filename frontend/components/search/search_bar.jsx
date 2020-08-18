@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchDropdown from './search_dropdown';
 import { GrSearch } from 'react-icons/gr';
+import { debounce } from 'throttle-debounce';
 
 export default class SearchBar extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export default class SearchBar extends React.Component {
     } else {
       this.setState({ showDropdown: true })
     }
-    this.setState({ fragment }, () => this.props.search(fragment));
+    this.setState({ fragment }, () => debounce(200, this.props.search)(fragment));
   }
 
   handleFocus(e) {
