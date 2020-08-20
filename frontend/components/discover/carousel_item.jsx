@@ -3,7 +3,7 @@ import LikeButton from '../like_button';
 import PlayButton from '../play_button';
 import { withRouter } from 'react-router-dom';
 
-function CarouselItem({ song, songIds, user, history }) {
+function CarouselItem({ song, songIds, user, history, incrementCount }) {
   const [hovering, setHovering] = useState(false);
 
   const openSongShow = () => history.push(`/${user.profileUrl}/${song.songUrl}`);
@@ -17,6 +17,7 @@ function CarouselItem({ song, songIds, user, history }) {
           onClick={openSongShow} 
           onMouseEnter={() => setHovering(true)} 
           onMouseLeave={() => setHovering(false)} 
+          onLoad={incrementCount}
           src={song.imageUrl} 
         />
         { hovering ? 

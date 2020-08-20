@@ -73,7 +73,7 @@ export default class Carousel extends React.Component {
   }
 
   render() {
-    const { users, songs, type } = this.props;
+    const { users, songs, type, incrementCount } = this.props;
     const carousel = document.querySelector(`#songs-carousel-${this.id}`);
     const scrollWidth = (carousel ? carousel.scrollWidth : 9999);
     const songIds = songs ? songs.map(song => song.id) : [];
@@ -86,11 +86,11 @@ export default class Carousel extends React.Component {
             {type === 'songs' ? 
               songs.map(song => {
                 const user = users[song.userUrl];
-                return <CarouselItem song={song} songIds={songIds} user={user} key={`${song.id}-${this.id}`} />
+                return <CarouselItem song={song} songIds={songIds} user={user} key={`${song.id}-${this.id}`} incrementCount={incrementCount} />
               })
               :
               users.map(user => {
-                return <LibraryUserItem user={user} key={`${user.id}-${this.id}`} />
+                return <LibraryUserItem user={user} key={`${user.id}-${this.id}`} incrementCount={incrementCount} />
               })
             }
           </div>
