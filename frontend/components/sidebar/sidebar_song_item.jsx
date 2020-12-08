@@ -11,7 +11,7 @@ const SideBarSongItem = ({ item, history }) => {
   const [hovering, setHovering] = useState(false);
 
   const playing = audio.playing && audio.currentSong.id === item.id;
-
+  
   if (!user) return null;
 
   return (

@@ -68,14 +68,20 @@ class Api::UsersController < ApplicationController
 
   def fetch_all_info
     @user = User.with_attached_profile_image.includes(:followings, :followers, :songs, :liked_songs).find_by(profile_url: params[:profile_url])
-    if (@user) 
-      @follows = @user.followings.with_attached_profile_image.includes(:followers).includes(:songs).map { |user| user }
+    if @user 
+      @users = @user.followings.with_attached_profile_image.includes(:followers).includes(:songs).map { |user| user }
       @user.followers.with_attached_profile_image.includes(:followers).includes(:songs).each do |user|
-        unless @follows.include?(user)
-          @follows.push(user)
+        unless @users.include?(user)
+          @users.push(user)
         end
       end
       @songs = @user.liked_songs.map { |song| song }
+      @songs.each do |song|
+        song_user = song.user
+        unless @users.include?(song_user)
+          @users.push(song_user)
+        end
+      end
       @user.songs.with_attached_image_file.includes(:likers).each do |song| 
         unless @songs.include?(song)
           @songs.push(song)

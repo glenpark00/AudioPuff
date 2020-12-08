@@ -25,7 +25,7 @@ const songsReducer = (state = {}, action) => {
       const userSongs = (action.data.songs ? action.data.songs : {})
       return Object.assign({}, state, userSongs);
     case RECEIVE_USER_INFO:
-      const userAllSongs = (action.data.songs ? action.data.songs : {})
+      const userAllSongs = (action.data.songs ? action.data.songs : {});
       return Object.assign({}, state, userAllSongs);
     case RECEIVE_SEARCH_RESULTS:
       return Object.assign({}, state, action.data.songs);

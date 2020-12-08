@@ -16,12 +16,12 @@ json.users do
     json.followings @user.followings.map { |following| following.profile_url }
     json.followers @user.followers.map { |follower| follower.profile_url }
   end
-  @follows.each do |follow|
-    json.set! follow.profile_url do
-      json.extract! follow, :id, :display_name, :profile_url
-      json.image_url url_for(follow.profile_image)
-      json.followers follow.followers.map { |follower| follower.profile_url }
-      json.songs follow.songs.map { |song| "#{song.user_url}#{song.song_url.tr('_', '').downcase}" }
+  @users.each do |user|
+    json.set! user.profile_url do
+      json.extract! user, :id, :display_name, :profile_url
+      json.image_url url_for(user.profile_image)
+      json.followers user.followers.map { |follower| follower.profile_url }
+      json.songs user.songs.map { |song| "#{song.user_url}#{song.song_url.tr('_', '').downcase}" }
     end
   end
 end

@@ -23,10 +23,11 @@ const ProfilePage = ({ profileUrl }) => {
    
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchUserInfo();
   }, [])
 
   useEffect(() => {
-    fetchUserInfo()
+    fetchUserInfo();
   }, [profileUrl])
   
   if (!user) return null;
@@ -45,6 +46,9 @@ const ProfilePage = ({ profileUrl }) => {
   const likedSongs = user.likedSongs ? user.likedSongs.map(songId => songs[songId]).filter(song => song) : [];
   const followings = user.followings && users ? user.followings.map(userUrl => users[userUrl]).filter(song => song) : [];
   const followers = user.followers && users ? user.followers.map(userUrl => users[userUrl]).filter(song => song) : [];
+
+  // console.log(likedSongs);
+  
 
   return (
     <div className='current-user-profile-background'>
