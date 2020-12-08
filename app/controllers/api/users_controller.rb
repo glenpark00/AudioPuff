@@ -75,7 +75,7 @@ class Api::UsersController < ApplicationController
           @users.push(user)
         end
       end
-      @songs = @user.liked_songs.map { |song| song }
+      @songs = @user.liked_songs.with_attached_image_file.includes(:user).map { |song| song }
       @songs.each do |song|
         song_user = song.user
         unless @users.include?(song_user)
