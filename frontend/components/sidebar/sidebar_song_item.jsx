@@ -5,7 +5,7 @@ import PlayButton from '../play_button';
 import { FaHeart } from 'react-icons/fa';
 import { withRouter } from 'react-router-dom';
 
-const SideBarSongItem = ({ item, history, incrementCount }) => {
+const SideBarSongItem = ({ item, history }) => {
   const user = useSelector(state => state.entities.users[item.userUrl]);
   const audio = useSelector(state => state.audio);
   const [hovering, setHovering] = useState(false);
@@ -21,7 +21,7 @@ const SideBarSongItem = ({ item, history, incrementCount }) => {
       onMouseLeave={() => setHovering(false)}
     >
       <div>
-        <img className='side-bar-song-img' src={item.imageUrl} alt="sidebar-song" onLoad={incrementCount}/>
+        <img className='side-bar-song-img' src={item.imageUrl} alt="sidebar-song" />
         { hovering || playing ?
           <PlayButton song={item} type='side-bar' /> : null
         }

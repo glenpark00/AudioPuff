@@ -4,13 +4,13 @@ import { FaUserFriends } from 'react-icons/fa';
 import { GiSoundWaves } from 'react-icons/gi';
 import { withRouter } from 'react-router-dom';
 
-const SideBarUserItem = ({ item, history, incrementCount }) => {
+const SideBarUserItem = ({ item, history }) => {
   if (!item || !item.followers || !item.songs) return null;
 
   return (
     <div className='side-bar-user-item'>
       <div>
-        <img className='side-bar-user-img' src={item.imageUrl} alt="" onLoad={incrementCount}/>
+        <img className='side-bar-user-img' src={item.imageUrl} alt="" />
         <div className='side-bar-user-content'>
           <div 
             className='side-bar-user-text'

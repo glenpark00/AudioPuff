@@ -6,7 +6,7 @@ import { FaHeart } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaPlay, FaPause } from 'react-icons/fa';
 
-const Playlist = ({ songs, users, incrementCount}) => {
+const Playlist = ({ songs, users }) => {
   if (!songs[0]) return null;
 
   const audio = useSelector(state => state.audio),
@@ -58,7 +58,7 @@ const Playlist = ({ songs, users, incrementCount}) => {
     <div className='playlist-container'>
       <div className='playlist'>
         <div className='playlist-img-container'>
-          <img className='playlist-img' src={songs[0].imageUrl} alt="" onLoad={incrementCount}/>
+          <img className='playlist-img' src={songs[0].imageUrl} alt="" />
           <div
             className='song-playlist-play'
             onClick={handlePlayButton}

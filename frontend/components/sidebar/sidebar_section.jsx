@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 
-const SideBarSection = ({ icon, items, component, text, url, history, incrementCount }) => {
+const SideBarSection = ({ icon, items, component, text, url, history }) => {
   if (!items || items.length === 0) return null;
 
   const [threeItems, setThreeItems] = useState(items.slice(0, 3));
@@ -40,7 +40,7 @@ const SideBarSection = ({ icon, items, component, text, url, history, incrementC
       <div className='side-bar-section-line'></div>
       <div>
         {threeItems.map(item => {
-          let c = React.cloneElement(component, { item: item, incrementCount: incrementCount });
+          let c = React.cloneElement(component, { item: item });
           return <div key={`sidebar-${text}-${Math.random() * 1000}`}>{c}</div>;
         })}
       </div>
