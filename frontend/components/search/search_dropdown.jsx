@@ -36,7 +36,7 @@ export class SearchDropdown extends React.Component {
           {songs.map((song, i) => {
             if (i < 3) {
               return (
-                <li className='search-dropdown-result' key={song.id} onClick={() => history.push(`${song.userUrl}/${song.songUrl}`)}>
+                <li className='search-dropdown-result' key={song.id} onClick={() => history.push(`/${song.userUrl}/${song.songUrl}`)}>
                   <div className='search-dropdown-info'>
                     <img src={song.imageUrl} alt='user-image-search' className='search-dropdown-song-img' />
                     <div>{song.title}</div>
