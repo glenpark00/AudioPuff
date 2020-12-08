@@ -66,7 +66,7 @@ const Stream = ({ history }) => {
             <div className='stream-header-sub'>Follow your favorite artists, labels and friends on SoundCloud and see every track they post right here.</div>
             <div className='stream-subheader'>Hear the latest posts from the people you’re following:</div>
             { followedUsersSongs.length < 1 ? 
-              <div className='stream-empty-text'>Your stream is currently empty. Go to <Link to='/search/'>Search</Link> or <Link to='/discover'>Home</Link> to find music &#38; audio to listen to.</div>
+              <div className='stream-empty-text'>Your stream is currently empty. Search or go to <Link to='/discover'>Home</Link> to find music &#38; audio to listen to.</div>
               : 
               <div className='stream-items'>
                 { followedUsersSongs.map(song => {
