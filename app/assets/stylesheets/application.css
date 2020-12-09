@@ -59,3 +59,46 @@ button:active {
   box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24); 
   opacity: 1;
 }
+
+@media (min-width: 1500px) {
+  .discover-page {
+    width: 65%;
+  }
+
+  .signed-out-form-page {
+    width: 65%;
+  }
+
+  .global-audio-player-div {
+    width: 65%;
+    padding: 0 17.5%;
+  }
+
+  .library-page {
+    width: 65%;
+  }
+
+  .nav-bar {
+    width: 65%;
+  }
+
+  .nav-bar-space {
+    width: 17.5%;
+  }
+
+  .current-user-profile-page {
+    width: 65%;
+  }
+
+  .search-results-page {
+    width: 65%;
+  }
+
+  .search-results-page > h1 {
+    width: 65%;
+  }
+  
+  .song-show-page {
+    width: 65%;
+  }
+}
