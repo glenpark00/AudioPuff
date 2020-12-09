@@ -7,7 +7,7 @@ import SearchBarContainer from '../search/search_bar_container';
 class NavBar extends React.Component {
   constructor(props) {
     super(props);
-    this.smallScreen = window.innerWidth < 600;
+    this.smallScreen = window.innerWidth < 900;
     this.mobileLinkClick = this.mobileLinkClick.bind(this);
   }
 
