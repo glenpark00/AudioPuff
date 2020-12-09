@@ -88,7 +88,7 @@ export default class WaveformProgress extends React.Component {
             src={song.waveform} alt="waveform"
             width={`${waveformWidth}px`}
             style={{ filter: 'invert(21%) sepia(62%) saturate(1084%) hue-rotate(305deg) brightness(95%) contrast(89%)', width: `${waveformWidth}px` }}
-        />
+          />
         </div>
       </div>
     )

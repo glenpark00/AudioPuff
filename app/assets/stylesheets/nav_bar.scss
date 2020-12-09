@@ -123,11 +123,16 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   display: flex;
   align-items: center;
   position: relative;
-  width: 140px;
+  // width: 140px;
+  width: fit-content;
   height: 46px;
   cursor: pointer;
-  max-width: 45%;
+  max-width: 35%;
   padding: 0 10px;
+}
+
+.profile-button > div {
+  max-width: 107px;
 }
 
 .profile-button > img {
@@ -139,6 +144,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 .profile-button-text {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .profile-button-text > div:first-child {
@@ -149,6 +155,7 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  max-width: 100%;;
 }
 
 .profile-button-text > div:nth-child(2) {
@@ -180,11 +187,12 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 .profile-dropdown-div {
   position: absolute;
   top: 100%;
-  right: 0%;
+  left: 0%;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   width: 100%;
+  min-width: 108px;
   height: auto;
   border-radius: 0 0 3px 3px;
   // padding: 5px;

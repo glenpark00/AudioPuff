@@ -17,11 +17,11 @@ const ProfileDropdownButton = () => {
   return (
       <div className={`profile-button ${showDropdown ? 'link-selected' : ''}`} onClick={() => setShowDropdown(true)}>
         <img src={currentUser.imageUrl}/> 
-        <div stlye={showDropdown ? { color: 'white' } : {}}>
-        <div className='profile-button-text'>
-          <div>{currentUser.displayName}</div>
-          <div>{<MdKeyboardArrowDown fontSize='15px' />}</div>
-        </div>
+        <div>
+          <div className='profile-button-text'>
+          <div style={showDropdown ? { color: 'white' } : {}}>{currentUser.displayName}</div>
+            <div>{<MdKeyboardArrowDown fontSize='15px' />}</div>
+          </div>
         </div>
         {showDropdown ?
           <ProfileDropdown
