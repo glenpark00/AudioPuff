@@ -181,4 +181,8 @@ button:active {
   .search-dropdown-container {
     display: none;
   }
+
+  .form-modal {
+    width: 300px;
+  }
 }

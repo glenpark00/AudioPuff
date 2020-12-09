@@ -27,8 +27,6 @@ class NavBar extends React.Component {
     }
   }
 
-
-
   render() {
     const location = this.props.history.location.pathname;
 
