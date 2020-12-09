@@ -81,7 +81,7 @@ const Playlist = ({ songs, users }) => {
                   onMouseLeave={e => handleMouseLeave(e, song)}
                   style={audio.currentSong.id === song.id ? { backgroundColor: 'rgba(255, 255, 255, 0.1)' } : {}}
                 > 
-                  <div>
+                  <div className='playlist-song-text'>
                     <div>{`${user.displayName} - `}</div>
                     <div>{song.title}</div>
                   </div>

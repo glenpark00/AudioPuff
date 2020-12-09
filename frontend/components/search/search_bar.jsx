@@ -44,7 +44,9 @@ export default class SearchBar extends React.Component {
   }
 
   openSearchResults() {
-    this.props.history.push(`/search/${this.state.fragment}`);
+    if (this.state.fragment !== '') {
+      this.props.history.push(`/search/${this.state.fragment}`);
+    }
   }
 
   render() {
