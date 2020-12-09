@@ -5,6 +5,11 @@ import { Link, withRouter } from 'react-router-dom';
 import SearchBarContainer from '../search/search_bar_container';
 
 class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.smallScreen = window.innerWidth < 900;
+  }
+
   render() {
     const location = this.props.history.location.pathname;
 
@@ -19,7 +24,7 @@ class NavBar extends React.Component {
               <Link to='/stream' className={`nav-left-link ${location === '/stream' ? 'link-selected' : ''}`}>Stream</Link>
               <Link to='/you/library' className={`nav-left-link ${location.slice(0, 4) === '/you' ? 'link-selected' : ''}`}>Library</Link>
             </div>
-            <SearchBarContainer />
+            {!this.smallScreen ? <SearchBarContainer /> : null}
             {!this.props.loggedIn ? <NavBarAuth /> : <NavBarProtected />}
           </div>
           <div className='nav-bar-space'></div>

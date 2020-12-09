@@ -9,6 +9,8 @@ import SideBarSongItem from '../sidebar/sidebar_song_item';
 
 export default class Discover extends React.Component {
   componentDidMount() {
+    console.log(window.innerWidth)
+    this.smallScreen = window.innerWidth < 900;
     window.scrollTo(0, 0);
     const { fetchSongs, fetchUsers } = this.props;
     fetchUsers();
@@ -88,14 +90,18 @@ export default class Discover extends React.Component {
               </div>
               <Carousel songs={rock} users={users} type='songs' />
             </div>
-            <div className='side-bar'>
-              <SideBarMyInfo />
-              <SideBarSection icon={<FaUserFriends />} items={whoToFollow} component={<SideBarUserItem />} text='Who to follow' />
-              <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url='/you/likes' />
-              <div className='page-border-container'>
-                <div className='page-top-border'></div>
+            { !this.smallScreen ? (
+              <div className='side-bar'>
+                <SideBarMyInfo />
+                <SideBarSection icon={<FaUserFriends />} items={whoToFollow} component={<SideBarUserItem />} text='Who to follow' />
+                <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url='/you/likes' />
+                <div className='page-border-container'>
+                  <div className='page-top-border'></div>
+                </div>
               </div>
-            </div>
+            ) : (
+              null
+            )}
           </div>
         </div>
       </div>

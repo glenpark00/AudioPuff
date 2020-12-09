@@ -17,7 +17,8 @@ const Stream = ({ history }) => {
   const songs = useSelector(state => state.entities.songs),
     users = useSelector(state => state.entities.users),
     currentUser = useSelector(state => state.session.currentUser ? state.entities.users[state.session.currentUser.profileUrl] : {}),
-    dispatch = useDispatch();
+    dispatch = useDispatch(),
+    smallScreen = window.innerWidth < 900;
 
   // useEffect(() => {
   //   dispatch(fetchUsers());
@@ -89,14 +90,18 @@ const Stream = ({ history }) => {
               </div>
             }
           </div>
-          <div className='side-bar'>
-            <SideBarMyInfo />
-            <SideBarSection icon={<FaUserFriends />} items={whoToFollow} component={<SideBarUserItem />} text='Who to follow' />
-            <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url='/you/likes' />
-            <div className='page-border-container'>
-              <div className='page-top-border'></div>
+          { !smallScreen ? (
+            <div className='side-bar'>
+              <SideBarMyInfo />
+              <SideBarSection icon={<FaUserFriends />} items={whoToFollow} component={<SideBarUserItem />} text='Who to follow' />
+              <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url='/you/likes' />
+              <div className='page-border-container'>
+                <div className='page-top-border'></div>
+              </div>
             </div>
-          </div>
+          ) : (
+            null
+          )}        
         </div>
       </div>
     </div>

@@ -19,7 +19,8 @@ const ProfilePage = ({ profileUrl }) => {
     users = useSelector(state => state.entities.users),
     songs = useSelector(state => state.entities.songs),
     dispatch = useDispatch(),
-    fetchUserInfo = () => dispatch(fetchAllUserInfo(profileUrl))
+    fetchUserInfo = () => dispatch(fetchAllUserInfo(profileUrl)),
+    smallScreen = window.innerWidth < 900;
    
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,15 +92,19 @@ const ProfilePage = ({ profileUrl }) => {
               }
             </div>
           </div>
-          <div className='side-bar'>
-            <SideBarProfileInfo user={user} currentUser={currentUserUrl} />
-            <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url={url('likes')} />
-            <SideBarSection icon={<FaUserFriends />} items={followings} component={<SideBarUserItem />} text={`${followings.length} following`} url={url('following')} />
-            <SideBarSection icon={<IoIosPerson />} items={followers} component={<SideBarUserItem />} text={`${followers.length} followers`} url={url('followers')} />
-            <div className='page-border-container'>
-              <div className='page-top-border'></div>
+          { !smallScreen ? (
+            <div className='side-bar'>
+              <SideBarProfileInfo user={user} currentUser={currentUserUrl} />
+              <SideBarSection icon={<FaHeart />} items={likedSongs} component={<SideBarSongItem />} text={`${likedSongs.length} likes`} url={url('likes')} />
+              <SideBarSection icon={<FaUserFriends />} items={followings} component={<SideBarUserItem />} text={`${followings.length} following`} url={url('following')} />
+              <SideBarSection icon={<IoIosPerson />} items={followers} component={<SideBarUserItem />} text={`${followers.length} followers`} url={url('followers')} />
+              <div className='page-border-container'>
+                <div className='page-top-border'></div>
+              </div>
             </div>
-          </div>
+          ) : (
+            null
+          )}
         </div>
       </div>
     </div>
