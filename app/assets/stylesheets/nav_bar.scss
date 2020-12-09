@@ -55,6 +55,24 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
   border-right: 1px solid black;
   text-align: center;
   box-sizing: border-box;
+  background-color: $black-theme;
+}
+
+.nav-links-button {
+  font: 100 14px/1.5 Interstate,Lucida Grande,Arial,sans-serif;
+  color: #ccc;
+  padding: 12.5px 15px 0 15px;
+  box-sizing: border-box;
+  width: fit-content;
+  position: relative;
+}
+
+.nav-links-dropdown {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  flex-direction: column;
+  width: 100%;
 }
 
 .nav-right-link {
@@ -88,8 +106,8 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 .login-button {
   color: white;
   background-color: rgb(51, 51, 51);;
-  font-size: 13px;
-  font-weight: 100;
+  font-size: 10px;
+  font-weight: 600;
   font-family: $form-button-text-fam;
   width: 70px;
   height: 26px;
@@ -101,8 +119,8 @@ $form-button-text-fam: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,
 .signup-button {
   color: white;
   font-family: $form-button-text-fam;
-  font-size: 13px;
-  font-weight: 100;
+  font-size: 10px;
+  font-weight: 600;
   background-color: $yellow-theme;
   width: 110px;
   height: 26px;

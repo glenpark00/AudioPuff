@@ -102,3 +102,83 @@ button:active {
     width: 65%;
   }
 }
+
+@media (max-width: 600px) {
+  .discover-page {
+    width: 100%;
+  }
+
+  .signed-out-form-page {
+    width: 100%;
+  }
+
+  .global-audio-player-div {
+    width: 100%;
+    padding: 0;
+  }
+
+  .library-page {
+    width: 100%;
+  }
+
+  .nav-bar {
+    width: 100%;
+  }
+
+  .nav-bar-space {
+    width: 0;
+  }
+
+  .current-user-profile-page {
+    width: 100%;
+  }
+
+  .search-results-page {
+    width: 100%;
+  }
+
+  .search-results-page > h1 {
+    width: 100%;
+  }
+  
+  .song-show-page {
+    width: 100%;
+  }
+
+  .nav-left-link {
+    padding: 0 10px;
+    position: relative;
+  }
+
+  .homepage-link {
+    font-size: 8px;
+    width: 70px;
+    min-width: fit-content;
+  }
+
+  .search-container {
+    width: 30%;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 27%;
+    right: -5%;
+    font-weight: 900;
+    font-size: 13px;
+  }
+
+  .search-input {
+    font-size: 10px;
+  }
+
+  .signup-button, .login-button {
+    font-size: 10px;
+    width: fit-content;
+    margin-right: 5px;
+  }
+
+  .search-dropdown-container {
+    display: none;
+  }
+}
