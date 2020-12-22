@@ -9,7 +9,6 @@ import SideBarSongItem from '../sidebar/sidebar_song_item';
 
 export default class Discover extends React.Component {
   componentDidMount() {
-    console.log(window.innerWidth)
     this.smallScreen = window.innerWidth < 900;
     window.scrollTo(0, 0);
     const { fetchSongs, fetchUsers } = this.props;
